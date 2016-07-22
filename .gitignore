@@ -10,13 +10,6 @@ secrets.json
 # Sphinx docs
 build
 
-# SQLite3 database files
-*.db
-klogistics/people/migrations/*
-klogistics/seasons/migrations/*
-klogistics/allocations/migrations/*
-
-
 # Logs
 *.log
 
