@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+
+{% block extrahead %}
+<style>
+  body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
+  }
+
+  .form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+  }
+  .form-signin .form-signin-heading,
+  .form-signin .checkbox {
+    margin-bottom: 10px;
+  }
+  .form-signin .checkbox {
+    font-weight: normal;
+  }
+  .form-signin .form-control {
+    position: relative;
+    height: auto;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+    padding: 10px;
+    font-size: 16px;
+  }
+  .form-signin .form-control:focus {
+    z-index: 2;
+  }
+  .form-signin input[type="email"] {
+    margin-bottom: -1px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  .form-signin input[type="password"] {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+</style>
+{% endblock extrahead %}
+
+{% block navbar %}{% endblock navbar %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-md-4"></div>
+<div class="col-md-4">
+  
+  <form class="form-signin" method="post" action="{% url 'login' %}">
+
+  {% if form.errors %}
+  <div class="alert alert-danger alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <p> 
+        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+        Credenziali non corrette.
+    </p>
+  </div>
+  {% endif %}
+
+  <h2 class="form-signin-heading">Autenticati  qui.</h2>
+      {% csrf_token %}
+      <div class="input-group">
+        <span class="input-group-addon" id="basic-addon1">
+          <i class="fa fa-envelope-o" aria-hidden="true"></i>
+        </span>
+        <input type="text" class="form-control" placeholder="username" name="username" aria-describedby="basic-addon1" required autofocus>
+      </div>
+      <div class="input-group" style="margin-bottom:10px;">
+        <span class="input-group-addon" id="basic-addon2">
+          <i class="fa fa-key" aria-hidden="true"></i>
+        </span>
+        <input type="password" class="form-control" placeholder="password" name="password" aria-describedby="basic-addon2" required>
+      </div>
+      <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
+      <input type="hidden" name="next" value="{{ next }}" />
+  </form>
+
+
+</div>
+</div>
+{% endblock content %}

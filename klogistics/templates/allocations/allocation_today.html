@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block heading %}
+  Logistica del giorno {{ today }}
+{% endblock heading %}
+
+{% block content %}
+
+  <ul class="nav nav-pills">
+    <li role="presentation" class="disabled"><a href="#"><i class="fa fa-filter" aria-hidden="true"></i> Filtri:</a></li>
+    {% for project in projects %}
+      <li role="presentation" class="{% ifequal nav_active project.name %}active{% endifequal %}">
+        <a href="{% url 'project-day' today|date:"Y" today|date:"m" today|date:"d" project.name %}">
+          {{ project.name }}
+        </a>
+      </li>
+    {% endfor %}
+    <li role="presentation" class="pull-right">
+      <a href="{% url 'day' today|date:"Y" today|date:"m" today|date:"d" %}">
+        <i class="fa fa-eraser" aria-hidden="true"></i> Pulisci filtri
+      </a>
+    </li>
+  </ul>
+
+  <hr />
+
+<div class="row">
+  {% for allocation in today_allocations %}
+
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="panel panel-default plain profile-panel">
+        <div class="panel-heading white-content p-left p-right">
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="profile-avatar">
+                    <img class="img-responsive" src="{{ allocation.person.avatar }}" alt="profile picture" height="84" width="84">
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <p class="lead">
+                    {{ allocation.person.user.name }} {{ allocation.person.surname }} 
+                    <span class="label label-info">{{ allocation.project }}</span>
+                </p>
+
+                <div class="user-information">
+                    <p>{{ allocation.comment }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer white-content">
+            <ul class="fa-ul">
+                <li><i class="fa fa-suitcase fa-li" aria-hidden="true"></i> {{ allocation.person.rank }} </li>
+                <li><i class="fa fa-street-view fa-li" aria-hidden="true"></i> {{ allocation.person.office }}</li>
+                <li><i class="fa fa-envelope fa-li " aria-hidden="true"></i> {{ allocation.person.user.email }}</li>
+                <li><i class="fa fa-mobile fa-li " aria-hidden="true"></i> {{ allocation.person.mobile_phone }}
+            </ul>
+        </div>
+    </div>
+    </div>
+
+  {% endfor %}
+</div> <!-- grid row -->
+{% endblock content %}

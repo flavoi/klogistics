@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>klogistics {% block title %}{% endblock %}</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+    <!-- Font Awesome CSS --> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom CSS -->
+    <style>
+      html {
+          position: relative;
+          min-height: 100%;
+        }
+      body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        margin-bottom: 60px; /* Margin bottom by footer height */
+      }
+      .navbar {
+        margin-bottom: 20px;
+      }
+      .footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        /* Set the fixed height of the footer here */
+        height: 60px;
+      }
+      .container .text-muted {
+        margin: 20px 0;
+      }
+    </style>
+
+    {% block extrahead %}{% endblock %}
+
+</head>
+
+<body>
+
+    <div class="container">
+    {% block navbar %}
+        <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'today' %}">KLogistics</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              {% if user.is_superuser %}
+              <li>
+                <a href="/admin">Admin</a>
+              </li> <!-- Admin -->
+              {% endif %}
+
+              {% if user.is_authenticated %}
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Logistica
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li>
+                      {% now "Y" as current_year %}
+                      {% now "m" as current_month %}
+                      {% now "d" as current_day %}
+                      <a href="{% url 'day' current_year current_month current_day %}">Oggi</a></li>
+                    <li>
+                      <a href="{% url 'season' %}">Stagione</a>
+                    </li>
+                  </ul>
+                </div>
+              </li> <!-- Logistica -->
+              {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
+              <li>
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                  <i class="fa fa-user" aria-hidden="true"></i>
+                    Hey,  {{ user.name }}!
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><a href="{% url 'pwchange' %}">Modifica password</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                      <a href="{% url 'logout' %}">
+                      <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li> <!-- User -->
+              {% endif %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+   {% endblock navbar %}
+   </div>
+
+    <div class="container">
+        <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
+        <br />
+        {% block content %}{% endblock content %}
+    </div><!-- /.container -->
+
+    <footer class="footer">
+      <div class="container">
+        <hr />
+        <p class="text-muted">
+          <i class="fa fa-creative-commons" aria-hidden="true"></i>
+          {{ signature }}
+        </p>
+      </div>
+    </footer>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

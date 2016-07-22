@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block heading %}
+  Stagione corrente: {{ season.start_date }} - {{ season.end_date }}
+{% endblock heading %}
+
+{% block content %}
+
+  <div class="text-center">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+      {% for day in calendar %}
+        <tr>
+        {% for person, allocations in day.items %}
+          <td class="text-left">
+          {{ person|title }}</td>
+          {% for allocation in allocations %}
+            <td>
+             {% ifequal forloop.parentloop.parentloop.counter 1 %}
+              <a href="{% url 'day' allocation|date:"Y" allocation|date:"m" allocation|date:"d" %}">
+                {{ allocation|date:"d" }}
+              </a>
+             {% else %}
+              {{ allocation }}
+            {% endifequal %}
+            </td>
+           {% endfor %}
+        {% endfor %}
+        </tr>
+      {% endfor %}
+      </table>
+    </div>
+  </div>
+  
+{% endblock content %}
