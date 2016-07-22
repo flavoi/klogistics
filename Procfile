@@ -1,1 +1,1 @@
-web: gunicorn klogistics/config/uwsgi.py --log-file -
+web: gunicorn klogistics/config/wsgi.py --log-file -
