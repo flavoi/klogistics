@@ -18,6 +18,7 @@
             <td>
              {% ifequal forloop.parentloop.parentloop.counter 1 %}
               <a href="{% url 'day' allocation|date:"Y" allocation|date:"m" allocation|date:"d" %}">
+                {{ allocation|date:"D" }} <br />
                 {{ allocation|date:"d" }}
               </a>
              {% else %}
