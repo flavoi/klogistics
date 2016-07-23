@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+<style type="text/css">
+  .calendar
+  {
+      color: gray !important;
+  }
+</style>
+{% endblock extrahead %}
+
 {% block heading %}
   Stagione corrente: {{ season.start_date }} - {{ season.end_date }}
 {% endblock heading %}
@@ -22,7 +31,15 @@
                 {{ allocation|date:"d" }}
               </a>
              {% else %}
-              {{ allocation }}
+              <a class="calendar"
+              tabindex="0" role="button"
+              data-trigger="focus"
+              data-toggle="popover" 
+              title="{{ allocation.location.name }}" 
+              data-placement="top"
+              data-content="{{ allocation.location.description }}">
+                {{ allocation.location.abbreviation }}
+              </a>
             {% endifequal %}
             </td>
            {% endfor %}
@@ -34,3 +51,11 @@
   </div>
   
 {% endblock content %}
+
+{% block extrascript %}
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+</script>
+{% endblock %}

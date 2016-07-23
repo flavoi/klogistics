@@ -42,7 +42,6 @@ class SeasonAllocationView(AllocationView):
             for day in days:
                 try:
                     today_allocation = person_allocations.get(day=day)
-                    today_allocation = today_allocation.location.abbreviation
                 except Allocation.DoesNotExist:
                     today_allocation = ''
                 day_allocations.append(today_allocation)
