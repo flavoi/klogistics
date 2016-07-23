@@ -9,7 +9,15 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Person(models.Model):
     """ La singola risorsa del gruppo di lavoro. """
     surname = models.CharField(max_length=30)
-    rank = models.CharField(max_length=30)
+    RANK_CHOICES = (
+        (u'1', u'stagista'),
+        (u'2', u'consultant'),
+        (u'3', u'senior'),
+        (u'4', u'assistant manager'),
+        (u'5', u'manager'),
+        (u'6', u'partner'),
+    )
+    rank = models.CharField(max_length=30, choices=RANK_CHOICES)
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     mobile_phone = PhoneNumberField(blank=True)
     office = models.CharField(max_length=30)
