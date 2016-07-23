@@ -38,6 +38,6 @@ class Allocation(models.Model):
     comment = models.TextField(blank=True)
 
     def __str__(self):              # __unicode__ on Python 2
-        return "%s - %s" % (self.person, str(self.day))
+        return "%s-%s-%s" % (str(self.day), self.person, self.location)
 
     objects = AllocationManager.as_manager()
