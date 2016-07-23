@@ -50,7 +50,7 @@
         </div>
         <div class="panel-footer white-content">
             <ul class="fa-ul">
-                <li><i class="fa fa-suitcase fa-li" aria-hidden="true"></i> {{ allocation.person.rank }} </li>
+                <li><i class="fa fa-suitcase fa-li" aria-hidden="true"></i> {{ allocation.person.get_rank_display|capfirst }} </li>
                 <li><i class="fa fa-street-view fa-li" aria-hidden="true"></i> {{ allocation.person.office }}</li>
                 <li><i class="fa fa-envelope fa-li " aria-hidden="true"></i> {{ allocation.person.user.email }}</li>
                 <li><i class="fa fa-phone fa-li " aria-hidden="true"></i> {{ allocation.person.mobile_phone }}
