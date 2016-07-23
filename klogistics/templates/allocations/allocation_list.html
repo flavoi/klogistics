@@ -1,14 +1,5 @@
 {% extends "base.html" %}
 
-{% block extrahead %}
-<style type="text/css">
-  .calendar
-  {
-      color: gray !important;
-  }
-</style>
-{% endblock extrahead %}
-
 {% block heading %}
   Stagione corrente: {{ season.start_date }} - {{ season.end_date }}
 {% endblock heading %}
@@ -38,7 +29,9 @@
               title="{{ allocation.location.name }}" 
               data-placement="top"
               data-content="{{ allocation.location.description }}">
+              <span class="gray">
                 {{ allocation.location.abbreviation }}
+              </span>
               </a>
             {% endifequal %}
             </td>

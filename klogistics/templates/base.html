@@ -24,6 +24,10 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- Special font for the webapp title -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Bitter">
+    <link rel=stylesheet href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css">
+
     <!-- Custom CSS -->
     <style>
       html {
@@ -48,6 +52,9 @@
       .container .text-muted {
         margin: 20px 0;
       }
+      #brand {
+        font-family: 'Bitter', serif;
+      }
     </style>
 
     {% block extrahead %}{% endblock %}
@@ -68,7 +75,11 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% url 'today' %}">KLogistics</a>
+            <a class="navbar-brand" id="brand" href="{% url 'today' %}">
+              <span class="blue">
+              KLogistics
+              </span>
+            </a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -79,23 +90,18 @@
               {% endif %}
 
               {% if user.is_authenticated %}
-              <li>
-                <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Logistica
-                    <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                    <li>
-                      {% now "Y" as current_year %}
-                      {% now "m" as current_month %}
-                      {% now "d" as current_day %}
-                      <a href="{% url 'day' current_year current_month current_day %}">Oggi</a></li>
-                    <li>
-                      <a href="{% url 'season' %}">Stagione</a>
-                    </li>
-                  </ul>
-                </div>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistica <span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li>
+                    {% now "Y" as current_year %}
+                    {% now "m" as current_month %}
+                    {% now "d" as current_day %}
+                    <a href="{% url 'day' current_year current_month current_day %}">Oggi</a></li>
+                  <li>
+                    <a href="{% url 'season' %}">Stagione</a>
+                  </li>
+                </ul>
               </li> <!-- Logistica -->
               {% endif %}
             </ul>

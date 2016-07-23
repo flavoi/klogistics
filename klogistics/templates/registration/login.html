@@ -42,12 +42,27 @@
     border-top-left-radius: 0;
     border-top-right-radius: 0;
   }
+  .big-brand {
+    font-size: 50px;
+    line-height: 1;
+  }
+  .brand-border {
+    border-width: 1px;
+    border-style: solid; }
+  }
 </style>
 {% endblock extrahead %}
 
 {% block navbar %}{% endblock navbar %}
 
 {% block content %}
+
+<div class="row">
+  <div class="col-md-4"></div>
+  <div class="col-md-4">
+    <h1 id="brand" class="text-center big-brand blue">KLogistics</h1>
+  </div>
+</div>
 
 <div class="row">
 <div class="col-md-4"></div>
@@ -67,22 +82,21 @@
   </div>
   {% endif %}
 
-  <h2 class="form-signin-heading">Autenticati  qui.</h2>
-      {% csrf_token %}
-      <div class="input-group">
-        <span class="input-group-addon" id="basic-addon1">
-          <i class="fa fa-envelope-o" aria-hidden="true"></i>
-        </span>
-        <input type="text" class="form-control" placeholder="username" name="username" aria-describedby="basic-addon1" required autofocus>
-      </div>
-      <div class="input-group" style="margin-bottom:10px;">
-        <span class="input-group-addon" id="basic-addon2">
-          <i class="fa fa-key" aria-hidden="true"></i>
-        </span>
-        <input type="password" class="form-control" placeholder="password" name="password" aria-describedby="basic-addon2" required>
-      </div>
-      <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
-      <input type="hidden" name="next" value="{{ next }}" />
+    {% csrf_token %}
+    <div class="input-group">
+      <span class="input-group-addon" id="basic-addon1">
+        <i class="fa fa-envelope-o" aria-hidden="true"></i>
+      </span>
+      <input type="text" class="form-control" placeholder="username" name="username" aria-describedby="basic-addon1" required autofocus>
+    </div>
+    <div class="input-group" style="margin-bottom:10px;">
+      <span class="input-group-addon" id="basic-addon2">
+        <i class="fa fa-key" aria-hidden="true"></i>
+      </span>
+      <input type="password" class="form-control" placeholder="password" name="password" aria-describedby="basic-addon2" required>
+    </div>
+    <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
+    <input type="hidden" name="next" value="{{ next }}" />
   </form>
 
 
