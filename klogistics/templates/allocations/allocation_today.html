@@ -8,10 +8,10 @@
 
   <ul class="nav nav-pills">
     <li role="presentation" class="disabled"><a href="#"><i class="fa fa-filter" aria-hidden="true"></i> Filtri:</a></li>
-    {% for project in projects %}
-      <li role="presentation" class="{% ifequal nav_active project.name %}active{% endifequal %}">
-        <a href="{% url 'project-day' today|date:"Y" today|date:"m" today|date:"d" project.name %}">
-          {{ project.name }}
+    {% for location in locations %}
+      <li role="presentation" class="{% ifequal nav_active location.name %}active{% endifequal %}">
+        <a href="{% url 'location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}">
+          {{ location.name }}
         </a>
       </li>
     {% endfor %}
@@ -40,7 +40,7 @@
             <div class="col-lg-8 col-md-8 col-sm-12">
                 <p class="lead">
                     {{ allocation.person.user.name }} {{ allocation.person.surname }} 
-                    <span class="label label-info">{{ allocation.project }}</span>
+                    <span class="label label-info">{{ allocation.location }}</span>
                 </p>
 
                 <div class="user-information">

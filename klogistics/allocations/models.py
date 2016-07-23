@@ -19,8 +19,8 @@ class AllocationManager(models.QuerySet):
         return allocations
 
 
-class Project(models.Model):
-    """ Attivita` per la quale sono allocate delle persone dette risorse. """
+class Location(models.Model):
+    """ Luogo nel quale sono allocate i membri del gruppo. """
     name = models.CharField(max_length=30)
     description = models.TextField(blank=True)
     abbreviation = models.CharField(max_length=1, unique=True)
@@ -32,7 +32,7 @@ class Project(models.Model):
 
 class Allocation(models.Model):
     """ Schedulazione giornaliera della risorsa. """
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
     day = models.DateField()
     comment = models.TextField(blank=True)

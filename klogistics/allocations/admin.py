@@ -1,13 +1,13 @@
 from django.contrib import admin
 
-from .models import Project, Allocation
+from .models import Location, Allocation
 
 
 class AllocationInline(admin.TabularInline):
-    model = Project.people.through
+    model = Location.people.through
     extra = 1
 
-@admin.register(Project)
+@admin.register(Location)
 class ProjectAdmin(admin.ModelAdmin):
     inlines = [
         AllocationInline,

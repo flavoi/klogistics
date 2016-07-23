@@ -8,7 +8,7 @@ from django.utils import timezone
 
 from braces.views import LoginRequiredMixin
 
-from .models import Project, Allocation
+from .models import Location, Allocation
 from people.models import Person
 from seasons.decorators import open_period_only
 from seasons.models import Season
@@ -42,7 +42,7 @@ class SeasonAllocationView(AllocationView):
             for day in days:
                 try:
                     today_allocation = person_allocations.get(day=day)
-                    today_allocation = today_allocation.project.abbreviation
+                    today_allocation = today_allocation.location.abbreviation
                 except Allocation.DoesNotExist:
                     today_allocation = ''
                 day_allocations.append(today_allocation)
@@ -70,9 +70,9 @@ class TodayAllocationView(AllocationView):
         context = super(TodayAllocationView, self).get_context_data(**kwargs)
         today = self.get_today()
         """ Preparazione filtri successivi. """
-        projects = Project.objects.all() 
+        locations = Location.objects.all() 
         context['today'] = today
-        context['projects'] = projects
+        context['locations'] = locations
         return context
 
 
@@ -92,17 +92,17 @@ class DayAllocationView(TodayAllocationView):
         return allocations
 
 
-class ProjectDayAllocationView(DayAllocationView):
-    """ Filtra la logistica del giorno per uno specifico progetto. """
+class LocationDayAllocationView(DayAllocationView):
+    """ Filtra la logistica del giorno per uno specifico luogo. """
 
     def get_queryset(self):
         today = self.get_today()
-        project = self.args[3]
+        location = self.args[3]
         allocations = Allocation.objects.get_today_allocations(today)
-        allocations = allocations.filter(project__name=project)
+        allocations = allocations.filter(location__name=location)
         return allocations
 
     def get_context_data(self, **kwargs):
-        context = super(ProjectDayAllocationView, self).get_context_data(**kwargs)
+        context = super(LocationDayAllocationView, self).get_context_data(**kwargs)
         context['nav_active'] = self.args[3]
         return context

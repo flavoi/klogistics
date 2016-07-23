@@ -13,6 +13,6 @@ urlpatterns = [
         view=views.DayAllocationView.as_view(),
         name='day'),
     url(r'^([0-9]{4})/([0-9]{2})/([0-9]+)/([-\w\d]+)/$',
-        view=views.ProjectDayAllocationView.as_view(),
-        name='project-day'),
+        view=views.LocationDayAllocationView.as_view(),
+        name='location-day'),
 ]
