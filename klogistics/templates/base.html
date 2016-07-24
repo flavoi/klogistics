@@ -7,9 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>klogistics {% block title %}{% endblock %}</title>
+    
+    <title>klogistics &raquo; {% block title %}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ STATIC_URL }}img/kl-logo.ico" />
 
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -29,33 +33,7 @@
     <link rel=stylesheet href="https://s3-us-west-2.amazonaws.com/colors-css/2.2.0/colors.min.css">
 
     <!-- Custom CSS -->
-    <style>
-      html {
-          position: relative;
-          min-height: 100%;
-        }
-      body {
-        padding-top: 20px;
-        padding-bottom: 20px;
-        margin-bottom: 60px; /* Margin bottom by footer height */
-      }
-      .navbar {
-        margin-bottom: 20px;
-      }
-      .footer {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        /* Set the fixed height of the footer here */
-        height: 60px;
-      }
-      .container .text-muted {
-        margin: 20px 0;
-      }
-      #brand {
-        font-family: 'Bitter', serif;
-      }
-    </style>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css">
 
     {% block extrahead %}{% endblock %}
 

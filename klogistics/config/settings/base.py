@@ -13,13 +13,6 @@ MEDIA_ROOT = BASE_DIR.child("media")
 STATIC_ROOT = BASE_DIR.child("static")
 STATICFILES_DIRS = ()
 
-def get_env_variable(var_name):
-    """ Get th environment variable or return explicit exception. """
-    try:
-        return os.environ[var_name]
-    except KeyError:
-        error_msg = "Set the {0} enviroment variable".format(var_name)
-        raise ImproperlyConfigured(error_msg)
 
 DEBUG = None
 
@@ -50,6 +43,7 @@ PROJECT_APPS = [
 
 ADDONS = [
     'authtools',
+    'storages',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ADDONS
@@ -76,6 +70,7 @@ TEMPLATES = [
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
+                'django.template.context_processors.static',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'signature.context.get_signature',
@@ -131,9 +126,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
-
-STATIC_URL = '/static/'
