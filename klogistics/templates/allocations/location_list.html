@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block heading %}
+  Luoghi censiti
+{% endblock heading %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <p class="lead text-justify">
+        Il concetto di luogo &egrave; in senso lato. Non &egrave; infatti un posto
+        fisico, ma in generale un riferimento su dove &egrave; allocata una persona 
+        in un determinato momento.
+        </p>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+<div class="row">
+<div class="col-md-3"></div>
+
+<div class="col-md-6">
+    <dl class="dl-horizontal">
+      {% for location in locations %}
+      <dt>
+        {{ location.name }}
+      </dt>
+      <dd>{{ location.description }}</dd>
+      <dd>Abbreviazione: {{ location.abbreviation }}.</dd>          
+      {% endfor %}
+    </dl>
+</div>
+
+<div class="col-md-3"></div>
+{% endblock content %}
