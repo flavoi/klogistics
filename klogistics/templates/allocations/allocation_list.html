@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+<style>
+
+</style>
+{% endblock %}
+
 {% block heading %}
   Stagione corrente: {{ season.start_date }} - {{ season.end_date }}
 {% endblock heading %}
@@ -8,14 +14,16 @@
 
   <div class="text-center">
     <div class="table-responsive">
-      <table class="table table-bordered">
+      <table class="table table-bordered table-condensed">
       {% for day in calendar %}
         <tr>
         {% for person, allocations in day.items %}
           <td class="text-left">
-          {{ person|title }}</td>
+            {{ person.0|title }}
+            {{ person.1|title }}
+          </td>
           {% for allocation in allocations %}
-            <td>
+            <td style="vertical-align: middle;">
              {% ifequal forloop.parentloop.parentloop.counter 1 %}
               <a href="{% url 'day' allocation|date:"Y" allocation|date:"m" allocation|date:"d" %}">
                 {{ allocation|date:"D" }} <br />
@@ -26,11 +34,11 @@
               tabindex="0" role="button"
               data-trigger="focus"
               data-toggle="popover" 
-              title="{{ allocation.location.name }}" 
+              title="{{ allocation.0.0 }}" 
               data-placement="top"
-              data-content="{{ allocation.location.description }}">
+              data-content="{{ allocation.0.1 }}">
               <span class="gray">
-                {{ allocation.location.abbreviation }}
+                {{ allocation.0.2 }}
               </span>
               </a>
             {% endifequal %}

@@ -34,18 +34,26 @@ class SeasonAllocationView(AllocationView):
         delta = season.end_date - season.start_date
         days = [season.start_date + td(days=day) for day in range(delta.days + 1)]
         calendar = []
-        calendar.append({'persone': days})
+        calendar.append({('persone',): days})
         # compila il calendario
         for person in people:
+            name_surname = (
+                person.user.name,
+                person.surname,
+            )
             person_allocations = allocations.filter(person=person)
             day_allocations = []
             for day in days:
                 try:
-                    today_allocation = person_allocations.get(day=day)
+                    today_allocation = person_allocations.filter(day=day).values_list(
+                        'location__name', 
+                        'location__description',
+                        'location__abbreviation'
+                    )
                 except Allocation.DoesNotExist:
                     today_allocation = ''
                 day_allocations.append(today_allocation)
-            calendar.append({person: [allocation for allocation in day_allocations]})
+            calendar.append({name_surname: [allocation for allocation in day_allocations]})
         context['calendar'] = calendar
         context['season'] = season
         return context
