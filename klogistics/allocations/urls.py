@@ -15,4 +15,7 @@ urlpatterns = [
     url(r'^([0-9]{4})/([0-9]{2})/([0-9]+)/([-\w\d]+)/$',
         view=views.LocationDayAllocationView.as_view(),
         name='location-day'),
+    url(r'^luoghi/$',
+        view=views.LocationView.as_view(),
+        name='locations'),
 ]

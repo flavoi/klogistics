@@ -113,3 +113,9 @@ class LocationDayAllocationView(DayAllocationView):
         context = super(LocationDayAllocationView, self).get_context_data(**kwargs)
         context['nav_active'] = self.args[3]
         return context
+
+
+class LocationView(LoginRequiredMixin, ListView):
+    """ Restituisce la lista dei luoghi censiti a sistema. """
+    model = Location
+    context_object_name = 'locations'
