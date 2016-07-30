@@ -2,12 +2,17 @@ Babel==2.3.4
 boto==2.42.0
 dj-database-url==0.4.1
 Django==1.9.7
+django-annoying==0.9.0
 django-authtools==1.5.0
 django-braces==1.9.0
 django-phonenumber-field==1.1.0
+django-scheduler==0.8
 django-storages==1.4.1
 gunicorn==19.6.0
+icalendar==3.10
 phonenumberslite==7.4.5
 psycopg2==2.6.1
+python-dateutil==2.5.3
 pytz==2016.6.1
+six==1.10.0
 Unipath==1.1
