@@ -3,7 +3,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^logistica/$', 
+    url(r'^stagione/([0-9]+)/$', 
         view=views.SeasonAllocationView.as_view(), 
         name='season'),
     url(r'^$',

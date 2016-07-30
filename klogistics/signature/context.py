@@ -1,5 +1,5 @@
 """
-    Custom context processors for the page app.
+    Custom context processors for the signature app.
     This script contains useful informations for every template.
 """
 from datetime import date

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block heading %}
-  Stagione corrente: {{ season.start_date }} - {{ season.end_date }}
+  {{ season.name|title }}: {{ season.start_date }} - {{ season.end_date }}
 {% endblock heading %}
 
 {% block content %}

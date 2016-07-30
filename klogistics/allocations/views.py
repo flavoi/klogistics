@@ -22,12 +22,12 @@ class AllocationView(LoginRequiredMixin, ListView):
 
 @method_decorator(open_period_only, name='dispatch')
 class SeasonAllocationView(AllocationView):
-    """ Visualizza il calendario relativo alla Stagione aperta."""
+    """ Visualizza il calendario relativo alla Stagione imputata."""
 
     def get_context_data(self, **kwargs):
         context = super(SeasonAllocationView, self).get_context_data(**kwargs)
-        # Deve esserci una sola stagione attiva per volta
-        season = Season.objects.get_open_season()
+        print self.args[0]
+        season = Season.objects.get(pk=self.args[0])
         allocations = Allocation.objects.get_season_allocations(season.start_date, season.end_date)
         people = Person.objects.all()
         # Estrae tutti i giorni della stagione corrente
