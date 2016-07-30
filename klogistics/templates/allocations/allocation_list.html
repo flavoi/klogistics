@@ -18,15 +18,13 @@
           </td>
           {% for allocation in allocations %}
             <td style="vertical-align: middle;">
-             {% ifequal forloop.parentloop.parentloop.counter 1 %}
-              <a href="{% url 'day' allocation|date:"Y" allocation|date:"m" allocation|date:"d" %}">
-                {{ allocation|date:"D" }} <br />
-                {{ allocation|date:"d" }}
-              </a>
-             {% else %}
-              <span class="gray">
-                <abbr title="{{ allocation.0.0 }}">{{ allocation.0.2 }}</abbr>
-              </span>
+              {% ifequal forloop.parentloop.parentloop.counter 1 %}
+                <a href="{% url 'day' allocation|date:"Y" allocation|date:"m" allocation|date:"d" %}">
+                  {{ allocation|date:"D" }} <br />
+                  {{ allocation|date:"d" }}
+                </a>
+              {% else %}
+                <span class="gray">{{ allocation.0.2 }}</span>
             {% endifequal %}
             </td>
            {% endfor %}
