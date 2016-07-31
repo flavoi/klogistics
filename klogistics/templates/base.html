@@ -34,7 +34,7 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css">
-
+    
     {% block extrahead %}{% endblock %}
 
 </head>
@@ -85,7 +85,12 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                   <li>
                     {% for s in seasons %}
-                      <a href="{% url 'season' s.pk %}">{{ s.name|title }}</a>
+                      <a href="{% url 'season' s.pk %}">
+                      {{ s.name|title }}
+                      {% ifequal s.state "1" %}
+                        <i class="fa fa-flag" aria-hidden="true"></i>
+                      {% endifequal %}
+                      </a>
                     {% endfor %}
                   </li>
                 </ul>
