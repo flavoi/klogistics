@@ -43,7 +43,6 @@ PROJECT_APPS = [
 ADDONS = [
     'authtools',
     'storages',
-    'django_tables2',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ADDONS
