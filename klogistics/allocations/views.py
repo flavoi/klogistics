@@ -1,6 +1,7 @@
 from datetime import date, timedelta as td
 
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.decorators import method_decorator
@@ -13,6 +14,10 @@ from people.models import Person
 from seasons.decorators import open_period_only
 from seasons.models import Season
 
+from django.shortcuts import render
+from django.utils.safestring import mark_safe
+from kcalendar import KCalendar
+
 
 @method_decorator(open_period_only, name='dispatch')
 class AllocationView(LoginRequiredMixin, ListView):
@@ -24,12 +29,17 @@ class AllocationView(LoginRequiredMixin, ListView):
 class SeasonAllocationView(AllocationView):
     """ Visualizza il calendario relativo alla Stagione imputata."""
 
+    def get_queryset(self):
+        self.season = get_object_or_404(Season, pk=self.args[0])
+        self.people = Person.objects.all()
+        start_date, end_date = self.season.start_date, self.season.end_date
+        return Allocation.objects.get_season_allocations(start_date, end_date)
+
     def get_context_data(self, **kwargs):
         context = super(SeasonAllocationView, self).get_context_data(**kwargs)
-        print self.args[0]
-        season = Season.objects.get(pk=self.args[0])
-        allocations = Allocation.objects.get_season_allocations(season.start_date, season.end_date)
-        people = Person.objects.all()
+        allocations = self.get_queryset()
+        season = self.season
+        people = self.people
         # Estrae tutti i giorni della stagione corrente
         delta = season.end_date - season.start_date
         days = [season.start_date + td(days=day) for day in range(delta.days + 1)]

@@ -1,58 +1,51 @@
 {% extends "base.html" %}
 
-
-{% block extrahead %}
-<!-- Specific style for klogistics login page. -->
-<link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics-login.css">
-{% endblock extrahead %}
-
 {% block navbar %}{% endblock navbar %}
 
 {% block content %}
 
-<div class="row">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
-    <h1 id="brand" class="text-center big-brand blue">KLogistics</h1>
-  </div>
-</div>
+<div class="login-page">
 
-<div class="row">
-<div class="col-md-4"></div>
-<div class="col-md-4">
-  
-  <form class="form-signin" method="post" action="{% url 'login' %}">
-
-  {% if form.errors %}
-  <div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <p> 
-        <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-        Credenziali non corrette.
-    </p>
-  </div>
-  {% endif %}
-
-    {% csrf_token %}
-    <div class="input-group">
-      <span class="input-group-addon" id="basic-addon1">
-        <i class="fa fa-envelope-o" aria-hidden="true"></i>
-      </span>
-      <input type="text" class="form-control" placeholder="username" name="username" aria-describedby="basic-addon1" required autofocus>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <h1 id="brand" class="text-center big-brand blue">KLogistics</h1>
     </div>
-    <div class="input-group" style="margin-bottom:10px;">
-      <span class="input-group-addon" id="basic-addon2">
-        <i class="fa fa-key" aria-hidden="true"></i>
-      </span>
-      <input type="password" class="form-control" placeholder="password" name="password" aria-describedby="basic-addon2" required>
-    </div>
-    <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
-    <input type="hidden" name="next" value="{{ next }}" />
-  </form>
+  </div>
 
-
-</div>
-</div>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      
+      <form class="form-signin" method="post" action="{% url 'login' %}">
+        {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <p> 
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              Credenziali non corrette.
+          </p>
+        </div>
+        {% endif %}
+        {% csrf_token %}
+        <div class="input-group" style="margin-bottom:5px;">
+          <span class="input-group-addon" id="basic-addon1">
+            <i class="fa fa-envelope-o" aria-hidden="true"></i>
+          </span>
+          <input type="text" class="form-control" placeholder="username" name="username" aria-describedby="basic-addon1" required autofocus>
+        </div>
+        <div class="input-group" style="margin-bottom:10px;">
+          <span class="input-group-addon" id="basic-addon2">
+            <i class="fa fa-key" aria-hidden="true"></i>
+          </span>
+          <input type="password" class="form-control" placeholder="password" name="password" aria-describedby="basic-addon2" required>
+        </div>
+        <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+    </div> <!-- grid colum -->
+  </div> <!-- grid row -->
+</div> <!-- login page -->
 {% endblock content %}

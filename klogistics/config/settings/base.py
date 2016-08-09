@@ -13,7 +13,6 @@ MEDIA_ROOT = BASE_DIR.child("media")
 STATIC_ROOT = BASE_DIR.child("static")
 STATICFILES_DIRS = ()
 
-
 DEBUG = None
 
 # Quick-start development settings - unsuitable for production
@@ -44,6 +43,7 @@ PROJECT_APPS = [
 ADDONS = [
     'authtools',
     'storages',
+    'django_tables2',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ADDONS

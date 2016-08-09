@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 import datetime
 
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from people.models import Person
 
