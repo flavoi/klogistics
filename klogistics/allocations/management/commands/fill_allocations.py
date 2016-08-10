@@ -1,5 +1,6 @@
 import datetime
 from datetime import datetime, date, timedelta as td
+from random import randint
 
 from django.core.management.base import BaseCommand
 
@@ -30,10 +31,19 @@ class Command(BaseCommand):
             return
         season = Season.objects.get_open_season()
         delta = season.end_date - season.start_date
-        day_range = [season.start_date + td(days=day) for day in range(delta.days + 1)]
+        start_date = season.start_date.toordinal()
+        end_date = season.end_date.toordinal()
         for p in people:
-            for day in day_range:
+            allocation_times = randint(2,4)
+            for i in range(1, allocation_times, 1):
                 random_location = Location.objects.all().order_by('?')[0]
-                allocation = Allocation(location = random_location, person=p, day=day)
+                random_start_date = date.fromordinal(randint(start_date, end_date))
+                random_end_date = random_start_date + td(days=randint(1,4))
+                allocation = Allocation(
+                    location = random_location, 
+                    person=p, 
+                    start_date=random_start_date,
+                    end_date=random_end_date,
+                )
                 allocation.save()
                 print "Allocazione creata %s" % allocation

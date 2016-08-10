@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  <!-- Login page CSS -->
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/extra/login.css">
+{% endblock extrahead %}
+
 {% block navbar %}{% endblock navbar %}
 
 {% block content %}

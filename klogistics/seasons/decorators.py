@@ -16,7 +16,7 @@ def open_period_only(view_func):
     @wraps(view_func, assigned=available_attrs(view_func))
     def wrapper(request, *args, **kwargs):
         try:
-            stagione = Season.objects.get_open_season()
+            season = Season.objects.get_open_season()
         except Season.DoesNotExist:
             return HttpResponseRedirect(reverse('fine_stagione'))
         else:

@@ -1,43 +1,69 @@
 {% extends "base.html" %}
-{% load render_table from django_tables2 %}
 
-{% block extrahead %}{% endblock %}
+{% block extrahead %}
+<link rel='stylesheet' href="{{ STATIC_URL }}css/fullcalendar/fullcalendar.min.css">
+<link rel='stylesheet' href="{{ STATIC_URL }}css/fullcalendar/scheduler.min.css">
+<script src="{{ STATIC_URL }}js/fullcalendar/moment.min.js"></script>
+<script src="{{ STATIC_URL }}js/fullcalendar/fullcalendar.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.9.1/lang/it.js"></script>
+<script src="{{ STATIC_URL }}js/fullcalendar/scheduler.min.js"></script>
+<script>
+    $(function() { // document ready
+
+        $('#calendar').fullCalendar({
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+            defaultDate: '{{ season.start_date|date:"%Y-%m-%d" }}',
+            now: '{{ now }}',
+            contentHeight: 'auto',
+            editable: false, // enable draggable events
+            header: {
+                left: '',
+                center: '',
+                right: ''
+            },
+            defaultView: 'timelineFifteenDays',
+            views: {
+                timelineFifteenDays: {
+                    type: 'timeline',
+                    duration: { days: 30 }
+                }
+            },
+            resourceLabelText: 'Persone',
+            resourceAreaWidth: '15%',
+            resources: {
+                url: '{% url 'ppljson' %}',
+                error: function() {
+                    $('#script-warning').show();
+                }
+            },
+            slotDuration: { 
+                days:1,
+            },
+            events: {
+                url: '{% url 'season-json' season.pk %}',
+                error: function() {
+                    $('#script-warning').show();
+                }
+            },
+        });
+    
+    });
+
+</script>
+
+{% endblock %}
+
+{% block title %}
+  {{ season.name }}
+{% endblock title %}
 
 {% block heading %}
   {{ season.name|title }}: {{ season.start_date }} - {{ season.end_date }}
 {% endblock heading %}
 
 {% block content %}
-
-  <div class="text-center">
-    <div class="table-responsive">
-      <table class="table table-bordered table-condensed">
-      {% for day in calendar %}
-        <tr>
-        {% for person, allocations in day.items %}
-          <td class="text-left">
-            {{ person.0|title }}
-            {{ person.1|title }}
-          </td>
-          {% for allocation in allocations %}
-            <td style="vertical-align: middle;">
-             {% ifequal forloop.parentloop.parentloop.counter 1 %}
-              <a href="{% url 'day' allocation|date:"Y" allocation|date:"m" allocation|date:"d" %}">
-                {{ allocation|date:"D" }} <br />
-                {{ allocation|date:"d" }}
-              </a>
-             {% else %}
-              <span class="gray">
-                <abbr title="{{ allocation.0.0 }}">{{ allocation.0.2 }}</abbr>
-              </span>
-            {% endifequal %}
-            </td>
-           {% endfor %}
-        {% endfor %}
-        </tr>
-      {% endfor %}
-      </table>
-    </div>
-  </div>
-  
+  <div id='calendar'></div>
 {% endblock content %}
+
+{% block extrascript %}
+{% endblock extrascript %}

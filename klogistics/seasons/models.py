@@ -28,7 +28,6 @@ class Season(models.Model):
     available = models.BooleanField(default=True)
     name = models.CharField(max_length=30)
     slug = models.SlugField(max_length=30)
-    number = models.PositiveIntegerField(primary_key=True)
 
     def __str__(self):              # __unicode__ on Python 2
         return u'%s %s' % (self.slug, self.end_date)
@@ -36,10 +35,6 @@ class Season(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
-        if not self.number:
-            s = self.name
-            n = [int(s) for s in str.split() if s.isdigit()][0]
-            number = n
         super(Season, self).save(*args, **kwargs)
 
     objects = SeasonManager.as_manager()

@@ -1,8 +1,9 @@
+import json
 from datetime import date, timedelta as td
 
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.decorators import method_decorator
 from django.utils import timezone
@@ -16,7 +17,15 @@ from seasons.models import Season
 
 from django.shortcuts import render
 from django.utils.safestring import mark_safe
-from kcalendar import KCalendar
+
+
+def allocation_season_json(request, season):
+    """ Restituisce le allocazioni della stagione in formato json """
+    season = get_object_or_404(Season, pk=season)
+    start_date, end_date = season.start_date, season.end_date
+    allocations = Allocation.objects.get_season_allocations(start_date, end_date)
+    allocations = [ obj.as_dict() for obj in allocations ]
+    return JsonResponse(allocations, safe=False)
 
 
 @method_decorator(open_period_only, name='dispatch')
@@ -37,35 +46,8 @@ class SeasonAllocationView(AllocationView):
 
     def get_context_data(self, **kwargs):
         context = super(SeasonAllocationView, self).get_context_data(**kwargs)
-        allocations = self.get_queryset()
-        season = self.season
-        people = self.people
-        # Estrae tutti i giorni della stagione corrente
-        delta = season.end_date - season.start_date
-        days = [season.start_date + td(days=day) for day in range(delta.days + 1)]
-        calendar = []
-        calendar.append({('persone',): days})
-        # compila il calendario
-        for person in people:
-            name_surname = (
-                person.user.name,
-                person.surname,
-            )
-            person_allocations = allocations.filter(person=person)
-            day_allocations = []
-            for day in days:
-                try:
-                    today_allocation = person_allocations.filter(day=day).values_list(
-                        'location__name', 
-                        'location__description',
-                        'location__abbreviation'
-                    )
-                except Allocation.DoesNotExist:
-                    today_allocation = ''
-                day_allocations.append(today_allocation)
-            calendar.append({name_surname: [allocation for allocation in day_allocations]})
-        context['calendar'] = calendar
-        context['season'] = season
+        context['now'] = date.today().strftime("%Y-%m-%d")
+        context['season'] = self.season
         return context
 
 

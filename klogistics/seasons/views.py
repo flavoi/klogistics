@@ -7,11 +7,13 @@ from .models import Season
 
 @login_required
 def park_here(request):
+    last_season = ''
     try:
         season = Season.objects.get_open_season()
+        last_season = Season.objects.latest('end_date')
     except Season.DoesNotExist:
         template = 'seasons/ended_season.html'
-        context = {'season': Season.objects.latest('end_date')}
+        context = {'season': last_season}
     else:
         return HttpResponseRedirect(reverse('today'))
     return render(request, template, context)

@@ -29,6 +29,11 @@ class Person(models.Model):
     class Meta:
         ordering = ['surname']
 
+    def as_dict(self): # integration with fullcalendar
+        return {
+            'id': self.id,
+            'title': self.surname + ' ' + self.user.name,
+        }
 
 class Team(models.Model):
     """ Il gruppo di lavoro. """
