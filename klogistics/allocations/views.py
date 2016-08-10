@@ -61,17 +61,19 @@ class TodayAllocationView(AllocationView):
         return today
 
     def get_queryset(self):
-        today = timezone.now()     
+        today = self.get_today()
         allocations = Allocation.objects.get_today_allocations(today)
         return allocations
 
     def get_context_data(self, **kwargs):
         context = super(TodayAllocationView, self).get_context_data(**kwargs)
         today = self.get_today()
+        people = Person.objects.all()
         """ Preparazione filtri successivi. """
         locations = Location.objects.all() 
         context['today'] = today
         context['locations'] = locations
+        context['people'] = people
         return context
 
 

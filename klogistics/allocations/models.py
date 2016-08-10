@@ -1,9 +1,7 @@
 from __future__ import unicode_literals
-
 import datetime
 
 from django.db import models
-from django.core.urlresolvers import reverse
 
 from people.models import Person
 
@@ -15,8 +13,9 @@ class AllocationManager(models.QuerySet):
         allocations = self.filter(start_date__range=[start_date, end_date])
         return allocations
 
+    # Estrae tutte le allocazioni, per tutte le risorse, in un determinato giorno
     def get_today_allocations(self, today):
-        allocations = self.filter(start_date__lte=today).filter(end_date__gte=today)
+        allocations = self.filter(start_date__lte=today).filter(end_date__gt=today)
         return allocations
 
 

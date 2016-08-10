@@ -1,9 +1,18 @@
 from __future__ import unicode_literals
 
+from django import template
 from django.conf import settings
 from django.db import models
 
 from phonenumber_field.modelfields import PhoneNumberField
+
+
+class PersonManager(models.QuerySet):
+
+    # Estrae tutte le allocazioni, raggruppate per persona, in un determinato giorno
+    def get_people_allocations(self, day='2016-08-10'):
+        people = self.all().allocation_set.get_today_allocations(day)
+        return people
 
 
 class Person(models.Model):
@@ -34,6 +43,7 @@ class Person(models.Model):
             'id': self.id,
             'title': self.surname + ' ' + self.user.name,
         }
+        
 
 class Team(models.Model):
     """ Il gruppo di lavoro. """
