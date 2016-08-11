@@ -47,6 +47,8 @@ class SeasonAllocationView(AllocationView):
         context = super(SeasonAllocationView, self).get_context_data(**kwargs)
         context['now'] = date.today().strftime("%Y-%m-%d")
         context['season'] = self.season
+        delta = self.season.end_date - self.season.start_date
+        context['season_duration'] = delta.days + 1
         return context
 
 
