@@ -93,6 +93,16 @@
                   </li>
                 </ul>
               </li> <!-- Logistica -->
+              <li>
+                <form class="navbar-form navbar-left" method="get" action={% url 'search_day_allocation' %}>
+                  <div class="form-group">
+                    <input type="text" name="q" class="form-control" placeholder="Data aaaa-mm-gg" autofocus>
+                  </div>
+                  <button type="submit" class="btn btn-default">
+                    <i class="fa fa-search" aria-hidden="true"></i> Cerca
+                  </button>
+                </form>
+              </li> <!-- Ricerca -->
               {% endif %}
             </ul>
 
@@ -125,9 +135,22 @@
    </div>
 
     <div class="container">
-        <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
-        <br />
-        {% block content %}{% endblock content %}
+      <div class="row">
+              {% if messages %}
+          <div class="col-md-6 col-md-offset-3">
+            {% for message in messages %}
+              <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+                <div class="text-center">{{ message }}</div>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
+        <div class="col-md-12">
+          <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
+        </div>        
+      </div>
+      <br />
+      {% block content %}{% endblock content %}
     </div><!-- /.container -->
 
     <footer class="footer">

@@ -7,6 +7,11 @@ import os, json
 from unipath import Path
 
 from django.core.exceptions import ImproperlyConfigured
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 BASE_DIR = Path(__file__).ancestor(3)
 MEDIA_ROOT = BASE_DIR.child("media")

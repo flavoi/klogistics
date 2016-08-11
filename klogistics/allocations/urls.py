@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^stagione-json/([0-9]+)/$',
         view=views.allocation_season_json,
         name='season-json'),
+    url(r'^search-day-allocation/$',
+        view=views.search_day_allocation,
+        name='search_day_allocation'),
 ]
