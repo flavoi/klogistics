@@ -12,5 +12,5 @@ class ProjectAdmin(admin.ModelAdmin):
     inlines = [
         AllocationInline,
     ]
-    list_display = ('name', 'description', 'abbreviation')
+    list_display = ('name', 'description', 'color')
     exclude = ('people',)

@@ -31,7 +31,10 @@ luoghi
         {{ location.name }}
       </dt>
       <dd>{{ location.description }}</dd>
-      <dd>Abbreviazione: {{ location.abbreviation }}.</dd>   
+      <dd>
+        Colore: <span class="label" style="background-color: {{ location.color }};">
+        {{ location.get_color_display }}</span>
+      </dd>   
       <hr />       
       {% endfor %}
     </dl>
