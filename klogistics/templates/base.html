@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
     <meta name="description" content="">
     <meta name="author" content="">
     
@@ -30,114 +30,102 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css">
-    
+
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
-    <script src="{{ STATIC_URL }}js/jquery-ui.min.js"></script>
     
     {% block extrahead %}{% endblock %}
 
 </head>
 
 <body>
+  {% block navbar %}
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'today' %}">
+            KLogistics
+          </a>
+        </div>
+        <div id="navbar">
+          <ul class="nav navbar-nav">
+            {% if user.is_superuser %}
+            <li>
+              <a href="/admin">Admin</a>
+            </li> <!-- Admin -->
+            {% endif %}
 
-    <div class="container">
-    {% block navbar %}
-        <!-- Static navbar -->
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'today' %}">
-              KLogistics
-            </a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              {% if user.is_superuser %}
-              <li>
-                <a href="/admin">Admin</a>
-              </li> <!-- Admin -->
-              {% endif %}
+            {% if user.is_authenticated %}
+            <li>
+              {% now "Y" as current_year %}
+              {% now "m" as current_month %}
+              {% now "d" as current_day %}
+              <a href="{% url 'day' current_year current_month current_day %}">
+                <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Oggi
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'locations' %}">Luoghi</a>
+            </li>
+            <li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stagioni <span class="caret"></span></a>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                <li>
+                  {% for s in seasons %}
+                    <a href="{% url 'season' s.pk %}">
+                    {{ s.name|title }}
+                    {% ifequal s.state "1" %}
+                      <i class="fa fa-flag" aria-hidden="true"></i>
+                    {% endifequal %}
+                    </a>
+                  {% endfor %}
+                </li>
+              </ul>
+            </li> <!-- Logistica -->
+            <li>
+              <form class="navbar-form navbar-left" method="get" action={% url 'search_day_allocation' %}>
+                <div class="form-group">
+                  <input type="text" name="q" class="form-control" placeholder="Data aaaa-mm-gg" autofocus>
+                </div>
+                <button type="submit" class="btn btn-default">
+                  <i class="fa fa-search" aria-hidden="true"></i> Cerca
+                </button>
+              </form>
+            </li> <!-- Ricerca -->
+            {% endif %}
+          </ul>
 
-              {% if user.is_authenticated %}
-              <li>
-                {% now "Y" as current_year %}
-                {% now "m" as current_month %}
-                {% now "d" as current_day %}
-                <a href="{% url 'day' current_year current_month current_day %}">
-                  <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Oggi
-                </a>
-              </li>
-              <li>
-                <a href="{% url 'locations' %}">Luoghi</a>
-              </li>
-              <li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stagioni <span class="caret"></span></a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li>
-                    {% for s in seasons %}
-                      <a href="{% url 'season' s.pk %}">
-                      {{ s.name|title }}
-                      {% ifequal s.state "1" %}
-                        <i class="fa fa-flag" aria-hidden="true"></i>
-                      {% endifequal %}
-                      </a>
-                    {% endfor %}
-                  </li>
-                </ul>
-              </li> <!-- Logistica -->
-              <li>
-                <form class="navbar-form navbar-left" method="get" action={% url 'search_day_allocation' %}>
-                  <div class="form-group">
-                    <input type="text" name="q" class="form-control" placeholder="Data aaaa-mm-gg" autofocus>
-                  </div>
-                  <button type="submit" class="btn btn-default">
-                    <i class="fa fa-search" aria-hidden="true"></i> Cerca
-                  </button>
-                </form>
-              </li> <!-- Ricerca -->
-              {% endif %}
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-              {% if user.is_authenticated %}
-              <li>
-                <div class="dropdown">
-                  <button class="btn btn-default dropdown-toggle navbar-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <ul class="nav navbar-nav navbar-right">
+            {% if user.is_authenticated %}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-user" aria-hidden="true"></i>
                     Hey,  {{ user.name }}!
                     <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li><a href="{% url 'pwchange' %}">Modifica password</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                      <a href="{% url 'logout' %}">
-                      <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </li> <!-- User -->
-              {% endif %}
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </nav>
-   {% endblock navbar %}
-   </div>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                  <li><a href="{% url 'pwchange' %}">Modifica password</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li>
+                    <a href="{% url 'logout' %}">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                    </a>
+                  </li>
+                </ul>
+            </li> <!-- User -->
+            {% endif %}
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div><!--/.container-fluid -->
+    </nav>
+ {% endblock navbar %}
 
     <div class="container">
+      <div class="page-header">
       <div class="row">
-              {% if messages %}
-          <div class="col-md-6 col-md-offset-3">
+        {% if messages %}
+          <div class="col-xs-6 col-xs-offset-3">
             {% for message in messages %}
               <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
                 <div class="text-center">{{ message }}</div>
@@ -145,11 +133,11 @@
             {% endfor %}
           </div>
         {% endif %}
-        <div class="col-md-12">
+        <div class="col-xs-12">
           <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
         </div>        
       </div>
-      <br />
+      </div><!-- page header -->
       {% block content %}{% endblock content %}
     </div><!-- /.container -->
 

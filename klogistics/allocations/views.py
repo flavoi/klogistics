@@ -126,7 +126,7 @@ def search_day_allocation(request):
             message = 'Imposta un criterio di ricerca diverso da vuoto :-)'
             messages.add_message(request, messages.WARNING, message)
         else:
-            message = 'Ricerca fallita, assicurati di formattare la data come riportato nella casella.'
+            message = 'Ricerca fallita: assicurati di riportare la data come nella casella.'
             messages.add_message(request, messages.ERROR, message)
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
     year = date.strftime('%Y')
