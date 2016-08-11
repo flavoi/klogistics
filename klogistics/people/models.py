@@ -37,6 +37,7 @@ class Person(models.Model):
 
     class Meta:
         ordering = ['surname']
+        verbose_name_plural = 'people'
 
     def as_dict(self): # integration with fullcalendar
         return {

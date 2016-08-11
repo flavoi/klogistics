@@ -27,7 +27,8 @@ class Location(models.Model):
         (u'green', u'verde'),
         (u'orange', u'arancio'),
         (u'red', u'rosso'),
-        (u'#3a87ad', u'azure'),
+        (u'#3a87ad', u'azzurro'),
+        (u'hotpink', u'rosa'),
     )
     color = models.CharField(max_length=30, choices=COLOR_CHOICES, default='azure')
     people = models.ManyToManyField(Person, through='Allocation')
