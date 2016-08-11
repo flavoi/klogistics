@@ -50,8 +50,8 @@ class Allocation(models.Model):
 
     def as_dict(self): # integration with fullcalendar
         return {
-            'id': self.id,
-            'resourceId': self.person.pk,
+            'id': str(self.id),
+            'resourceId': str(self.person.pk),
             'start': self.start_date.strftime("%Y-%m-%d"),
             'end': self.end_date.strftime("%Y-%m-%d"),
             'title': self.location.name,

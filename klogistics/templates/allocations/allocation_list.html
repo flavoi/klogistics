@@ -12,7 +12,7 @@
 
         $('#calendar').fullCalendar({
             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-            defaultDate: '{{ season.start_date|date:"%Y-%m-%d" }}',
+            defaultDate: '{{ season.start_date|date:"Y-m-d" }}',
             now: '{{ now }}',
             contentHeight: 'auto',
             editable: false, // enable draggable events
