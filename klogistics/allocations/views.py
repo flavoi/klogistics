@@ -103,7 +103,9 @@ class LocationDayAllocationView(DayAllocationView):
         today = self.get_today()
         location = self.args[3]
         allocations = Allocation.objects.get_today_allocations(today)
+        print location
         allocations = allocations.filter(location__name=location)
+        print allocations
         return allocations
 
     def get_context_data(self, **kwargs):
