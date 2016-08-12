@@ -54,9 +54,9 @@ class SeasonAllocationView(AllocationView):
 
 @method_decorator(open_period_only, name='dispatch')
 class TodayAllocationView(AllocationView):
-    """ Visualizza la logistica del giorno solare. """
+    """ Visualizza la logistica del giorno. """
     template_name = 'allocations/allocation_today.html'
-    context_object_name = 'today_allocations'
+    context_object_name = 'people'
 
     def get_today(self):
         today = date.today()
@@ -65,17 +65,16 @@ class TodayAllocationView(AllocationView):
     def get_queryset(self):
         today = self.get_today()
         allocations = Allocation.objects.get_today_allocations(today)
-        return allocations
+        people = Person.objects.filter(allocation__in = allocations)
+        return people
 
     def get_context_data(self, **kwargs):
         context = super(TodayAllocationView, self).get_context_data(**kwargs)
         today = self.get_today()
-        people = Person.objects.all()
         """ Preparazione filtri successivi. """
         locations = Location.objects.all() 
         context['today'] = today
         context['locations'] = locations
-        context['people'] = people
         return context
 
 
@@ -93,7 +92,8 @@ class DayAllocationView(TodayAllocationView):
     def get_queryset(self):
         today = self.get_today()
         allocations = Allocation.objects.get_today_allocations(today)
-        return allocations
+        people = Person.objects.filter(allocation__in = allocations)
+        return people
 
 
 class LocationDayAllocationView(DayAllocationView):
@@ -103,10 +103,9 @@ class LocationDayAllocationView(DayAllocationView):
         today = self.get_today()
         location = self.args[3]
         allocations = Allocation.objects.get_today_allocations(today)
-        print location
         allocations = allocations.filter(location__name=location)
-        print allocations
-        return allocations
+        people = Person.objects.filter(allocation__in = allocations)
+        return people
 
     def get_context_data(self, **kwargs):
         context = super(LocationDayAllocationView, self).get_context_data(**kwargs)
