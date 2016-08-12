@@ -2,21 +2,18 @@ import json
 from datetime import date, datetime
 
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+from django.http import JsonResponse, HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from django.views.generic import ListView, DetailView, TemplateView
+from django.views.generic import ListView
 from django.utils.decorators import method_decorator
-from django.utils import timezone
 from django.contrib import messages
-from django.db.models import Count
 
 from braces.views import LoginRequiredMixin
 
-from .models import Location, Allocation
 from people.models import Person
 from seasons.decorators import open_period_only
 from seasons.models import Season
-
+from .models import Location, Allocation
 
 @open_period_only
 def allocation_season_json(request, season):
@@ -30,7 +27,7 @@ def allocation_season_json(request, season):
 
 @method_decorator(open_period_only, name='dispatch')
 class AllocationView(LoginRequiredMixin, ListView):
-    """ Visualizza una specifica allocazione. """
+    """ Espone la lista di allocazioni. """
     model = Allocation
 
 
@@ -51,63 +48,6 @@ class SeasonAllocationView(AllocationView):
         delta = self.season.end_date - self.season.start_date
         context['season_duration'] = delta.days + 1
         return context
-
-
-@method_decorator(open_period_only, name='dispatch')
-class TodayAllocationView(AllocationView):
-    """ Visualizza la logistica del giorno. """
-    template_name = 'allocations/allocation_today.html'
-    context_object_name = 'people'
-
-    def get_today(self):
-        today = date.today()
-        return today
-
-    def get_queryset(self):
-        today = self.get_today()
-        people = Person.objects.all()
-        return people
-
-    def get_context_data(self, **kwargs):
-        context = super(TodayAllocationView, self).get_context_data(**kwargs)
-        today = self.get_today()
-        """ Preparazione dei filtri. """
-        allocations = Allocation.objects.get_today_allocations(today)
-        locations = Location.objects.filter(allocation__in=allocations)
-        locations = locations.annotate(num_allocations=Count('allocation'))
-        context['today'] = today
-        context['locations'] = locations
-        return context
-
-
-@method_decorator(open_period_only, name='dispatch')
-class DayAllocationView(TodayAllocationView):
-    """ Visualizza la logistica del giorno specificato. """
-
-    def get_today(self):
-        year = int(self.args[0])
-        month = int(self.args[1])
-        day = int(self.args[2])
-        today = date(year, month, day)
-        return today
-
-
-class LocationDayAllocationView(DayAllocationView):
-    """ Filtra la logistica del giorno per uno specifico luogo. """
-
-    def get_queryset(self):
-        queryset = super(LocationDayAllocationView, self).get_queryset()
-        location = self.args[3]
-        allocations = Allocation.objects.get_today_allocations(self.get_today())
-        allocations = allocations.filter(location__name = location)
-        people = queryset.filter(allocation__in = allocations)
-        return people
-
-    def get_context_data(self, **kwargs):
-        context = super(LocationDayAllocationView, self).get_context_data(**kwargs)
-        context['nav_active'] = self.args[3]
-        return context
-
 
 class LocationView(LoginRequiredMixin, ListView):
     """ Restituisce la lista dei luoghi censiti a sistema. """

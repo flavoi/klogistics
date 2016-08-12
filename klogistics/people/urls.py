@@ -10,4 +10,13 @@ urlpatterns = [
     url(r'^logout/$', view=djlogout, name='logout'),
     url(r'^cambio-password/$', view=djpwchange, name='pwchange'),
     url(r'^persone-json/$', view=views.people_json, name='ppljson'),
+    url(r'^$',
+        view=views.TodayPersonView.as_view(),
+        name='today'),
+    url(r'^([0-9]{4})/([0-9]{2})/([0-9]+)/$',
+        view=views.DayPersonView.as_view(),
+        name='day'),
+    url(r'^([0-9]{4})/([0-9]{2})/([0-9]+)/([-\w\d]+)/$',
+        view=views.LocationDayPersonView.as_view(),
+        name='location-day'),
 ]
