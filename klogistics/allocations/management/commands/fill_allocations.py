@@ -24,12 +24,16 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         people = Person.objects.all()
-        print "Pulisco allocazioni correnti."
-        Allocation.objects.all().delete()
-        print "Allocazioni cancellate."
         if options['delete']:
+            print "Cancello tutte le allocazioni."
+            Allocation.objects.all().delete()
+            print "Allocazioni cancellate."
             return
-        season = Season.objects.get_open_season()
+        else:
+            print "Pulisco allocazioni della stagione."
+            season = Season.objects.get_open_season()
+            Allocation.objects.get_season_allocations(season.start_date, season.end_date).delete()
+            print "Stagione ripulita."
         delta = season.end_date - season.start_date
         for p in people: 
             i = 1

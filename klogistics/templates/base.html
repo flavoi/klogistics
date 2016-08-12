@@ -12,14 +12,14 @@
     
     <title>klogistics &raquo; {% block title %}{% endblock %}</title>
     
-    <!-- Fort Awesome Kit --> 
-    <script src="https://use.fortawesome.com/ebffd7c6.js"></script>
-
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ STATIC_URL }}img/kl-logo.ico" />
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    
+    <!-- Klogistics core CSS -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css"> 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -31,17 +31,15 @@
     <!-- JQuery -->
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
     
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css">
-    
     {% block extrahead %}{% endblock %}
 
 </head>
 
 <body>
+<div class="container">
   {% block navbar %}
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -53,7 +51,7 @@
             KLogistics
           </a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             {% if user.is_superuser %}
             <li>
@@ -125,42 +123,43 @@
         </div><!--/.nav-collapse -->
       </div><!--/.container-fluid -->
     </nav>
+
  {% endblock navbar %}
-
-    <div class="container">
-      <div class="page-header">
-      <div class="row">
-        {% if messages %}
-          <div class="col-xs-6 col-xs-offset-3">
-            {% for message in messages %}
-              <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
-                <div class="text-center">{{ message }}</div>
-              </div>
-            {% endfor %}
+  <div class="page-header">
+  <div class="row">
+    {% if messages %}
+      <div class="col-xs-6 col-xs-offset-3">
+        {% for message in messages %}
+          <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+            <div class="text-center">{{ message }}</div>
           </div>
-        {% endif %}
-        <div class="col-xs-12">
-          <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
-        </div>        
+        {% endfor %}
       </div>
-      </div><!-- page header -->
-      {% block content %}{% endblock content %}
-    </div><!-- /.container -->
+    {% endif %}
+    <div class="col-xs-12">
+      <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
+    </div>        
+  </div>
+  </div><!-- page header -->
+  {% block content %}{% endblock content %}
+</div><!-- /.container -->
 
-    <footer class="footer">
-      <div class="container">
-        <hr />
-        <p class="text-muted">
-          <i class="fa fa-creative-commons" aria-hidden="true"></i>
-          {{ signature }}
-        </p>
-      </div>
-    </footer>
+  <footer class="footer">
+    <div class="container">
+      <hr />
+      <p class="text-muted">
+        <i class="fa fa-creative-commons" aria-hidden="true"></i>
+        {{ signature }}
+      </p>
+    </div>
+  </footer>
 
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    
-    {% block extrascript %}{% endblock extrascript %}
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Fort Awesome Kit --> 
+  <script src="https://use.fortawesome.com/ebffd7c6.js"></script>
+
+  {% block extrascript %}{% endblock extrascript %}
 
 </body>
 
