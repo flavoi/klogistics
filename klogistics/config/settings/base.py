@@ -18,6 +18,8 @@ MEDIA_ROOT = BASE_DIR.child("media")
 STATIC_ROOT = BASE_DIR.child("static")
 STATICFILES_DIRS = ()
 
+LOGIN_URL = '/login/'
+
 DEBUG = None
 
 # Quick-start development settings - unsuitable for production
