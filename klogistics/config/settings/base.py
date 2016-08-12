@@ -19,6 +19,7 @@ STATIC_ROOT = BASE_DIR.child("static")
 STATICFILES_DIRS = ()
 
 LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
 
 DEBUG = None
 
