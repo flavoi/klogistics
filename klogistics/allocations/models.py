@@ -31,7 +31,7 @@ class Location(models.Model):
         (u'hotpink', u'rosa'),
     )
     color = models.CharField(max_length=30, choices=COLOR_CHOICES, default='azure')
-    people = models.ManyToManyField(Person, through='Allocation')
+    people = models.ManyToManyField(Person, through='Allocation', related_name='people')
 
     def __str__(self):              # __unicode__ on Python 2
         return self.name

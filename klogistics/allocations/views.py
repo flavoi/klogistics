@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, TemplateView
 from django.utils.decorators import method_decorator
 from django.utils import timezone
 from django.contrib import messages
+from django.db.models import Count
 
 from braces.views import LoginRequiredMixin
 
@@ -64,15 +65,16 @@ class TodayAllocationView(AllocationView):
 
     def get_queryset(self):
         today = self.get_today()
-        allocations = Allocation.objects.get_today_allocations(today)
-        people = Person.objects.filter(allocation__in = allocations)
+        people = Person.objects.all()
         return people
 
     def get_context_data(self, **kwargs):
         context = super(TodayAllocationView, self).get_context_data(**kwargs)
         today = self.get_today()
-        """ Preparazione filtri successivi. """
-        locations = Location.objects.all() 
+        """ Preparazione dei filtri. """
+        allocations = Allocation.objects.get_today_allocations(today)
+        locations = Location.objects.filter(allocation__in=allocations)
+        locations = locations.annotate(num_allocations=Count('allocation'))
         context['today'] = today
         context['locations'] = locations
         return context
@@ -96,7 +98,9 @@ class LocationDayAllocationView(DayAllocationView):
     def get_queryset(self):
         queryset = super(LocationDayAllocationView, self).get_queryset()
         location = self.args[3]
-        people = queryset.filter(allocation__location__name = location)
+        allocations = Allocation.objects.get_today_allocations(self.get_today())
+        allocations = allocations.filter(location__name = location)
+        people = queryset.filter(allocation__in = allocations)
         return people
 
     def get_context_data(self, **kwargs):
