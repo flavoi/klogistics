@@ -89,22 +89,14 @@ class DayAllocationView(TodayAllocationView):
         today = date(year, month, day)
         return today
 
-    def get_queryset(self):
-        today = self.get_today()
-        allocations = Allocation.objects.get_today_allocations(today)
-        people = Person.objects.filter(allocation__in = allocations)
-        return people
-
 
 class LocationDayAllocationView(DayAllocationView):
     """ Filtra la logistica del giorno per uno specifico luogo. """
 
     def get_queryset(self):
-        today = self.get_today()
+        queryset = super(LocationDayAllocationView, self).get_queryset()
         location = self.args[3]
-        allocations = Allocation.objects.get_today_allocations(today)
-        allocations = allocations.filter(location__name=location)
-        people = Person.objects.filter(allocation__in = allocations)
+        people = queryset.filter(allocation__location__name = location)
         return people
 
     def get_context_data(self, **kwargs):
