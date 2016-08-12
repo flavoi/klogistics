@@ -1,12 +1,9 @@
-{% extends "base.html" %}
+{% extends "registration/base_registration.html" %}
 
-{% block content %}
-    <div class="row">
-      <div class="col-xs-6 col-xs-offset-3">
-        <div class="alert alert-success" role="alert">
-            <strong>Uscita completata!</strong>
-            Ora puoi lasciare la pagina o riconnetterti <a href="{% url 'today' %}">qui.</a>
-        </div>
-      </div>
-    </div>
-{% endblock %}
+{% block outcome %}
+    Uscita completata!
+{% endblock outcome %}
+
+{% block followup %}
+    Ora puoi lasciare la pagina o riconnetterti <a href="{% url 'today' %}">qui.</a>
+{% endblock followup %}
