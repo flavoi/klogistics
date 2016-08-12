@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load people_extras %}
+
+{% block title %}
+  {{ today }}
+{% endblock title %}
+
+{% block heading %}
+  Logistica del giorno {{ today }}
+{% endblock heading %}
+
+{% block content %}
+
+  <ul class="nav nav-pills">
+    <li role="presentation" class="disabled"><a href="#"><i class="fa fa-filter" aria-hidden="true"></i> Filtri:</a></li>
+    {% for location in locations %}
+      <li role="presentation" class="{% ifequal nav_active location.name %}active{% endifequal %}">
+        <a href="{% url 'location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}">
+          {{ location.name }} <span class="badge">{{ location.num_allocations }}</span>
+        </a>
+      </li>
+    {% endfor %}
+    <li role="presentation" class="pull-right">
+      <a href="{% url 'day' today|date:"Y" today|date:"m" today|date:"d" %}">
+        <i class="fa fa-eraser" aria-hidden="true"></i> Pulisci filtri
+      </a>
+    </li>
+  </ul>
+
+  <hr />
+
+<div class="row">
+  {% for person in people %}
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="panel panel-default plain profile-panel">
+        <div class="panel-heading white-content p-left p-right">
+        </div>
+        <div class="panel-body">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="profile-avatar">
+                    <img class="img-responsive" src="{{ person.avatar }}" alt="profile picture" height="84" width="84">
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12">
+                <p class="lead">
+                    {{ person.user.name }} {{ person.surname }} 
+                    <br />
+                    {% for allocation in person.allocation_set.all|people_allocation_day:today %}
+                      <span class="label" style="background-color: {{ allocation.location.color }};">
+                        {{ allocation.location }}
+                      </span> &nbsp;
+                      {% empty %}
+                      <span class="label label-default">N/D</span>
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        <div class="panel-footer white-content">
+            <ul class="fa-ul">
+                <li><i class="fa fa-suitcase fa-li" aria-hidden="true"></i> 
+                {{ person.get_rank_display|capfirst }} </li>
+                <li><i class="fa fa-street-view fa-li" aria-hidden="true"></i> 
+                {{ person.office }}</li>
+                <li><i class="fa fa-envelope fa-li " aria-hidden="true"></i> 
+                {{ person.user.email }}</li>
+                <li><i class="fa fa-phone fa-li " aria-hidden="true"></i> 
+                {{ person.mobile_phone }}
+            </ul>
+        </div>
+    </div>
+    </div>
+  {% endfor %}
+</div> <!-- grid row -->
+{% endblock content %}
