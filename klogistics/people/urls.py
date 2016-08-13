@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^([0-9]{4})/([0-9]{2})/([0-9]+)/([-\w\d]+)/$',
         view=views.LocationDayPersonView.as_view(),
         name='location-day'),
+    url(r'^ricerca/$',
+        view=views.search_day_allocation,
+        name='search_day_allocation'),
 ]

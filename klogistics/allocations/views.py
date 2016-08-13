@@ -1,9 +1,8 @@
 import json
-from datetime import date, datetime
+from datetime import date
 
 from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.http import JsonResponse
 from django.views.generic import ListView
 from django.utils.decorators import method_decorator
 from django.contrib import messages
@@ -53,22 +52,3 @@ class LocationView(LoginRequiredMixin, ListView):
     """ Restituisce la lista dei luoghi censiti a sistema. """
     model = Location
     context_object_name = 'locations'
-
-
-@open_period_only
-def search_day_allocation(request):
-    date = request.GET.get('q')
-    try:
-        date = datetime.strptime(date, '%Y-%m-%d').date()
-    except ValueError:
-        if date == '':
-            message = 'Imposta un criterio di ricerca diverso da vuoto :-)'
-            messages.add_message(request, messages.WARNING, message)
-        else:
-            message = 'Ricerca fallita: assicurati di riportare la data come nella casella.'
-            messages.add_message(request, messages.ERROR, message)
-        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    year = date.strftime('%Y')
-    month = date.strftime('%m')
-    day = date.strftime('%d')
-    return HttpResponseRedirect(reverse('day', args=(year,month,day,)))

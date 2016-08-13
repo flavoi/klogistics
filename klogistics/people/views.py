@@ -1,9 +1,12 @@
-from datetime import date
+from datetime import date, datetime
 
 from django.http import JsonResponse
 from django.db.models import Count
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 from braces.views import LoginRequiredMixin
 
@@ -11,11 +14,32 @@ from seasons.decorators import open_period_only
 from allocations.models import Location, Allocation
 from .models import Person
 
+
 def people_json(request):
     """ Restituisce l'elenco delle persone in formato json. """
     people = Person.objects.all()
     people = [ obj.as_dict() for obj in people ]
     return JsonResponse(people, safe=False)
+
+
+@open_period_only
+def search_day_allocation(request):
+    """ Ricerca la logistica del giorno specificato. """
+    date = request.GET.get('q')
+    try:
+        date = datetime.strptime(date, '%Y-%m-%d').date()
+    except ValueError:
+        if date == '':
+            message = 'Imposta un criterio di ricerca diverso da vuoto :-)'
+            messages.add_message(request, messages.WARNING, message)
+        else:
+            message = 'Ricerca fallita: assicurati di riportare la data come nella casella.'
+            messages.add_message(request, messages.ERROR, message)
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    year = date.strftime('%Y')
+    month = date.strftime('%m')
+    day = date.strftime('%d')
+    return HttpResponseRedirect(reverse('day', args=(year,month,day,)))
 
 
 @method_decorator(open_period_only, name='dispatch')
