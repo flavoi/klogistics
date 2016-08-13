@@ -15,13 +15,13 @@
     <li role="presentation" class="disabled"><a href="#"><i class="fa fa-filter" aria-hidden="true"></i> Filtri:</a></li>
     {% for location in locations %}
       <li role="presentation" class="{% ifequal nav_active location.name %}active{% endifequal %}">
-        <a href="{% url 'location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}">
+        <a href="{% url 'people:location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}">
           {{ location.name }} <span class="badge">{{ location.num_allocations }}</span>
         </a>
       </li>
     {% endfor %}
     <li role="presentation" class="pull-right">
-      <a href="{% url 'day' today|date:"Y" today|date:"m" today|date:"d" %}">
+      <a href="{% url 'people:day' today|date:"Y" today|date:"m" today|date:"d" %}">
         <i class="fa fa-eraser" aria-hidden="true"></i> Pulisci filtri
       </a>
     </li>

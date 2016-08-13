@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 import datetime
 
 from django.db import models
+from django.core.urlresolvers import reverse
 
 from people.models import Person
 
@@ -39,11 +40,11 @@ class Location(models.Model):
 
 class Allocation(models.Model):
     """ Schedulazione giornaliera della risorsa. """
-    location = models.ForeignKey(Location, on_delete=models.CASCADE)
-    person = models.ForeignKey(Person, on_delete=models.CASCADE)
-    start_date = models.DateField()
-    end_date = models.DateField()
-    comment = models.TextField(blank=True)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name='luogo')
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, verbose_name='persona')
+    start_date = models.DateField(verbose_name='data inizio')
+    end_date = models.DateField(verbose_name='data fine')
+    comment = models.TextField(blank=True, verbose_name='commento')
 
     def __str__(self):              # __unicode__ on Python 2
         return "%s-%s-%s-%s" % (str(self.start_date), str(self.end_date), self.person, self.location)
@@ -57,4 +58,8 @@ class Allocation(models.Model):
             'title': self.location.name,
             'color': self.location.color,
         }
+
     objects = AllocationManager.as_manager()
+
+    def get_absolute_url(self):
+        return reverse("allocations:detail", kwargs={"pk": self.pk})

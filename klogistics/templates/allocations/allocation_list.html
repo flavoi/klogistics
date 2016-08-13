@@ -31,7 +31,7 @@
             resourceLabelText: 'Persone',
             resourceAreaWidth: '20%',
             resources: {
-                url: '{% url 'ppljson' %}',
+                url: '{% url 'people:ppljson' %}',
                 error: function() {
                     $('#script-warning').show();
                 }
@@ -40,7 +40,7 @@
                 days:1,
             },
             events: {
-                url: '{% url 'season-json' season.pk %}',
+                url: '{% url 'allocations:season-json' season.pk %}',
                 error: function() {
                     $('#script-warning').show();
                 }
@@ -48,22 +48,43 @@
         });
     
     });
-
 </script>
-
-{% endblock %}
+<script src="http://malsup.github.com/jquery.form.js"></script>
+<script>
+$('#myModal').on('show.bs.modal', function (event) {
+    var modal = $(this)
+    $.ajax({
+        url: "{% url 'allocations:create' %}",
+        context: document.body
+    }).done(function(response) {
+        modal.html(response);
+    });
+})
+</script>
+{% endblock extrahead %}
 
 {% block title %}
   {{ season.name }}
 {% endblock title %}
 
 {% block heading %}
-  {{ season.name|title }}: {{ season.start_date }} - {{ season.end_date }}
+    {{ season.name|title }}: {{ season.start_date }} - {{ season.end_date }}
+    <p>
+        <a class="btn btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
+            Registra la tua logistica
+        </a>
+    </p>
 {% endblock heading %}
 
 {% block content %}
-  <div id='calendar'></div>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content" id="myModalContent">
+        </div>
+      </div>
+    </div>
+    
+    <!-- Calendar -->
+    <div id='calendar'></div>
 {% endblock content %}
-
-{% block extrascript %}
-{% endblock extrascript %}

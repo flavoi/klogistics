@@ -51,6 +51,7 @@ PROJECT_APPS = [
 ADDONS = [
     'authtools',
     'storages',
+    'widget_tweaks',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ADDONS

@@ -39,7 +39,7 @@ def search_day_allocation(request):
     year = date.strftime('%Y')
     month = date.strftime('%m')
     day = date.strftime('%d')
-    return HttpResponseRedirect(reverse('day', args=(year,month,day,)))
+    return HttpResponseRedirect(reverse('people:day', args=(year,month,day,)))
 
 
 @method_decorator(open_period_only, name='dispatch')
