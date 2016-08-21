@@ -30,6 +30,20 @@
 
     <!-- JQuery -->
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+
+    <!-- Modal assets -->
+    <script src="http://malsup.github.com/jquery.form.js"></script>
+    <script>
+      $('#myModal').on('show.bs.modal', function (event) {
+          var modal = $(this)
+          $.ajax({
+              url: "{% url 'allocations:create' %}",
+              context: document.body
+          }).done(function(response) {
+              modal.html(response);
+          });
+      })
+    </script>
     
     {% block extrahead %}{% endblock %}
 
@@ -97,6 +111,13 @@
                 </button>
               </form>
             </li> <!-- Ricerca -->
+            <li>
+            <p class="navbar-btn">
+              <a class="btn btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
+                  Compila
+              </a> <!-- Compila -->
+            </p>
+            </li>
             {% endif %}
           </ul>
 
@@ -126,21 +147,30 @@
 
  {% endblock navbar %}
   <div class="page-header" style="border-bottom: 0;">
-  <div class="row">
-    {% if messages %}
-      <div class="col-xs-6 col-xs-offset-3">
-        {% for message in messages %}
-          <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
-            <div class="text-center">{{ message }}</div>
-          </div>
-        {% endfor %}
-      </div>
-    {% endif %}
-    <div class="col-xs-12">
-      <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
-    </div>        
-  </div>
+    <div class="row">
+      {% if messages %}
+        <div class="col-xs-6 col-xs-offset-3">
+          {% for message in messages %}
+            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
+              <div class="text-center">{{ message }}</div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+      <div class="col-xs-12">
+        <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
+      </div>        
+    </div>
   </div><!-- page header -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" id="myModalContent">
+      </div>
+    </div>
+  </div>
+
   {% block content %}{% endblock content %}
 </div><!-- /.container -->
 

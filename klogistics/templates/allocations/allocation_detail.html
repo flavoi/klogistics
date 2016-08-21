@@ -1,0 +1,23 @@
+{% extends "base_modal.html" %}
+
+{% block modal_title %}
+    Riepilogo
+{% endblock modal_title %}
+
+{% block modal_body %}
+    <h4>Contenuti registrati:</h4>
+    <div class="list-group">
+      <a href="#" class="list-group-item active"><strong>Persona:</strong> {{ allocation.person }} </a>
+      <a href="#" class="list-group-item"><strong>Allocazione:</strong> {{ allocation.location }} </a>
+      <a href="#" class="list-group-item"><strong>Data inizio:</strong> {{ allocation.end_date }}</a>
+      <a href="#" class="list-group-item"><strong>Data fine:</strong> {{ allocation.start_date }}</a>
+    </div>
+{% endblock modal_body %}
+
+{% block modal_extra_script %}
+    <script>
+        $('#myModal').on('hidden.bs.modal', function () {
+            window.location.reload(true);
+        })
+    </script>
+ {% endblock modal_extra_script %}

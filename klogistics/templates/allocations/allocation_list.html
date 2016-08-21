@@ -49,18 +49,6 @@
     
     });
 </script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script>
-$('#myModal').on('show.bs.modal', function (event) {
-    var modal = $(this)
-    $.ajax({
-        url: "{% url 'allocations:create' %}",
-        context: document.body
-    }).done(function(response) {
-        modal.html(response);
-    });
-})
-</script>
 {% endblock extrahead %}
 
 {% block title %}
@@ -69,22 +57,9 @@ $('#myModal').on('show.bs.modal', function (event) {
 
 {% block heading %}
     {{ season.name|title }}: {{ season.start_date }} - {{ season.end_date }}
-    <p>
-        <a class="btn btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
-            Registra la tua logistica
-        </a>
-    </p>
 {% endblock heading %}
 
-{% block content %}
-    <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content" id="myModalContent">
-        </div>
-      </div>
-    </div>
-    
+{% block content %}    
     <!-- Calendar -->
     <div id='calendar'></div>
 {% endblock content %}

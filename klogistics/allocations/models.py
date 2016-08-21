@@ -49,7 +49,7 @@ class Allocation(models.Model):
     def __str__(self):              # __unicode__ on Python 2
         return "%s-%s-%s-%s" % (str(self.start_date), str(self.end_date), self.person, self.location)
 
-    def as_dict(self): # integration with fullcalendar
+    def as_dict(self): # integrazione con fullcalendar
         return {
             'id': str(self.id),
             'resourceId': str(self.person.pk),

@@ -1,0 +1,42 @@
+{% extends "base_modal.html" %}
+
+{% load i18n widget_tweaks %}
+{% block modal_action %}
+    action="{% url 'allocations:create' %}" id="allocations-create"
+{% endblock modal_action %}
+
+{% block modal_title %}
+    Compila nuova logistica
+{% endblock modal_title %}
+
+{% block modal_body %}
+    {% for field in form %}
+    <fieldset class="form-group {% if field.errors %}has-warning{% endif %}">
+        {% if field.errors %}
+            <div class="alert alert-warning" role="alert">
+                {{ field.errors|striptags }}
+            </div>
+        {% endif %}
+        <label class="col-sm-4 control-label">
+            {{ field.label_tag }}
+        </label>
+        <div class="col-sm-8">
+            {{ field|attr:"class:form-control" }}
+            {% if field.help_text %}
+                <span id="helpBlock" class="help-block">{{ field.help_text|safe }}</span>
+            {% endif %}
+        </div>
+    </fieldset>
+{% endfor %}
+{% endblock modal_body %}
+
+{% block modal_footer %}
+    <input type="submit" class="btn btn-primary" value="Salva modifiche" />
+{% endblock %}
+
+{% block modal_extra_script %}
+    <script>
+        var form_options = { target: '#myModalContent', success: function(response) {} };
+        $('#allocations-create').ajaxForm(form_options);
+    </script>
+{% endblock modal_extra_script %}
