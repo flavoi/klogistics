@@ -31,7 +31,7 @@
     <!-- JQuery -->
     <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
 
-    <!-- Modal assets -->
+    <!-- Modal JS -->
     <script src="http://malsup.github.com/jquery.form.js"></script>
     <script>
       $('#myModal').on('show.bs.modal', function (event) {
@@ -62,7 +62,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="{% url 'people:today' %}">
-            KLogistics
+            <img alt="Brand" width="30" height="20" src="{{ STATIC_URL }}img/kl-logo.png">
           </a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
@@ -74,31 +74,23 @@
             {% endif %}
 
             {% if user.is_authenticated %}
-            <li>
-              {% now "Y" as current_year %}
-              {% now "m" as current_month %}
-              {% now "d" as current_day %}
-              <a href="{% url 'people:day' current_year current_month current_day %}">
-                <i class="fa fa-calendar-check-o" aria-hidden="true"></i> Oggi
-              </a>
-            </li>
-            <li>
-              <a href="{% url 'allocations:locations' %}">Luoghi</a>
-            </li>
-            <li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Stagioni <span class="caret"></span></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistica <span class="caret"></span></a>
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                 <li>
-                  {% for s in seasons %}
+                  <a href="{% url 'allocations:locations' %}">Luoghi</a>
+                </li>
+                <li role="separator" class="divider"></li>
+                {% for s in seasons %}
+                  <li>
                     <a href="{% url 'allocations:season' s.pk %}">
                     {{ s.name|title }}
                     {% ifequal s.state "1" %}
                       <i class="fa fa-flag" aria-hidden="true"></i>
                     {% endifequal %}
                     </a>
-                  {% endfor %}
-                </li>
+                  </li>
+                {% endfor %}
               </ul>
             </li> <!-- Logistica -->
             <li>
@@ -107,16 +99,16 @@
                   <input type="text" name="q" class="form-control" placeholder="Data aaaa-mm-gg">
                 </div>
                 <button type="submit" class="btn btn-default">
-                  <i class="fa fa-search" aria-hidden="true"></i> Cerca
+                  <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
               </form>
             </li> <!-- Ricerca -->
             <li>
-            <p class="navbar-btn">
-              <a class="btn btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
-                  Compila
-              </a> <!-- Compila -->
-            </p>
+              <p class="navbar-btn">
+                <a class="btn btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
+                    Compila
+                </a> <!-- Compila nuova logistica -->
+              </p>
             </li>
             {% endif %}
           </ul>
