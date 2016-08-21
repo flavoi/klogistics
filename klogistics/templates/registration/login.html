@@ -36,18 +36,18 @@
         {% endif %}
         {% csrf_token %}
         <div class="input-group" style="margin-bottom:5px;">
+          <input type="text" class="form-control" placeholder="username" name="username" aria-describedby="basic-addon1" autofocus>
           <span class="input-group-addon" id="basic-addon1">
             <i class="fa fa-envelope-o" aria-hidden="true"></i>
           </span>
-          <input type="text" class="form-control" placeholder="username" name="username" aria-describedby="basic-addon1" required autofocus>
         </div>
         <div class="input-group" style="margin-bottom:10px;">
+          <input type="password" class="form-control" placeholder="password" name="password" aria-describedby="basic-addon2">
           <span class="input-group-addon" id="basic-addon2">
             <i class="fa fa-key" aria-hidden="true"></i>
           </span>
-          <input type="password" class="form-control" placeholder="password" name="password" aria-describedby="basic-addon2" required>
         </div>
-        <button class="btn btn-lg btn-default btn-block" type="submit">Login</button>
+        <button class="btn btn-block btn-primary btn-fill" type="submit">Login</button>
         <input type="hidden" name="next" value="{{ next }}" />
       </form>
     </div> <!-- grid colum -->

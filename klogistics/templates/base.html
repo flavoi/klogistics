@@ -2,158 +2,147 @@
 <html lang="it">
 
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    
-    <title>klogistics &raquo; {% block title %}{% endblock %}</title>
-    
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="{{ STATIC_URL }}img/kl-logo.ico" />
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  
+  <title>klogistics &raquo; {% block title %}{% endblock %}</title>
+  
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{ STATIC_URL }}img/kl-logo.ico" />
 
-    <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
-    <!-- Klogistics core CSS -->
-    <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css"> 
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap/bootstrap.css" />
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <!-- Get Shit Done Kit CSS -->
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done/gsdk.css" />
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done/demo.css" />
 
-    <!-- JQuery -->
-    <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+  <!-- Klogistics CSS -->
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css" />
 
-    <!-- Modal JS -->
-    <script src="http://malsup.github.com/jquery.form.js"></script>
-    <script>
-      $('#myModal').on('show.bs.modal', function (event) {
-          var modal = $(this)
-          $.ajax({
-              url: "{% url 'allocations:create' %}",
-              context: document.body
-          }).done(function(response) {
-              modal.html(response);
-          });
-      })
-    </script>
-    
-    {% block extrahead %}{% endblock %}
+
+  <!-- JQuery -->
+  <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
+  
+  <!-- Modal JavaScript -->
+  <script src="http://malsup.github.com/jquery.form.js"></script>
+  <script src="{{ STATIC_URL }}js/klogistics.js"></script>
+
+  {% block extrahead %}{% endblock %}
 
 </head>
 
 <body>
-<div class="container">
+
   {% block navbar %}
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'people:today' %}">
-            <img alt="Brand" width="30" height="20" src="{{ STATIC_URL }}img/kl-logo.png">
-          </a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            {% if user.is_superuser %}
-            <li>
-              <a href="/admin">Admin</a>
-            </li> <!-- Admin -->
-            {% endif %}
-
-            {% if user.is_authenticated %}
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistica <span class="caret"></span></a>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li>
-                  <a href="{% url 'allocations:locations' %}">Luoghi</a>
-                </li>
-                <li role="separator" class="divider"></li>
-                {% for s in seasons %}
-                  <li>
-                    <a href="{% url 'allocations:season' s.pk %}">
-                    {{ s.name|title }}
-                    {% ifequal s.state "1" %}
-                      <i class="fa fa-flag" aria-hidden="true"></i>
-                    {% endifequal %}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li> <!-- Logistica -->
-            <li>
-              <form class="navbar-form navbar-left" method="get" action={% url 'people:search_day_allocation' %}>
-                <div class="form-group">
-                  <input type="text" name="q" class="form-control" placeholder="Data aaaa-mm-gg">
-                </div>
-                <button type="submit" class="btn btn-default">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                </button>
-              </form>
-            </li> <!-- Ricerca -->
-            <li>
-              <p class="navbar-btn">
-                <a class="btn btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
-                    Compila
-                </a> <!-- Compila nuova logistica -->
-              </p>
-            </li>
-            {% endif %}
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            {% if user.is_authenticated %}
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-user" aria-hidden="true"></i>
-                    Hey,  {{ user.name }}!
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <li><a href="{% url 'people:pwchange' %}">Modifica password</a></li>
-                  <li role="separator" class="divider"></li>
-                  <li>
-                    <a href="{% url 'people:logout' %}">
-                    <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
-                    </a>
-                  </li>
-                </ul>
-            </li> <!-- User -->
-            {% endif %}
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div><!--/.container-fluid -->
-    </nav>
-
- {% endblock navbar %}
-  <div class="page-header" style="border-bottom: 0;">
-    <div class="row">
-      {% if messages %}
-        <div class="col-xs-6 col-xs-offset-3">
+  <div id="navbar-full">
+    <div id="navbar">
+      <nav class="navbar navbar-default navbar-fixed-top filled">
+        {% if messages %}
           {% for message in messages %}
-            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}" role="alert">
-              <div class="text-center">{{ message }}</div>
+            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
+              <div class="container">
+                {{ message }}
+              </div>
             </div>
           {% endfor %}
-        </div>
-      {% endif %}
-      <div class="col-xs-12">
-        <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
-      </div>        
-    </div>
-  </div><!-- page header -->
+        {% endif %}
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'people:today' %}">
+              Klogistics
+              <span class="label label-warning label-new label-fill" style="text-transform: capitalize;">&alpha;lfa</span>
+            </a>
+          </div>
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+              {% if user.is_superuser %}
+              <li>
+                <a href="/admin">Admin</a>
+              </li> <!-- Admin -->
+              {% endif %}
+
+              {% if user.is_authenticated %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistica <span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                  <li>
+                    <a href="{% url 'allocations:locations' %}">Luoghi</a>
+                  </li>
+                  <li role="separator" class="divider"></li>
+                  {% for s in seasons %}
+                    <li>
+                      <a href="{% url 'allocations:season' s.pk %}">
+                      {{ s.name|title }}
+                      {% ifequal s.state "1" %}
+                        <i class="fa fa-flag" aria-hidden="true"></i>
+                      {% endifequal %}
+                      </a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li> <!-- Logistica -->
+              <li>
+                <a href="javascript:void(0);" data-toggle="search" class="hidden-xs"><i class="fa fa-search"></i></a>
+              </li>
+              <form class="navbar-form navbar-left navbar-search-form" role="search" method="get" action={% url 'people:search_day_allocation' %}>                  
+                <div class="form-group">
+                  <input type="text" value="" name="q" class="form-control" placeholder="Ricerca aaaa-mm-gg">
+                </div> 
+              </form> <!-- Ricerca -->
+              {% endif %}
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+              {% if user.is_authenticated %}
+              <li>
+                  <a class="btn btn-round btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
+                      Compila
+                  </a> <!-- Compila nuova logistica -->
+              </li>
+              <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                      Hey,  {{ user.name }}!
+                      <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><a href="{% url 'people:pwchange' %}">Modifica password</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                      <a href="{% url 'people:logout' %}">
+                      <i class="fa fa-sign-out" aria-hidden="true"></i> Logout
+                      </a>
+                    </li>
+                  </ul>
+              </li> <!-- User -->
+              {% endif %}
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!-- /.container-fluid -->
+      </nav>
+    </div><!--  end navbar -->
+  </div> <!-- end menu-dropdown -->    
+ {% endblock navbar %}
+
+<div class="main">
+<div class="container" style="padding-top:40px;">
+  
+<div class="page-header" style="border-bottom:0;">
+  <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
+</div>
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
@@ -164,24 +153,36 @@
   </div>
 
   {% block content %}{% endblock content %}
-</div><!-- /.container -->
+</div><!-- end container -->
+</div><!-- end main content -->
 
-  <footer class="footer">
-    <div class="container">
-      <hr />
-      <p class="text-muted">
-        <i class="fa fa-creative-commons" aria-hidden="true"></i>
-        {{ signature }}
-      </p>
-    </div>
-  </footer>
+<footer class="sticky-footer">
+  <div class="container">
+      <div class="row">
+          <div class="credits">
+          <p class="text-muted text-center">
+              <i class="fa fa-creative-commons" aria-hidden="true"></i>
+              {{ signature }} | made with <i class="fa fa-heart heart" alt="love"></i> for my KPMG team.
+          </p>
+          </div>
+      </div>
+  </div>
+</footer>
 
-  <!-- Bootstrap core JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-  <!-- Fort Awesome Kit --> 
-  <script src="https://use.fortawesome.com/ebffd7c6.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-  {% block extrascript %}{% endblock extrascript %}
+<!-- Get Shit Done Kit Javascript -->
+<script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-checkbox.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-radio.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-bootstrapswitch.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/get-shit-done.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/custom.js"></script>
+
+<!-- Fort Awesome Kit JavaScript --> 
+<script src="https://use.fortawesome.com/ebffd7c6.js"></script>
+
+{% block extrascript %}{% endblock extrascript %}
 
 </body>
 
