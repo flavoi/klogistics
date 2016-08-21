@@ -46,9 +46,9 @@
                     {{ person.user.name }} {{ person.surname }} 
                     <br />
                     {% for allocation in person.allocation_set.all|people_allocation_day:today %}
-                      <span class="label" style="background-color: {{ allocation.location.color }};">
+                      <span class="label" style="border-color: {{ allocation.location.color }}; color: {{ allocation.location.color }};">
                         {{ allocation.location }}
-                      </span> &nbsp;
+                      </span>
                       {% empty %}
                       <span class="label label-default">N/D</span>
                     {% endfor %}
