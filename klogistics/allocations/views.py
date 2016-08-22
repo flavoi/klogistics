@@ -62,6 +62,11 @@ class AllocationActionMixin(object):
         messages.info(self.request, self.success_msg)
         return super(AllocationActionMixin, self).form_valid(form)
 
+    def get_form_kwargs(self):
+        kwargs = super(AllocationActionMixin, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
 
 class AllocationCreateView(LoginRequiredMixin, AllocationActionMixin, CreateView):
     """ Gestisce la creazione delle allocazioni. """
