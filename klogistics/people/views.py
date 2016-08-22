@@ -22,7 +22,7 @@ def people_json(request):
     return JsonResponse(people, safe=False)
 
 
-@open_period_only
+
 def search_day_allocation(request):
     """ Ricerca la logistica del giorno specificato. """
     date = request.GET.get('q')
@@ -42,13 +42,11 @@ def search_day_allocation(request):
     return HttpResponseRedirect(reverse('people:day', args=(year,month,day,)))
 
 
-@method_decorator(open_period_only, name='dispatch')
 class PersonView(LoginRequiredMixin, ListView):
     """ Espone la lista di persone. """
     model = Person
 
 
-@method_decorator(open_period_only, name='dispatch')
 class TodayPersonView(PersonView):
     """ Espone la logistica di oggi. """
     template_name = 'people/person_list.html'
@@ -75,7 +73,6 @@ class TodayPersonView(PersonView):
         return context
 
 
-@method_decorator(open_period_only, name='dispatch')
 class DayPersonView(TodayPersonView):
     """ Espone la logistica del giorno specificato. """
 

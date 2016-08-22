@@ -16,7 +16,6 @@ from .models import Location, Allocation
 from .forms import AllocationForm
 
 
-@open_period_only
 def allocation_season_json(request, season):
     """ Restituisce le allocazioni della stagione in formato json """
     season = get_object_or_404(Season, pk=season)
@@ -26,13 +25,11 @@ def allocation_season_json(request, season):
     return JsonResponse(allocations, safe=False)
 
 
-@method_decorator(open_period_only, name='dispatch')
 class AllocationView(LoginRequiredMixin, ListView):
     """ Espone la lista di allocazioni. """
     model = Allocation
 
 
-@method_decorator(open_period_only, name='dispatch')
 class SeasonAllocationView(AllocationView):
     """ Visualizza il calendario relativo alla Stagione imputata."""
 
@@ -49,6 +46,7 @@ class SeasonAllocationView(AllocationView):
         delta = self.season.end_date - self.season.start_date
         context['season_duration'] = delta.days + 1
         return context
+
 
 
 class AllocationActionMixin(object):
@@ -68,6 +66,7 @@ class AllocationActionMixin(object):
         return kwargs
 
 
+@method_decorator(open_period_only, name='dispatch')
 class AllocationCreateView(LoginRequiredMixin, AllocationActionMixin, CreateView):
     """ Gestisce la creazione delle allocazioni. """
     model = Allocation
@@ -76,6 +75,7 @@ class AllocationCreateView(LoginRequiredMixin, AllocationActionMixin, CreateView
     form_class = AllocationForm
 
 
+@method_decorator(open_period_only, name='dispatch')
 class AllocationUpdateView(LoginRequiredMixin, AllocationActionMixin, UpdateView):
     """ Gestisce la modifica delle allocazioni. """
     model = Allocation

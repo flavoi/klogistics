@@ -1,17 +1,7 @@
-{% extends 'base.html' %}
-
-{% block title %} stagione chiusa {% endblock title %}
-
-{% block content %}
-
 <div class="alert alert-danger text-center" role="alert">
-    <h2>
-        Stagione chiusa.
-    </h2>
-    <p class="lead">
+    <h2> Stagione chiusa.</h2>
+    <p>
       Non sar&agrave; pi&ugrave; possibile operare fino alla prossima apertura. <br />
       Ultima stagione trascorsa: {{ season.start_date}} - {{ season.end_date }}
     </p>
 </div>
-
-{% endblock content %}
