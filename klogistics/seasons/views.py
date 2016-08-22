@@ -11,7 +11,7 @@ def park_here(request):
     try:
         season = Season.objects.get_open_season()
     except Season.DoesNotExist:
-        last_season = Season.objects.latest('end_date')
+        last_season = Season.objects.filter(available=True).latest('end_date')
         template = 'seasons/ended_season.html'
         context = {'season': last_season}
     else:
