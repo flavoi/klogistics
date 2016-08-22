@@ -13,6 +13,7 @@ from people.models import Person
 from seasons.decorators import open_period_only
 from seasons.models import Season
 from .models import Location, Allocation
+from .forms import AllocationForm
 
 
 @open_period_only
@@ -52,7 +53,6 @@ class SeasonAllocationView(AllocationView):
 
 class AllocationActionMixin(object):
     """ Classe di base per la gestione delle allocazioni """
-    fields = ('location', 'person', 'start_date', 'end_date')
 
     @property
     def success_msg(self):
@@ -68,6 +68,7 @@ class AllocationCreateView(LoginRequiredMixin, AllocationActionMixin, CreateView
     model = Allocation
     template_name_suffix = '_create'
     success_msg = "Registrazione completata!"
+    form_class = AllocationForm
 
 
 class AllocationUpdateView(LoginRequiredMixin, AllocationActionMixin, UpdateView):
