@@ -43,7 +43,7 @@ class Command(BaseCommand):
             while(i == 1):
                 start_date = random_end_date
                 new_random_end_date = random_end_date + td(days=randint(1,20))
-                if new_random_end_date > season.end_date:
+                if new_random_end_date >= season.end_date:
                     new_random_end_date = season.end_date + td(days=1) # Do not go past season end date
                 random_end_date = new_random_end_date
                 while new_random_location == random_location:
