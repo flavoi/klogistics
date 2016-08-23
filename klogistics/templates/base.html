@@ -25,7 +25,6 @@
   <!-- Klogistics CSS -->
   <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css" />
 
-
   <!-- JQuery -->
   <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
   
@@ -35,110 +34,15 @@
 
   {% block extrahead %}{% endblock %}
 
+  <style>
+  </style>
 </head>
 
 <body>
 
-  {% block navbar %}
-  <div id="navbar-full">
-    <div id="navbar">
-      <nav class="navbar navbar-default navbar-fixed-top filled">
-        {% if messages %}
-          {% for message in messages %}
-            <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
-              <div class="container">
-                {{ message }}
-              </div>
-            </div>
-          {% endfor %}
-        {% endif %}
-        <div class="container">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="{% url 'people:today' %}">
-              Klogistics
-              <span class="label label-warning label-new label-fill" style="text-transform: lowercase;">&alpha;lfa</span>
-            </a>
-          </div>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              {% if user.is_superuser %}
-              <li>
-                <a href="/admin">Admin</a>
-              </li> <!-- Admin -->
-              {% endif %}
-
-              {% if user.is_authenticated %}
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistica <span class="caret"></span></a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                  <li>
-                    <a href="{% url 'allocations:locations' %}">Luoghi</a>
-                  </li>
-                  <li role="separator" class="divider"></li>
-                  {% for s in seasons %}
-                    <li>
-                      <a href="{% url 'allocations:season' s.pk %}">
-                      {{ s.name|title }}
-                      {% ifequal s.state "1" %}
-                        <i class="fa fa-flag" aria-hidden="true"></i>
-                      {% endifequal %}
-                      </a>
-                    </li>
-                  {% endfor %}
-                </ul>
-              </li> <!-- Logistica -->
-              <li>
-                <a href="javascript:void(0);" data-toggle="search" class="hidden-xs">
-                    <i class="fa fa-search"></i>
-                </a>
-              </li>
-              <form class="navbar-form navbar-left navbar-search-form" role="search" method="get" action={% url 'people:search_day_allocation' %}>                  
-                <div class="form-group">
-                  <input type="text" value="" name="q" class="form-control" placeholder="Ricerca gg/mm/aaaa">
-                </div> 
-              </form> <!-- Ricerca -->
-              {% endif %}
-            </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-              {% if user.is_authenticated %}
-              <li>
-                  <a class="btn btn-round btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
-                  Compila
-                  </a> <!-- Compila nuova logistica -->
-              </li>
-              <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <i class="fa fa-user" aria-hidden="true"></i> Hey,  {{ user.name }}!
-                      <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                    <li>
-                      <a href="{% url 'people:pwchange' %}">
-                        <i class="fa fa-fw fa-key" aria-hidden="true"></i> Modifica password
-                      </a>
-                    <li>
-                      <a href="{% url 'people:logout' %}">
-                       <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Logout
-                      </a>
-                    </li>
-                  </ul>
-              </li> <!-- User -->
-              {% endif %}
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!-- /.container-fluid -->
-      </nav>
-    </div><!--  end navbar -->
-  </div> <!-- end menu-dropdown -->    
- {% endblock navbar %}
+{% block navbar %}
+  {% include "navbar.html" %}
+{% endblock navbar %}
 
 <div class="main">
 <div class="container" style="padding-top:50px;">
