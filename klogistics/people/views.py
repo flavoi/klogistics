@@ -22,12 +22,11 @@ def people_json(request):
     return JsonResponse(people, safe=False)
 
 
-
 def search_day_allocation(request):
     """ Ricerca la logistica del giorno specificato. """
     date = request.GET.get('q')
     try:
-        date = datetime.strptime(date, '%Y-%m-%d').date()
+        date = datetime.strptime(date, '%d/%m/%Y').date()
     except ValueError:
         if date == '':
             message = 'Imposta un criterio di ricerca diverso da vuoto :-)'
