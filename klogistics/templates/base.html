@@ -34,17 +34,6 @@
 
   {% block extrahead %}{% endblock %}
 
-  <style>
-    .Site {
-      display: flex;
-      min-height: 100vh;
-      flex-direction: column;
-    }
-
-    .Site-content {
-      flex: 1;
-    }
-  </style>
 </head>
 
 <body class="Site">
@@ -56,12 +45,10 @@
   </header>
 
   <main class="Site-content">
-    <div class="container" style="padding-top:50px;">
-      <!-- Heading title -->  
-      <div class="page-header">
-        <h2 class="text-center">{% block heading %}{% endblock heading %}</h2>
+    <div class="container">
+      <div class="kheading">
+        <h2>{% block heading %}{% endblock heading %}</h2>
       </div>
-      <!-- Modal -->
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
           <div class="modal-content" id="myModalContent">
