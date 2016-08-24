@@ -57,8 +57,13 @@ class Allocation(models.Model):
             'end': self.end_date.strftime("%Y-%m-%d"),
             'title': self.location.name,
             'color': self.location.color,
-            'url': reverse("allocations:update", kwargs={"pk": self.pk})
         }
+
+    def as_dict_with_url(self): # integrazione con fullcalendar con url
+        d = self.as_dict()
+        url_d = {'url': reverse("allocations:update", kwargs={"pk": self.pk})}
+        d.update(url_d)
+        return d
 
     objects = AllocationManager.as_manager()
 
