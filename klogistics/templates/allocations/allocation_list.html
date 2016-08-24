@@ -49,14 +49,20 @@
                 // Aggiungi destinazione modal per eventi dell'utente
                 var h = $(this).attr('href');                
                 if (h != null) {
-                    $(this).attr('data-target','#myModal');
-                    $(this).attr('data-toggle','modal');
                     $(this).css('border-color', 'yellow');
                 }
             },
             eventMouseout: function(date, jsEvent, view) {
                 var c = $(this).css('backgroundColor');
                 $(this).css('border-color', c);
+            },
+            eventClick: function(date, jsEvent, view) {
+                // Aggiungi destinazione modal per eventi dell'utente
+                var h = $(this).attr('href');                
+                if (h != null) {
+                    $(this).attr('data-target','#myModal');
+                    $(this).attr('data-toggle','modal');
+                }
             },
         });
     
