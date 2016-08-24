@@ -5,14 +5,28 @@
 {% endblock modal_title %}
 
 {% block modal_body %}
-    <div class="list-group">
-      <a href="#" class="list-group-item active">
-        Logistica registrata per {{ allocation.person.surname }} {{ allocation.person.user.name }}
-      </a>
-      <a href="#" class="list-group-item"><strong>Allocazione:</strong> {{ allocation.location }} </a>
-      <a href="#" class="list-group-item"><strong>Data inizio:</strong> {{ allocation.start_date }}</a>
-      <a href="#" class="list-group-item"><strong>Data fine:</strong> {{ allocation.end_date }}</a>
-    </div>
+<div class="table-responsive">
+  <table class="table">
+    <tbody>
+      <tr class="active">
+        <th>Nominativo</th>
+        <td>{{ allocation.person.surname }} {{ allocation.person.user.name }}</td>
+      </tr>
+      <tr>  
+        <th>Allocazione</th>
+        <td>{{ allocation.location }}</td>
+      </tr>
+      <tr>
+        <th>Data inizio</th> 
+        <td>{{ allocation.start_date }}</td>
+      </tr>
+      <tr>
+        <th>Data fine</th> 
+        <td>{{ allocation.end_date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 {% endblock modal_body %}
 
 {% block modal_reset %}{% endblock modal_reset %}
