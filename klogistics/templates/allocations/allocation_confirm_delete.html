@@ -1,5 +1,10 @@
 {% extends "base_modal.html" %}
 
+{% load i18n widget_tweaks %}
+{% block modal_action %}
+    action="{% url 'allocations:delete' allocation.pk %}" id="allocations-update"
+{% endblock modal_action %}
+
 {% block modal_title %}
     Riepilogo
 {% endblock modal_title %}
@@ -7,19 +12,22 @@
 {% block modal_body %}
     <div class="list-group">
       <a href="#" class="list-group-item active">
-        Logistica registrata per {{ allocation.person.surname }} {{ allocation.person.user.name }}
+        Confermi di voler cancellare questa occorrenza?
       </a>
+      <a href="#" class="list-group-item"><strong>Persona:</strong> {{ allocation.person.surname }} {{ allocation.person.user.name }}</a>
       <a href="#" class="list-group-item"><strong>Allocazione:</strong> {{ allocation.location }} </a>
       <a href="#" class="list-group-item"><strong>Data inizio:</strong> {{ allocation.start_date }}</a>
       <a href="#" class="list-group-item"><strong>Data fine:</strong> {{ allocation.end_date }}</a>
     </div>
 {% endblock modal_body %}
 
-{% block modal_reset %}{% endblock modal_reset %}
+{% block modal_footer %}
+  <input type="submit" class="btn btn-danger btn-fill" value="Conferma">
+{% endblock %}
 
 {% block modal_extra_script %}
     <script>
-        $('#myModal').on('hidden.bs.modal', function () {
+        $('#myModal2').on('hidden.bs.modal', function () {
             window.location.reload(true);
         })
     </script>

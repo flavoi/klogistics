@@ -57,6 +57,7 @@ class Allocation(models.Model):
             'end': self.end_date.strftime("%Y-%m-%d"),
             'title': self.location.name,
             'color': self.location.color,
+            'url': reverse("allocations:update", kwargs={"pk": self.pk})
         }
 
     objects = AllocationManager.as_manager()

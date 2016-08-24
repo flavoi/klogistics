@@ -3,10 +3,10 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^stagione/([0-9]+)/$', 
+    url(r'^stagione/(?P<pk>\d+)/$', 
         view=views.SeasonAllocationView.as_view(), 
         name='season'),
-    url(r'^stagione-json/([0-9]+)/$',
+    url(r'^stagione-json/(?P<season>\d+)/$',
         view=views.allocation_season_json,
         name='season-json'),
     url(r'^luoghi/$',
@@ -21,4 +21,7 @@ urlpatterns = [
     url(r'^verifica/(?P<pk>\d+)/$',
         view=views.AllocationDetailView.as_view(),
         name='detail'),
+    url(r'^cancella/(?P<pk>\d+)/$',
+        view=views.AllocationDeleteView.as_view(),
+        name='delete'),
 ]

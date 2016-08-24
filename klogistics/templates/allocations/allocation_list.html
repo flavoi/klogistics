@@ -45,6 +45,10 @@
                     $('#script-warning').show();
                 }
             },
+            eventMouseover: function(date, jsEvent, view) {
+                $(this).attr('data-target','#myModal');
+                $(this).attr('data-toggle','modal');
+            },
         });
     
     });

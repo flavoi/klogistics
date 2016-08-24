@@ -16,8 +16,23 @@
 
 <div class="modal-footer">
     {% block modal_footer %}{% endblock modal_footer %}
+    {% block modal_reset %}
+        <button id="modal-reset" type="button" class="btn btn-secondary" data-dismiss="modal">
+            Annulla
+        </button>
+    {% endblock modal_reset %}
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
 </div>
 
 </form>
-{% block modal_extra_script %} {% endblock modal_extra_script %}
+
+<!-- Reset modal body content -->
+<script>
+    $('body').on('click', '#modal-reset', function (event) {
+        event.preventDefault();
+        $('.modal-body').empty();
+        $('#myModal').removeData('bs.modal')
+    });
+</script>
+
+{% block modal_extra_script %}{% endblock modal_extra_script %}

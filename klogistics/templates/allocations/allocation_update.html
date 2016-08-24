@@ -1,16 +1,46 @@
-{% extends "base.html" %}
+{% extends "base_modal.html" %}
 
-{% block title %}
-  registrazione
-{% endblock title %}
+{% load i18n widget_tweaks %}
+{% block modal_action %}
+    action="{% url 'allocations:update' allocation.pk %}" id="allocations-update"
+{% endblock modal_action %}
 
-{% block heading %}
-  Aggiorna logistica n°{{ allocation.pk }}
-{% endblock heading %}
+{% block modal_title %}
+    Modifica logistica
+{% endblock modal_title %}
 
-{% block content %}
-<form action="" method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Aggiorna" />
-</form>
-{% endblock content %}
+{% block modal_body %}
+    {% for field in form %}
+    <fieldset class="form-group {% if field.errors %}has-warning{% endif %}">
+        {% if field.errors %}
+            {% for error in field.errors %}
+                <div class="alert alert-warning" role="alert">
+                    {{ error|striptags }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <label class="col-sm-4 control-label">
+            {{ field.label|capfirst }}:
+        </label>
+        <div class="col-sm-8">
+            {{ field|attr:"class:form-control" }}
+            {% if field.help_text %}
+                <span id="helpBlock" class="help-block">{{ field.help_text|safe }}</span>
+            {% endif %}
+        </div>
+    </fieldset>
+{% endfor %}
+{% endblock modal_body %}
+
+{% block modal_footer %}
+    <a class="btn btn-danger btn-fill" href="{% url 'allocations:delete' allocation.pk %}" data-dismiss="modal" data-toggle="modal" data-target="#myModal2">
+        Cancella
+    </a>
+{% endblock %}
+
+{% block modal_extra_script %}
+    <script>
+        var form_options = { target: '#myModalContent', success: function(response) {} };
+        $('#allocations-update').ajaxForm(form_options);
+    </script>
+{% endblock modal_extra_script %}

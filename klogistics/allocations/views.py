@@ -3,9 +3,10 @@ from datetime import date
 
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib import messages
+from django.core.urlresolvers import reverse_lazy
 
 from braces.views import LoginRequiredMixin
 
@@ -34,7 +35,7 @@ class SeasonAllocationView(AllocationView):
     """ Visualizza il calendario relativo alla Stagione imputata."""
 
     def get_queryset(self):
-        self.season = get_object_or_404(Season, pk=self.args[0])
+        self.season = get_object_or_404(Season, pk=self.kwargs['pk'])
         self.people = Person.objects.all()
         start_date, end_date = self.season.start_date, self.season.end_date
         return Allocation.objects.get_season_allocations(start_date, end_date)
@@ -46,7 +47,6 @@ class SeasonAllocationView(AllocationView):
         delta = self.season.end_date - self.season.start_date
         context['season_duration'] = delta.days + 1
         return context
-
 
 
 class AllocationActionMixin(object):
@@ -81,6 +81,22 @@ class AllocationUpdateView(LoginRequiredMixin, AllocationActionMixin, UpdateView
     model = Allocation
     template_name_suffix = '_update'
     success_msg = "Logistica modificata!"
+    form_class = AllocationForm
+
+
+@method_decorator(open_period_only, name='dispatch')
+class AllocationDeleteView(LoginRequiredMixin, AllocationActionMixin, DeleteView):
+    """ Gestisce la cancellazione delle allocazioni. """
+    model = Allocation
+    success_msg = "Logistica cancellata!"
+    
+    def get_success_url(self, **kwargs):
+        season = Season.objects.get_open_season()
+        return reverse_lazy('allocations:season', kwargs={'pk':season.pk})
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_msg)
+        return super(AllocationDeleteView, self).delete(request, *args, **kwargs)
 
 
 class AllocationDetailView(LoginRequiredMixin, DetailView):
