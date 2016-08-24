@@ -33,6 +33,7 @@
 {% endblock modal_body %}
 
 {% block modal_footer %}
+    <input type="submit" class="btn btn-primary btn-fill" value="Salva" />
     <a class="btn btn-danger btn-fill" href="{% url 'allocations:delete' allocation.pk %}" data-dismiss="modal" data-toggle="modal" data-target="#myModal2">
         Cancella
     </a>
