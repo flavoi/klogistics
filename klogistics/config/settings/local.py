@@ -12,7 +12,7 @@ def get_secret(settings, secrets=secrets):
         error_msg = "Set the {0} enviroment variable".format(settings)
         raise ImproperlyConfigured(error_msg)
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
@@ -29,6 +29,10 @@ DATABASES = {
     }
 }
 
+ALLOWED_HOSTS = [
+    '127.0.0.1', 
+    'localhost'
+]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/

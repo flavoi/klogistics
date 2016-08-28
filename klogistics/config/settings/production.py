@@ -10,7 +10,7 @@ def get_env_variable(var_name):
         error_msg = "Set the {0} enviroment variable".format(var_name)
         raise ImproperlyConfigured(error_msg)
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
@@ -22,7 +22,6 @@ ALLOWED_HOSTS = [
     '.klogistics.herokuapp.com',
     'localhost',
 ]
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
