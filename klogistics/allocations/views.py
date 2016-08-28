@@ -23,13 +23,17 @@ def allocation_season_json(request, season):
     start_date, end_date = season.start_date, season.end_date
     allocations = Allocation.objects.get_season_allocations(start_date, end_date)
     
-    # Elaboro occorrenze dell'utente con url di modifica 
+    # Partiziono i risultati tra quelli dell'utente autenticato e il resto
     all_user = allocations.filter(person__user=request.user)
-    all_user = [obj.as_dict_with_url() for obj in all_user]
-    
-    # Elaboro occorrenze di altri utenti senza url di modifica
     all_others = allocations.exclude(person__user=request.user)
-    all_others = [obj.as_dict() for obj in all_others]
+        
+    if season.is_open():
+        # Con stagione aperta solo i risultati utente sono modificabili 
+        all_user = [obj.as_dict_with_url() for obj in all_user]
+    else:
+        all_user = [obj.as_dict() for obj in all_user]
+
+    all_others = [obj.as_dict() for obj in all_others] 
 
     # Concateno i risultati
     allocations_list = all_user + all_others

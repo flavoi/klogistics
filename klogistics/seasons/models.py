@@ -37,4 +37,10 @@ class Season(models.Model):
             self.slug = slugify(self.name)
         super(Season, self).save(*args, **kwargs)
 
+    
+    def is_open(self):              # Controlla se la stagione e` valida e aperta
+        if self.state == '1' and self.available:
+            return True
+        return False
+
     objects = SeasonManager.as_manager()

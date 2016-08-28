@@ -9,12 +9,12 @@ from people.models import Person
 
 class AllocationManager(models.QuerySet):
     
-    # Estrae tutte le allocazioni, per tutte le risorse, in un determinato periodo
+    # Estrae tutte le allocazioni, per tutte le persone, in un determinato periodo
     def get_season_allocations(self, start_date, end_date):
         allocations = self.filter(start_date__range=[start_date, end_date])
         return allocations
 
-    # Estrae tutte le allocazioni, per tutte le risorse, in un determinato giorno
+    # Estrae tutte le allocazioni, per tutte le persone, in un determinato giorno
     def get_today_allocations(self, today):
         allocations = self.filter(start_date__lte=today).filter(end_date__gt=today)
         return allocations
