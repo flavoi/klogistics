@@ -12,7 +12,7 @@ def get_secret(settings, secrets=secrets):
         error_msg = "Set the {0} enviroment variable".format(settings)
         raise ImproperlyConfigured(error_msg)
 
-DEBUG = False
+DEBUG = True
 
 SECRET_KEY = get_secret("SECRET_KEY")
 
