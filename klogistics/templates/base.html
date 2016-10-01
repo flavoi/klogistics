@@ -25,15 +25,22 @@
   <!-- Klogistics CSS -->
   <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css" />
 
+  <!-- Fort Awesome Kit JavaScript --> 
+  <script src="https://use.fortawesome.com/ebffd7c6.js"></script>
+
   <!-- JQuery -->
   <script src="{{ STATIC_URL }}js/jquery.min.js"></script>
   
   <!-- Modal JavaScript -->
-  <script src="http://malsup.github.com/jquery.form.js"></script>
+  <script src="{{ STATIC_URL }}js/jquery.form.js"></script>
   <script src="{{ STATIC_URL }}js/klogistics.js"></script>
 
   {% block extrahead %}{% endblock %}
-
+  <style type="text/css">
+    body {
+      font-family: "Lato";
+    }
+  </style>
 </head>
 
 <body class="Site">
@@ -70,7 +77,7 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
 
   <!-- Get Shit Done Kit Javascript -->
   <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-checkbox.js"></script>
@@ -78,9 +85,6 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-bootstrapswitch.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/get-shit-done.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/custom.js"></script>
-
-  <!-- Fort Awesome Kit JavaScript --> 
-  <script src="https://use.fortawesome.com/ebffd7c6.js"></script>
 
   {% block extrascript %}{% endblock extrascript %}
 
