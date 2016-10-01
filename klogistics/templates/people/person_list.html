@@ -49,7 +49,8 @@
             </div>
             <div class="col-lg-8 col-md-8 col-sm-12">
                 <p class="lead">
-                    {{ person.user.name }} {{ person.surname }}
+                    {{ person.user.name }} <br />
+                    {{ person.surname }}
                     <br />
                     {% for allocation in person.allocation_set.all|people_allocation_day:today %}
                       <span class="label" style="border-color: {{ allocation.location.color }}; color: {{ allocation.location.color }};">
