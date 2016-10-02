@@ -1,4 +1,4 @@
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
 from django.http import JsonResponse
 from django.db.models import Count
@@ -63,11 +63,15 @@ class TodayPersonView(PersonView):
     def get_context_data(self, **kwargs):
         context = super(TodayPersonView, self).get_context_data(**kwargs)
         today = self.get_today()
+        yesterday = today - timedelta(days=1)
+        tomorrow = today + timedelta(days=1)
         """ Preparazione dei filtri. """
         allocations = Allocation.objects.get_today_allocations(today)
         locations = Location.objects.filter(allocation__in=allocations)
         locations = locations.annotate(num_allocations=Count('allocation'))
         context['today'] = today
+        context['tomorrow'] = tomorrow
+        context['yesterday'] = yesterday
         context['locations'] = locations
         return context
 

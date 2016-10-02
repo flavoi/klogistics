@@ -6,7 +6,17 @@
 {% endblock title %}
 
 {% block heading %}
-  Logistica del giorno {{ today }}
+  <div class="row">
+  <div class="col-md-1">
+    <a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-chevron-left"></i></a>
+  </div>
+  <div class="col-md-10">
+    Logistica del giorno {{ today }}
+  </div>
+  <div class="col-md-1">
+    <a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-chevron-right"></i></a> 
+  </div>
+  </div>
 {% endblock heading %}
 
 {% block content %}
@@ -66,13 +76,13 @@
                       <div class="panel-body">
                         <ul class="fa-ul">
                           <li><i class="fa fa-suitcase fa-li" aria-hidden="true"></i> 
-                          {{ person.get_rank_display|capfirst }} </li>
+                          {{ person.get_rank_display|capfirst }}</li>
                           <li><i class="fa fa-street-view fa-li" aria-hidden="true"></i> 
                           {{ person.office }}</li>
-                          <li><i class="fa fa-envelope fa-li " aria-hidden="true"></i> 
+                          <li><i class="fa fa-envelope fa-li" aria-hidden="true"></i> 
                           {{ person.user.email }}</li>
-                          <li><i class="fa fa-phone fa-li " aria-hidden="true"></i> 
-                          {{ person.mobile_phone }}
+                          <li><i class="fa fa-phone fa-li" aria-hidden="true"></i> 
+                          {{ person.mobile_phone }}</li>
                           <li>&nbsp;</li>
                         </ul>
                       </div>
