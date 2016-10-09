@@ -44,7 +44,7 @@
                 <li role="separator" class="divider"></li>
                 {% for s in seasons %}
                   <li>
-                    <a href="{% url 'allocations:season' s.pk %}">
+                    <a href="{% url 'allocations:season' s.slug %}">
                     {{ s.name|title }}
                     {% ifequal s.state "1" %}
                       <i class="fa fa-flag" aria-hidden="true"></i>

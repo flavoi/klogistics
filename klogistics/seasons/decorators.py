@@ -1,6 +1,5 @@
 """
     Associabili a viste in tutte le app del progetto.
-    Controllano alcuni importanti funzionalita` come le votazioni.
 """
 import datetime
 from functools import wraps

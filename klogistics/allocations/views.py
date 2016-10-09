@@ -1,7 +1,7 @@
 import json
 from datetime import date
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
@@ -50,7 +50,8 @@ class SeasonAllocationView(AllocationView):
     """ Visualizza il calendario relativo alla Stagione imputata."""
 
     def get_queryset(self):
-        self.season = get_object_or_404(Season, pk=self.kwargs['pk'])
+        # self.season = Season.objects.get(slug=self.kwargs['slug'])
+        self.season = Season.objects.all()[0]
         self.people = Person.objects.all()
         start_date, end_date = self.season.start_date, self.season.end_date
         return Allocation.objects.get_season_allocations(start_date, end_date)
@@ -107,7 +108,7 @@ class AllocationDeleteView(LoginRequiredMixin, AllocationActionMixin, DeleteView
     
     def get_success_url(self, **kwargs):
         season = Season.objects.get_open_season()
-        return reverse_lazy('allocations:season', kwargs={'pk':season.pk})
+        return reverse_lazy('allocations:season', kwargs={'slug':season.slug})
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, self.success_msg)
