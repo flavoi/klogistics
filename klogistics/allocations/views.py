@@ -50,8 +50,8 @@ class SeasonAllocationView(AllocationView):
     """ Visualizza il calendario relativo alla Stagione imputata."""
 
     def get_queryset(self):
-        # self.season = Season.objects.get(slug=self.kwargs['slug'])
-        self.season = Season.objects.all()[0]
+        self.season = Season.objects.get(slug=self.kwargs['slug'])
+        # self.season = Season.objects.all()[0]
         self.people = Person.objects.all()
         start_date, end_date = self.season.start_date, self.season.end_date
         return Allocation.objects.get_season_allocations(start_date, end_date)
