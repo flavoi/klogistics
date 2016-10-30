@@ -8,11 +8,11 @@ from seasons.models import Season
 
 class AllocationForm(forms.ModelForm):
     start_date = forms.DateField(
-        widget=forms.SelectDateWidget(),
+        widget=forms.DateInput(attrs={'class': 'datepicker'}),
         label='data inizio',
     )
     end_date = forms.DateField(
-        widget=forms.SelectDateWidget(),
+        widget=forms.DateInput(attrs={'class': 'datepicker'}),
         label='data fine',
         help_text="La data fine e` il primo giorno in cui la logistica imputata non sara` piu` valida.",
     )

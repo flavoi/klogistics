@@ -1,5 +1,12 @@
 {% load i18n widget_tweaks %}
 
+<script>
+  $( function() {
+    $( ".datepicker" ).datepicker();
+    $( ".datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
+  } );
+</script>
+
 <form {% block modal_action %}{% endblock modal_action %} method="post" class="form">{% csrf_token %}
 
 <div class="modal-header">
