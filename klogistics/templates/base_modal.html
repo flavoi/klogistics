@@ -1,12 +1,5 @@
 {% load i18n widget_tweaks %}
 
-<script>
-  $( function() {
-    $( ".datepicker" ).datepicker();
-    $( ".datepicker" ).datepicker( "option", "dateFormat", "dd/mm/yy" );
-  } );
-</script>
-
 <form {% block modal_action %}{% endblock modal_action %} method="post" class="form">{% csrf_token %}
 
 <div class="modal-header">
@@ -33,13 +26,21 @@
 
 </form>
 
-<!-- Reset modal body content -->
+
 <script>
+    /* Reset modal body content */
     $('body').on('click', '#modal-reset', function (event) {
         event.preventDefault();
         $('.modal-body').empty();
         $('#myModal').removeData('bs.modal')
     });
+
+    /* Display datepicker */
+    $( function() {
+        $(".datepicker").datepicker();
+        $(".datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
+        $.datepicker.setDefaults($.datepicker.regional["it"]);
+    } );
 </script>
 
 {% block modal_extra_script %}{% endblock modal_extra_script %}
