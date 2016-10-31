@@ -1,5 +1,5 @@
 import json
-from datetime import date
+from datetime import date, timedelta, datetime
 
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
@@ -22,11 +22,11 @@ def allocation_season_json(request, season):
     season = get_object_or_404(Season, pk=season)
     start_date, end_date = season.start_date, season.end_date
     allocations = Allocation.objects.get_season_allocations(start_date, end_date)
-    
+
     # Partiziono i risultati tra quelli dell'utente autenticato e il resto
     all_user = allocations.filter(person__user=request.user)
     all_others = allocations.exclude(person__user=request.user)
-        
+    
     if season.is_open():
         # Con stagione aperta solo i risultati utente sono modificabili 
         all_user = [obj.as_dict_with_url() for obj in all_user]
@@ -37,6 +37,11 @@ def allocation_season_json(request, season):
 
     # Concateno i risultati
     allocations_list = all_user + all_others
+
+    for a in allocations_list:
+        virtual_end_date = datetime.strptime(a['end'], '%Y-%m-%d')
+        virtual_end_date += timedelta(1)
+        a['end'] = virtual_end_date.strftime('%Y-%m-%d')
 
     return JsonResponse(allocations_list, safe=False)
 
