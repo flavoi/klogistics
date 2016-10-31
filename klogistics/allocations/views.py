@@ -38,10 +38,11 @@ def allocation_season_json(request, season):
     # Concateno i risultati
     allocations_list = all_user + all_others
 
+    # Aggiusta la data fine per includere l'estremo destro nel calendario
     for a in allocations_list:
-        virtual_end_date = datetime.strptime(a['end'], '%Y-%m-%d')
-        virtual_end_date += timedelta(1)
-        a['end'] = virtual_end_date.strftime('%Y-%m-%d')
+        inclusive_end_date = datetime.strptime(a['end'], '%Y-%m-%d')
+        inclusive_end_date += timedelta(1)
+        a['end'] = inclusive_end_date.strftime('%Y-%m-%d')
 
     return JsonResponse(allocations_list, safe=False)
 
