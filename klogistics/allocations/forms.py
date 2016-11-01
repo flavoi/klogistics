@@ -36,13 +36,13 @@ class AllocationForm(forms.ModelForm):
         form_end_date = self.cleaned_data.get('end_date')
         errors_dict = {}
         if form_end_date is not None and form_start_date is not None:
-            if form_end_date <= form_start_date:
-                self.add_error('end_date', forms.ValidationError('La data fine deve essere maggiore della data inizio.'))
+            if form_end_date < form_start_date:
+                self.add_error('end_date', forms.ValidationError('La data fine deve essere maggiore o uguale alla data inizio.'))
             current_season = Season.objects.get_open_season()
             if form_start_date < current_season.start_date or \
-               form_start_date > (current_season.end_date + datetime.timedelta(days=1)):
-                self.add_error('start_date', forms.ValidationError('La data inizio deve essere compresa nella stagione aperta.'))
+               form_start_date > current_season.end_date:
+                self.add_error('start_date', forms.ValidationError('La data inizio deve essere inclusa nella stagione aperta.'))
             if form_end_date < current_season.start_date or \
-               form_end_date > (current_season.end_date + datetime.timedelta(days=1)):
-               self.add_error('end_date', forms.ValidationError('La data fine deve essere compresa nella stagione aperta.'))
+               form_end_date > current_season.end_date:
+               self.add_error('end_date', forms.ValidationError('La data fine deve essere inclusa nella stagione aperta.'))
         super(AllocationForm, self).clean()
