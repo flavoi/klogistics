@@ -16,7 +16,7 @@ class AllocationManager(models.QuerySet):
 
     # Estrae tutte le allocazioni, per tutte le persone, in un determinato giorno
     def get_today_allocations(self, today):
-        allocations = self.filter(start_date__lte=today).filter(end_date__gt=today)
+        allocations = self.filter(start_date__lte=today).filter(end_date__gte=today)
         return allocations
 
 
