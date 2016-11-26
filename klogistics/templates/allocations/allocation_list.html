@@ -81,7 +81,7 @@
 {% endblock title %}
 
 {% block heading %}
-    {{ season.name|title }}: {{ season.start_date }} - {{ season.end_date }}
+    {{ season.name|title }}: {{ season.start_date|date:"SHORT_DATE_FORMAT" }} - {{ season.end_date|date:"SHORT_DATE_FORMAT" }}
 {% endblock heading %}
 
 {% block content %}
