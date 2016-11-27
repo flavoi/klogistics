@@ -1,1 +1,10 @@
-beta 3
+beta X - 27/11/2016
+   - Added version notes in version.txt
+   - Changed date format in calendar page in local dd/mm/aaaa
+   - Fixed intervals calculation in automatic allocations script
+
+beta 3 - 20/11/2016
+
+beta 2 - 13/11/2016
+
+beta 1 - 06/11/2016
