@@ -44,11 +44,67 @@
 
 <body class="about-us">
 
-
   {% block navbar %}
-  <!--
-    {% include "navbar.html" %}
-  -->
+    <nav class="navbar navbar-icons" style="margin-bottom: 0;">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <div data-no-turbolink="">
+          <a class="navbar-brand" href="{% url 'people:today' %}">
+            Klogistics
+            <sup class="label label-primary label-new label-fill" style="text-transform: lowercase;">
+              &beta;eta
+            </sup>
+          </a>
+        </div>
+      </div> <!-- end navbar header -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                      <i class="pe-7s-keypad"></i>
+                      <p>
+                          Menu
+                          <b class="caret"></b>
+                      </p>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something</a></li>
+                  <li class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                </ul>
+          </li>
+           <li>
+             <a href="">
+                  <i class="pe-7s-global"></i>
+                  <p>Explore</p>
+              </a>
+          </li>
+          <li>
+             <a href="">
+                  <i class="pe-7s-config"></i>
+                  <p>Settings</p>
+              </a>
+          </li>
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="pe-7s-user"></i>
+              <p>{{ user.name }} <span class="caret"></span></p>
+            </a>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div>
+    </nav>
   {% endblock navbar %}
 
 <div class="wrapper">
