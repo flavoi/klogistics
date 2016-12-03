@@ -19,78 +19,92 @@
   <link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap/bootstrap.css" />
 
   <!-- Get Shit Done Kit CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done/gsdk.css" />
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done/demo.css" />
-
-  <!-- Datepicker CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery/jquery-ui.css" />
-
-  <!-- Klogistics CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css" />
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/gsdk.css" />
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/examples.css" rel=""/>
   
-  <!-- Fort Awesome Kit JavaScript --> 
-  <script src="https://use.fortawesome.com/ebffd7c6.js"></script>
+  <!-- Fonts and icons CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Grand+Hotel|Open+Sans:400,300'>
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/pe-icon-7-stroke.css" />
 
-  <!-- JQuery core JavaScript -->
-  <script src="{{ STATIC_URL }}js/jquery/jquery-1.12.4.js"></script>
+  <!-- Klogistics CSS
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css" />
+  -->
 
-  <!-- Datepicker JavaScript -->
-  <script src="{{ STATIC_URL }}js/jquery/jquery-ui.js"></script>
-  <script src="{{ STATIC_URL }}js/jquery/datepicker-it.js"></script>
+  <!-- jQuery core JavaScript -->
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/jquery.js" ></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/jquery-ui.custom.min.js" ></script>
 
-  <!-- Modal JavaScript -->
-  <script src="{{ STATIC_URL }}js/jquery/jquery.form.js"></script>
-  <script src="{{ STATIC_URL }}js/klogistics.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
 
   {% block extrahead %}{% endblock %}
 
 </head>
 
-<body class="Site">
+<body class="about-us">
 
-  <header class="Site-header">
-    {% block navbar %}
-      {% include "navbar.html" %}
-    {% endblock navbar %}
-  </header>
 
-  <main class="Site-content">
-    <div class="container">
-      <div class="kheading">
-        <h2>{% block heading %}{% endblock heading %}</h2>
-      </div>
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" id="myModalContent">
-          </div>
+  {% block navbar %}
+  <!--
+    {% include "navbar.html" %}
+  -->
+  {% endblock navbar %}
+
+<div class="wrapper">
+<!--
+  <div class="parallax filter-black">
+          <div class="parallax-image">
+            <img src="http://www.macwallhd.com/wp-content/Wallpapers/20120909/Science%20and%20Music%20HD%20Mac%20Wallpapers%20Mixing%20Audio-632186371.jpeg">
         </div>
-      </div>
-      <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" id="myModalContent2">
-          </div>
+        <div class="small-info">
+            <h1>Web dev rocks</h1>
+            <h3>
+              {% block heading %}
+              {% endblock heading %}
+            </h3>
         </div>
+  </div>
+-->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" id="myModalContent">
       </div>
-      {% block content %}{% endblock content %}
-    </div><!-- end container -->
-  </main>
+    </div>
+  </div>
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" id="myModalContent2">
+      </div>
+    </div>
+  </div>
+  
+  {% block content %}{% endblock content %}
 
-  <footer class="kfooter">
-    {% include "footer.html" %}
-  </footer>
+  {% block footer %}{% endblock footer %}
 
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
 
-  <!-- Get Shit Done Kit Javascript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-checkbox.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-radio.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-bootstrapswitch.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/get-shit-done.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/custom.js"></script>
+  <!-- Modal JavaScript
+  <script src="{{ STATIC_URL }}js/jquery/jquery.form.js"></script>
+  <script src="{{ STATIC_URL }}js/klogistics.js"></script>
+  -->
+
+  <!-- Get Shit Done Pro plugins JavaScript -->
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-checkbox.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-morphing.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-radio.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-bootstrapswitch.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/bootstrap-select.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/bootstrap-datepicker.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/chartist.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/jquery.tagsinput.js"></script>
+  
+  <!--  Get Shit Done Kit Pro core JavaScript    -->
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/get-shit-done.js"></script>
 
   {% block extrascript %}{% endblock extrascript %}
 
+</div> <!-- end body wrapper -->
 </body>
 
 </html>
