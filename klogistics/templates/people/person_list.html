@@ -10,13 +10,12 @@
 {% block content %}
 <div class="section">
   <div class="container">
-
-    <h2 class="section-title">Logistica del giorno  <small>{{ today }}
-        <a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
+    <h2 class="section-title">
+      Logistica del giorno  <small>{{ today }}
+        <a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>    
         <a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a> 
-        </small>
-    </h2>  
-
+      </small>
+    </h2>
     <div class="col-md-10">
       {% for location in locations %}
       <a class="btn btn-default btn-round" {% ifequal nav_active location.name %}style="background-color:#dcdcdc;{% endifequal %} href="{% url 'people:location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}">
@@ -35,7 +34,7 @@
     <div class="team-presentation">
       <div class="row">
         {% for person in people %}
-          <div class="col-md-4">
+          <div class="col-md-4 col-xs-4">
             <div class="card card-user">
               <div class="image">
                 <img src="https://img.fortawesome.com/ebffd7c6/light-blue-background.jpg" alt="">
