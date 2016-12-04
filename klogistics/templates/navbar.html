@@ -1,100 +1,82 @@
-<div id="navbar-full">
-  <div id="navbar">
-    <nav class="navbar navbar-ct-blue navbar-fixed-top">
-      {% if messages %}
-        {% for message in messages %}
-          <div class="alert alert-{% if message.tags %}{{ message.tags }}{% endif %}">
-            <div class="container">
-              {{ message }}
-            </div>
-          </div>
-        {% endfor %}
-      {% endif %}
-      <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="{% url 'people:today' %}">
-            Klogistics
-            <span class="label label-primary label-new label-fill" style="text-transform: lowercase;">&beta;eta</span>
-          </a>
-        </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          {% if user.is_superuser %}
-          <ul class="nav navbar-nav">
-            <li>
-              <a href="/admin">Admin</a>
-            </li> <!-- Admin -->
-          </ul>
-          {% endif %}
-
-          {% if user.is_authenticated %}
-            <ul class="nav navbar-nav">
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logistica <span class="caret"></span></a>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li>
-                  <a href="{% url 'allocations:locations' %}">Luoghi</a>
-                </li>
-                <li role="separator" class="divider"></li>
-                {% for s in seasons %}
-                  <li>
-                    <a href="{% url 'allocations:season' s.slug %}">
-                    {{ s.name|title }}
-                    {% ifequal s.state "1" %}
-                      <i class="fa fa-flag" aria-hidden="true"></i>
-                    {% endifequal %}
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li> <!-- Logistica -->
-            <li>
-              <a href="javascript:void(0);" data-toggle="search" class="hidden-xs">
-                  <i class="fa fa-search"></i>
-              </a>
-            </li>
-            </ul>
-            <form class="navbar-form navbar-left navbar-search-form" role="search" method="get" action={% url 'people:search_day_allocation' %}>                  
-              <div class="form-group">
-                <input type="text" value="" name="q" class="form-control" placeholder="Ricerca gg/mm/aaaa">
-              </div> 
-            </form> <!-- Ricerca -->
-          {% endif %}
-
-          {% if user.is_authenticated %}
-          <ul class="nav navbar-nav navbar-right">
-            <li>
-                <a class="btn btn-round btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
-                Compila
-                </a> <!-- Compila nuova logistica -->
-            </li>
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-user" aria-hidden="true"></i> Hey,  {{ user.name }}!
-                    <span class="caret"></span>
+<nav class="navbar navbar-ct-azure navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+      </button>
+      <div data-no-turbolink="">
+        <a class="navbar-brand" href="{% url 'people:today' %}">
+          Klogistics
+          <sup class="label label-primary label-new label-fill" style="text-transform: lowercase;">
+            &beta;eta
+          </sup>
+        </a>
+      </div>
+    </div> <!-- end navbar header -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        {% if user.is_authenticated %}
+          <li>
+              <a class="btn btn-round btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
+                Check-in
+              </a> <!-- Compila nuova logistica -->
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Logistica
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu dropdown-with-icons">
+              {% for s in seasons %}
+              <li>
+                <a href="{% url 'allocations:season' s.slug %}">
+                  <i class="pe-7s-portfolio"></i>
+                  {{ s.name|title }}
+                  {% ifequal s.state "1" %}
+                    <span class="label label-default">corrente</span>
+                  {% endifequal %}
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                  <li>
-                    <a href="{% url 'people:pwchange' %}">
-                      <i class="fa fa-fw fa-key" aria-hidden="true"></i> Modifica password
-                    </a>
-                  <li>
-                    <a href="{% url 'people:logout' %}">
-                     <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i> Logout
-                    </a>
-                  </li>
-                </ul>
-            </li> <!-- User -->
-          </ul>
+              </li>
+              {% endfor %}
+              <li class="divider"></li>
+              <li>
+                <a href="{% url 'allocations:locations' %}">
+                  <i class="pe-7s-map"></i>
+                  Luoghi
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="" class="dropdown-toggle" data-toggle="dropdown">
+              Hey, {{ user.name }} <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu dropdown-with-icons">
+              {% if user.is_superuser %}
+                <li>
+                  <a href="/admin">
+                    <i class="pe-7s-settings"></i> Admin
+                  </a>
+                </li> <!-- Admin -->
+              {% endif %}
+              <li>
+                <a href="{% url 'people:pwchange' %}">
+                  <i class="pe-7s-key"></i> Modifica password
+                </a>
+              <li>
+              <li>
+                <a href="{% url 'people:logout' %}" class="text-danger">
+                    <i class="pe-7s-close-circle"></i>
+                    Log out
+                </a>
+              </li>
+            </ul>
+          </li>
         {% endif %}
-        </div><!--/.nav-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-  </div><!--  end navbar -->
-</div> <!-- end menu-dropdown -->
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div>
+</nav>

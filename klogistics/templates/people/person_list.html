@@ -8,7 +8,7 @@
 {% block heading %}{% endblock heading %}
 
 {% block content %}
-<div class="section section-gray">
+<div class="section">
   <div class="container">
 
     <h2 class="section-title">Logistica del giorno  <small>{{ today }}
@@ -18,7 +18,6 @@
     </h2>  
 
     <div class="col-md-10">
-      <strong><i class="fa fa-filter" aria-hidden="true"></i> Filtri:</strong> 
       {% for location in locations %}
       <a class="btn btn-default btn-round" {% ifequal nav_active location.name %}style="background-color:#dcdcdc;{% endifequal %} href="{% url 'people:location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}">
         <i class="fa fa-circle-o" style="color:{{ location.color }};"></i> {{ location.name }} <span class="badge">{{ location.num_allocations }}</span>
