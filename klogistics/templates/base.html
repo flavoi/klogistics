@@ -67,8 +67,14 @@
     </div>
   </div>
   
-  {% block content %}{% endblock content %}
-
+  <div class="section">
+    <div class="container">
+      <h2 class="section-title">
+        {% block content_title %}{% endblock content_title %}
+      </h2>
+        {% block content %}{% endblock content %}
+    </div>
+  </div>
   {% block footer %}{% endblock footer %}
 
 

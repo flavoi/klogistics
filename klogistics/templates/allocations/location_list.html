@@ -4,29 +4,34 @@
 luoghi
 {% endblock title %}
 
-{% block heading %}
-  Luoghi
-{% endblock heading %}
+{% block content_title %}
+  Legenda per il calendario
+{% endblock content_title %}
 
 {% block content %}
-<div class="row">
-  <div class="col-md-6 col-md-offset-3 col-xs-12">
-    <p class="lead text-center">
-      Questa pagina funge da legenda per il calendario stagionale.
-    </p>
-    <dl class="dl-horizontal">
-      {% for location in locations %}
-      <dt>
-        {{ location.name }}
-      </dt>
-      <dd>{{ location.description }}</dd>
-      <dd>
-        <span class="label" style="border-color: {{ location.color }}; color: {{ location.color }};">
-        {{ location.get_color_display }}</span>
-      </dd>   
-      <hr />       
-      {% endfor %}
-      </dl>
-  </div>
-</div>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+          <tr>
+              <th class="text-center">#</th>
+              <th>Nome</th>
+              <th>Descrizione</th>
+              <th>Etichetta</th>            
+          </tr>
+      </thead>
+      <tbody>
+        {% for location in locations %}
+          <tr>
+              <td class="text-center">{{ location.id }}</td>
+              <td>{{ location.name }}</td>
+              <td>{{ location.description }}</td>
+              <td>
+                <span class="label" style="border-color: {{ location.color }}; color: {{ location.color }};">
+                  {{ location.get_color_display }}
+                </span>
+              </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>    
 {% endblock content %}
