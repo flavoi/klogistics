@@ -35,12 +35,12 @@
         $('#myModal').removeData('bs.modal')
     });
 
-    /* Display datepicker */
-    $( function() {
-        $(".datepicker").datepicker();
-        $(".datepicker").datepicker("option", "dateFormat", "dd/mm/yy");
-        $.datepicker.setDefaults($.datepicker.regional["it"]);
-    } );
+    $('.datepicker').datepicker({
+        weekStart:1,
+        color: '{red}',
+        format: 'dd/mm/yyyy',
+    });
+
 </script>
 
 {% block modal_extra_script %}{% endblock modal_extra_script %}
