@@ -10,7 +10,7 @@ def get_env_variable(var_name):
         error_msg = "Set the {0} enviroment variable".format(var_name)
         raise ImproperlyConfigured(error_msg)
 
-DEBUG = True
+DEBUG = False
 
 SECRET_KEY = get_env_variable('SECRET_KEY')
 
