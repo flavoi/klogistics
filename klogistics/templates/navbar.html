@@ -19,28 +19,17 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
-          <li>
-              <a class="btn btn-round btn-default" data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
-                Registrati
-              </a> <!-- Compila nuova logistica -->
-          </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              Logistica
-              <b class="caret"></b>
+              Menu <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-with-icons">
-              {% for s in seasons %}
               <li>
-                <a href="{% url 'allocations:season' s.slug %}">
-                  <i class="pe-7s-portfolio"></i>
-                  {{ s.name|title }}
-                  {% ifequal s.state "1" %}
-                    <span class="label label-default">corrente</span>
-                  {% endifequal %}
+                <a data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}">
+                  <i class="pe-7s-pen"></i>
+                  Registrazione
                 </a>
               </li>
-              {% endfor %}
               <li class="divider"></li>
               <li>
                 <a href="{% url 'allocations:locations' %}">
@@ -48,11 +37,29 @@
                   Luoghi
                 </a>
               </li>
+              <li class="divider"></li>
+              {% for s in seasons %}
+              {% if forloop.first %}
+              <li>
+                <a href="{% url 'allocations:season' s.slug %}">
+                  <i class="pe-7s-date"></i> Periodi
+                </a>
+              </li>
+              {% endif %}
+              <li>
+                <a href="{% url 'allocations:season' s.slug %}">
+                  {{ s.name|title }}
+                  {% ifequal s.state "1" %}
+                    <span class="label label-default">corrente</span>
+                  {% endifequal %}
+                </a>
+              </li>
+              {% endfor %}
             </ul>
           </li>
           <li class="dropdown">
             <a href="" class="dropdown-toggle" data-toggle="dropdown">
-              Hey, {{ user.name }} <span class="caret"></span>
+              {{ user.name }} <span class="caret"></span>
             </a>
             <ul class="dropdown-menu dropdown-with-icons">
               {% if user.is_superuser %}
