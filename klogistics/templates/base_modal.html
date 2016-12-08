@@ -1,13 +1,11 @@
-{% load i18n widget_tweaks %}
-
 <form {% block modal_action %}{% endblock modal_action %} method="post" class="form">{% csrf_token %}
-
+      
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">
-    <span aria-hidden="true">×</span>
-    <span class="sr-only">Chiudi</span>
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Chiudi</span>
     </button>
-    <h4 class="modal-title">{% block modal_title %}{% endblock modal_title %}</h4>
+    <h4 class="modal-title text-center">{% block modal_title %}{% endblock modal_title %}</h4>
 </div>
 
 <div class="modal-body">
@@ -26,8 +24,8 @@
 
 </form>
 
-
 <script>
+
     /* Reset modal body content */
     $('body').on('click', '#modal-reset', function (event) {
         event.preventDefault();
@@ -35,10 +33,17 @@
         $('#myModal').removeData('bs.modal')
     });
 
+    /* Display datepicker */
+    $( function() {
+        $.datepicker.setDefaults($.datepicker.regional["it"]);
+    } );
+
+    /* Datepicker configuration */
     $('.datepicker').datepicker({
-        weekStart:1,
-        color: '{red}',
+        weekStart: 1,
+        color: 'azure',
         format: 'dd/mm/yyyy',
+        language: 'it',
     });
 
 </script>

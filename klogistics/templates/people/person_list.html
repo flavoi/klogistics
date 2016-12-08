@@ -6,26 +6,27 @@
 {% endblock title %}
 
 {% block content_title %}
-  Logistica del <small>{{ today }}
-    <a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>    
-    <a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a> 
+  <a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>&nbsp;
+  Giorno {{ today }}
+  <a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a> 
   </small>
 {% endblock content_title %}
 
 {% block content %}
-  <div class="col-md-10">
+  <div class="text-center">
     {% for location in locations %}
-    <a class="btn btn-default btn-round" {% ifequal nav_active location.name %}style="background-color:#dcdcdc;{% endifequal %} href="{% url 'people:location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}"> <i class="fa fa-circle-o" style="color:{{ location.color }};"></i> {{ location.name }} <span class="badge">{{ location.num_allocations }}</span>
-    </a>
+      <a class="btn btn-default btn-round" {% ifequal nav_active location.name %}style="background-color:#dcdcdc;{% endifequal %} href="{% url 'people:location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}"> <i class="fa fa-circle" style="color:{{ location.color }};"></i> {{ location.name }} <span class="badge">{{ location.num_allocations }}</span>
+      </a>
     {% endfor %}
-  </div>
-  <div class="col-md-2">
-  {% if nav_active %}
-    <a class="btn btn-default reset-filter pull-right btn-round btn-sm visible" href="{% url 'people:day' today|date:"Y" today|date:"m" today|date:"d" %}">
-        <i class="fa fa-refresh" aria-hidden="true"></i> Reset
-    </a>
-  {% endif %}
-  </div> <!-- end of filters -->
+    <br /><br />
+    {% if nav_active %}
+      <a class="btn btn-default btn-round visible" href="{% url 'people:day' today|date:"Y" today|date:"m" today|date:"d" %}">
+          <i class="fa fa-refresh" aria-hidden="true"></i> Reset
+      </a>
+    {% endif %}
+  </div> <!-- end filters -->
+
+  <br />
 
   <div class="team-presentation">
     <div class="row">
@@ -33,12 +34,11 @@
         <div class="col-md-3 col-xs-4">
           <div class="card card-user">
             <div class="image">
-              <img src="https://img.fortawesome.com/ebffd7c6/pantone-background.jpg" alt="">
             </div>
             <div class="content">
               <div class="author">
                 <a href="#">
-                  <img class="avatar" src="{{ person.avatar }}" alt="{{ person.name }}"/>
+                  <img class="avatar border-gray" src="{{ person.avatar }}" alt="{{ person.name }}"/>
                   <h4 class="title">{{ person.user.name }} {{ person.surname }}<br />
                      <small>
                        {% for allocation in person.allocation_set.all|people_allocation_day:today %}
@@ -53,7 +53,6 @@
                 </a>
               </div> <!-- end card author -->
               <p class="description text-center">
-                <i class="fa fa-suitcase fa-fw text-muted"></i> {{ person.get_rank_display|capfirst }} <br/>
                 <i class="fa fa-map-marker fa-fw text-muted"></i> {{ person.office }} <br/>
                 <i class="fa fa-phone fa-fw text-muted"></i> {{ person.mobile_phone }} <br/>
                 <i class="fa fa-envelope-o fa-fw text-muted"></i> {{ person.user.email }}                    
