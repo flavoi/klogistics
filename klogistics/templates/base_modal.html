@@ -25,18 +25,12 @@
 </form>
 
 <script>
-
     /* Reset modal body content */
     $('body').on('click', '#modal-reset', function (event) {
         event.preventDefault();
         $('.modal-body').empty();
         $('#myModal').removeData('bs.modal')
     });
-
-    /* Display datepicker */
-    $( function() {
-        $.datepicker.setDefaults($.datepicker.regional["it"]);
-    } );
 
     /* Datepicker configuration */
     $('.datepicker').datepicker({
@@ -45,7 +39,6 @@
         format: 'dd/mm/yyyy',
         language: 'it',
     });
-
 </script>
 
 {% block modal_extra_script %}{% endblock modal_extra_script %}
