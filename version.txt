@@ -1,7 +1,13 @@
-beta X - 27/11/2016
+beta 4 - 09/12/2016
    - Added version notes in version.txt
-   - Changed date format in calendar page in local dd/mm/aaaa
+   - Changed calendar page title to display date in dd/mm/aaaa format
    - Fixed intervals calculation in automatic allocations script
+   - Unified all functionalities in a single navbar menu
+   - Updated user cards style
+   - Updated navbar icons style
+   - Updated datepicker style
+   - Upgraded color picker in the admin
+   - Updated jquery to the latest version
 
 beta 3 - 20/11/2016
 

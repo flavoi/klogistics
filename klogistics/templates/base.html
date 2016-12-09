@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/pe-icon-7-stroke.css" />
 
   <!-- JQuery Core Javascript -->
-  <script src="{{ STATIC_URL }}js/get-shit-done-pro/jquery.js"></script>
+  <script src="{{ STATIC_URL }}js/jquery/jquery.min.js"></script>
 
   {% block extrahead %}{% endblock %}
 
@@ -66,7 +66,7 @@
   {% endblock footer %}
 
   <!-- jQuery core JavaScript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/jquery-ui.custom.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-ui.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.form.js"></script>
 
   <!-- Bootstrap core JavaScript -->
@@ -82,6 +82,16 @@
   
   <!-- Get shit done core Javascript -->
   <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/get-shit-done.js"></script>  
+
+  <script type="text/javascript">
+    $("#myModal").draggable({
+      handle: ".modal-header"
+    });
+
+    $("#myModal2").draggable({
+      handle: ".modal-header"
+    });
+  </script>
 
   {% block extrascript %}{% endblock extrascript %}
 
