@@ -61,7 +61,9 @@
         {% block content %}{% endblock content %}
     </div>
   </div>
-  {% block footer %}{% endblock footer %}
+  {% block footer %}
+    {% include "footer.html" %}
+  {% endblock footer %}
 
   <!-- jQuery core JavaScript -->
   <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/jquery-ui.custom.min.js"></script>
@@ -84,6 +86,7 @@
   {% block extrascript %}{% endblock extrascript %}
 
 </div> <!-- end body wrapper -->
+
 </body>
 
 </html>

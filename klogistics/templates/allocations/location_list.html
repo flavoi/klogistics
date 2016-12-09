@@ -16,7 +16,7 @@ luoghi
               <th class="text-center">#</th>
               <th>Nome</th>
               <th>Descrizione</th>
-              <th>Etichetta</th>            
+              <th>Colore</th>            
           </tr>
       </thead>
       <tbody>
@@ -25,11 +25,7 @@ luoghi
               <td class="text-center">{{ location.id }}</td>
               <td>{{ location.name }}</td>
               <td>{{ location.description }}</td>
-              <td>
-                <span class="label" style="border-color: {{ location.color }}; color: {{ location.color }};">
-                  {{ location.get_color_display }}
-                </span>
-              </td>
+              <td><i class="fa fa-circle" style="border-color: {{ location.color }}; color: {{ location.color }};"></i></td>
           </tr>
         {% endfor %}
       </tbody>
