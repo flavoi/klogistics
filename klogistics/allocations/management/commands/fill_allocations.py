@@ -41,10 +41,9 @@ class Command(BaseCommand):
             random_end_date = season.start_date # Initialization
             random_location = new_random_location = ''
             while(i == 1):
-                start_date = random_end_date
                 new_random_end_date = random_end_date + td(days=randint(1,20))
                 if new_random_end_date >= season.end_date:
-                    new_random_end_date = season.end_date + td(days=1) # Do not go past season end date
+                    new_random_end_date = season.end_date # Do not go past season end date
                 random_end_date = new_random_end_date
                 while new_random_location == random_location:
                     new_random_location = Location.objects.all().order_by('?')[0]
@@ -59,3 +58,4 @@ class Command(BaseCommand):
                 print "Allocazione creata %s" % allocation
                 if random_end_date >= season.end_date:
                     i = 0
+                start_date = random_end_date + td(days=1)

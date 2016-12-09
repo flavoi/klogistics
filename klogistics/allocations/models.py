@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 
 from people.models import Person
 
+from colorfield.fields import ColorField
+
 
 class AllocationManager(models.QuerySet):
     
@@ -24,14 +26,7 @@ class Location(models.Model):
     """ Luogo nel quale sono allocate i membri del gruppo. """
     name = models.CharField(max_length=30)
     description = models.TextField(blank=True)
-    COLOR_CHOICES = (
-        (u'green', u'verde'),
-        (u'orange', u'arancio'),
-        (u'red', u'rosso'),
-        (u'#3a87ad', u'azzurro'),
-        (u'hotpink', u'rosa'),
-    )
-    color = models.CharField(max_length=30, choices=COLOR_CHOICES, default='azure')
+    color = ColorField(default='#FF0000')
     people = models.ManyToManyField(Person, through='Allocation', related_name='people')
 
     def __str__(self):              # __unicode__ on Python 2

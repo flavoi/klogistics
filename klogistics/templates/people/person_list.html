@@ -5,94 +5,61 @@
   {{ today }}
 {% endblock title %}
 
-{% block heading %}
-  <div class="row">
-  <div class="col-md-1">
-    <a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-chevron-left"></i></a>
-  </div>
-  <div class="col-md-10">
-    Logistica del giorno {{ today }}
-  </div>
-  <div class="col-md-1">
-    <a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-chevron-right"></i></a> 
-  </div>
-  </div>
-{% endblock heading %}
+{% block content_title %}
+<a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>&nbsp;
+Giorno {{ today }}
+<a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a> 
+{% endblock content_title %}
 
 {% block content %}
-
-<div class="row">
-    <div class="col-md-10">
-      <strong><i class="fa fa-filter" aria-hidden="true"></i> Filtri:</strong> 
-      {% for location in locations %}
-      <a class="btn btn-default btn-round" {% ifequal nav_active location.name %}style="background-color:#dcdcdc;{% endifequal %} href="{% url 'people:location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}">
-        <i class="fa fa-circle-o" style="color:{{ location.color }};"></i> {{ location.name }} <span class="badge">{{ location.num_allocations }}</span>
+  <div class="text-center">
+    {% for location in locations %}
+      <a class="btn btn-default btn-round" {% ifequal nav_active location.name %}style="background-color:#dcdcdc;{% endifequal %} href="{% url 'people:location-day' today|date:"Y" today|date:"m" today|date:"d" location.name %}"> <i class="fa fa-circle" style="color:{{ location.color }};"></i> {{ location.name }} <span class="badge">{{ location.num_allocations }}</span>
       </a>
-      {% endfor %}
-    </div>
-    <div class="col-md-2">
+    {% endfor %}
+    <br /><br />
     {% if nav_active %}
-      <a class="btn btn-default reset-filter pull-right btn-round btn-sm visible" href="{% url 'people:day' today|date:"Y" today|date:"m" today|date:"d" %}">
+      <a class="btn btn-default btn-round visible" href="{% url 'people:day' today|date:"Y" today|date:"m" today|date:"d" %}">
           <i class="fa fa-refresh" aria-hidden="true"></i> Reset
       </a>
     {% endif %}
-    </div>
-  <div class="clearfix"></div>
-</div> <!-- end nav pills -->
-<hr />
+  </div> <!-- end filters -->
 
-<div class="row">
-  {% for person in people %}
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-    <div class="panel panel-primary">
-        <div class="panel-heading">
-          <a class="btn btn-info btn-xs btn-fill pull-right" data-target="#{{ person.pk }}" href="#{{ person.pk }}" data-toggle="gsdk-collapse">
-            <i class="fa fa-expand"></i> 
-          </a>
-          <div class="clearfix"></div>
-        </div><!-- end panel heading -->
-        <div class="panel-body">
-            <div class="col-lg-4 col-md-4 col-sm-12">
-                <div class="profile-avatar">
-                    <img class="img-responsive" src="{{ person.avatar }}" alt="profile picture" height="84" width="84">
-                </div>
+  <br />
+
+  <div class="team-presentation">
+    <div class="row">
+      {% for person in people %}
+        <div class="col-md-3 col-xs-4">
+          <div class="card card-user">
+            <div class="image">
             </div>
-            <div class="col-lg-8 col-md-8 col-sm-12">
-                <p class="lead">
-                    {{ person.user.name }} <br />
-                    {{ person.surname }}
-                    <br />
-                    {% for allocation in person.allocation_set.all|people_allocation_day:today %}
-                      <span class="label" style="border-color: {{ allocation.location.color }}; color: {{ allocation.location.color }};">
-                        {{ allocation.location }}
-                      </span>
-                      {% empty %}
-                      <span class="label label-default">N/D</span>
-                    {% endfor %}
-                </p>
-                <div class="panel-group">
-                  <div class="panel">
-                    <div id="{{ person.pk }}" class="panel-collapse collapse">
-                      <div class="panel-body">
-                        <ul class="fa-ul">
-                          <li><i class="fa fa-suitcase fa-li" aria-hidden="true"></i> 
-                          {{ person.get_rank_display|capfirst }}</li>
-                          <li><i class="fa fa-street-view fa-li" aria-hidden="true"></i> 
-                          {{ person.office }}</li>
-                          <li><i class="fa fa-envelope fa-li" aria-hidden="true"></i> 
-                          {{ person.user.email }}</li>
-                          <li><i class="fa fa-phone fa-li" aria-hidden="true"></i> 
-                          {{ person.mobile_phone }}</li>
-                          <li>&nbsp;</li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-              </div><!-- end panel-group -->
-        </div><!-- end panel body grid -->
-        </div><!-- end panel body -->
-    </div><!-- end panel -->
-    </div><!-- end panel grid -->
-  {% endfor %}
-</div> <!-- grid row -->
+            <div class="content">
+              <div class="author">
+                <a href="#">
+                  <img class="avatar border-gray" src="{{ person.avatar }}" alt="{{ person.name }}"/>
+                  <h4 class="title">{{ person.user.name }} {{ person.surname }}<br />
+                     <small>
+                       {% for allocation in person.allocation_set.all|people_allocation_day:today %}
+                        <span class="label" style="border-color: {{ allocation.location.color }}; color: {{ allocation.location.color }};">
+                          {{ allocation.location }}
+                        </span>
+                        {% empty %}
+                        <span class="label label-default">N/D</span>
+                      {% endfor %}
+                    </small>
+                  </h4>
+                </a>
+              </div> <!-- end card author -->
+              <p class="description text-center">
+                <i class="fa fa-map-marker fa-fw text-muted"></i> {{ person.office }} <br/>
+                <i class="fa fa-phone fa-fw text-muted"></i> {{ person.mobile_phone }} <br/>
+                <i class="fa fa-envelope-o fa-fw text-muted"></i> {{ person.user.email }}                    
+              </p>
+            </div> <!-- end card content -->
+         </div> <!-- end card -->
+        </div> <!-- end grid column -->
+      {% endfor %}
+    </div> <!-- end grid row -->
+  </div> <!-- end team presentation -->
 {% endblock content %}

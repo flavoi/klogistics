@@ -19,77 +19,83 @@
   <link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap/bootstrap.css" />
 
   <!-- Get Shit Done Kit CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done/gsdk.css" />
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done/demo.css" />
-
-  <!-- Datepicker CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/jquery/jquery-ui.css" />
-
-  <!-- Klogistics CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/klogistics.css" />
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/gsdk.css" />
   
-  <!-- Fort Awesome Kit JavaScript --> 
-  <script src="https://use.fortawesome.com/ebffd7c6.js"></script>
+  <!-- Fonts and icons CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Grand+Hotel|Open+Sans:400,300'>
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/pe-icon-7-stroke.css" />
 
-  <!-- JQuery core JavaScript -->
-  <script src="{{ STATIC_URL }}js/jquery/jquery-1.12.4.js"></script>
-
-  <!-- Datepicker JavaScript -->
-  <script src="{{ STATIC_URL }}js/jquery/jquery-ui.js"></script>
-  <script src="{{ STATIC_URL }}js/jquery/datepicker-it.js"></script>
-
-  <!-- Modal JavaScript -->
-  <script src="{{ STATIC_URL }}js/jquery/jquery.form.js"></script>
-  <script src="{{ STATIC_URL }}js/klogistics.js"></script>
+  <!-- JQuery Core Javascript -->
+  <script src="{{ STATIC_URL }}js/jquery/jquery.min.js"></script>
 
   {% block extrahead %}{% endblock %}
 
 </head>
 
-<body class="Site">
+<body class="about-us">
 
-  <header class="Site-header">
-    {% block navbar %}
-      {% include "navbar.html" %}
-    {% endblock navbar %}
-  </header>
+  {% block navbar %}
+    {% include "navbar.html" %}
+  {% endblock navbar %}
 
-  <main class="Site-content">
+<div class="wrapper" style="padding-top: 40px;">
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" id="myModalContent">
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content" id="myModalContent2">
+      </div>
+    </div>
+  </div>
+  
+  <div class="section">
     <div class="container">
-      <div class="kheading">
-        <h2>{% block heading %}{% endblock heading %}</h2>
-      </div>
-      <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" id="myModalContent">
-          </div>
-        </div>
-      </div>
-      <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-          <div class="modal-content" id="myModalContent2">
-          </div>
-        </div>
-      </div>
-      {% block content %}{% endblock content %}
-    </div><!-- end container -->
-  </main>
-
-  <footer class="kfooter">
+      <h2 class="section-title text-center">
+        {% block content_title %}{% endblock content_title %}
+      </h2>
+        {% block content %}{% endblock content %}
+    </div>
+  </div>
+  {% block footer %}
     {% include "footer.html" %}
-  </footer>
+  {% endblock footer %}
+
+  <!-- jQuery core JavaScript -->
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.form.js"></script>
 
   <!-- Bootstrap core JavaScript -->
   <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
+  
+  <!-- Plugins JavaScript -->
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-checkbox.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-morphing.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-radio.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-bootstrapswitch.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/bootstrap-select.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/bootstrap-datepicker-it.js"></script>
+  
+  <!-- Get shit done core Javascript -->
+  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/get-shit-done.js"></script>  
 
-  <!-- Get Shit Done Kit Javascript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-checkbox.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-radio.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/gsdk-bootstrapswitch.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/get-shit-done.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done/custom.js"></script>
+  <script type="text/javascript">
+    $("#myModal").draggable({
+      handle: ".modal-header"
+    });
+
+    $("#myModal2").draggable({
+      handle: ".modal-header"
+    });
+  </script>
 
   {% block extrascript %}{% endblock extrascript %}
+
+</div> <!-- end body wrapper -->
 
 </body>
 

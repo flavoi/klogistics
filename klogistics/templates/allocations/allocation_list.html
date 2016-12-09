@@ -80,9 +80,9 @@
   {{ season.name }}
 {% endblock title %}
 
-{% block heading %}
-    {{ season.name|title }}: {{ season.start_date }} - {{ season.end_date }}
-{% endblock heading %}
+{% block content_title %}
+    Periodo {{ season.start_date|date:"SHORT_DATE_FORMAT" }} - {{ season.end_date|date:"SHORT_DATE_FORMAT" }}
+{% endblock content_title %}
 
 {% block content %}
     <!-- Calendar -->

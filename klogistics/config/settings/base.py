@@ -49,6 +49,7 @@ ADDONS = [
     'authtools',
     'storages',
     'widget_tweaks',
+    'colorfield',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS + ADDONS
