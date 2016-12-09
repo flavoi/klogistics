@@ -6,10 +6,9 @@
 {% endblock title %}
 
 {% block content_title %}
-  <a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>&nbsp;
-  Giorno {{ today }}
-  <a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a> 
-  </small>
+<a href="{% url 'people:day' yesterday|date:"Y" yesterday|date:"m" yesterday|date:"d" %}"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>&nbsp;
+Giorno {{ today }}
+<a href="{% url 'people:day' tomorrow|date:"Y" tomorrow|date:"m" tomorrow|date:"d" %}"><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a> 
 {% endblock content_title %}
 
 {% block content %}
