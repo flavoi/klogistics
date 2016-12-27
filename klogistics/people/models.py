@@ -39,22 +39,23 @@ class Person(models.Model):
     class Meta:
         ordering = ['surname']
         verbose_name_plural = 'people'
-
-    def as_dict(self): # integration with fullcalendar
-        return {
-            'id': self.id,
-            'title': self.surname + ' ' + self.user.name,
-        }
         
 
 class Team(models.Model):
     """ Il gruppo di lavoro. """
     name = models.CharField(max_length=30)
-    description = models.TextField()
+    description = models.TextField(blank=True)
     members = models.ManyToManyField(Person, through='Membership')
 
     def __str__(self):              # __unicode__ on Python 2
-        return self.nome
+        return self.name
+
+    def as_dict(self):              # integration with fullcalendar
+        memberships = self.membership_set.all()
+        return {
+            'title': self.name,
+            'children': [m.as_dict() for m in memberships]
+        }
 
 
 class Membership(models.Model):
@@ -62,7 +63,13 @@ class Membership(models.Model):
     member = models.ForeignKey(Person, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     ingress_date = models.DateTimeField(auto_now_add=True)
-    role = models.CharField(max_length=30)
+    role = models.CharField(blank=True, max_length=30)
     
     def __str__(self):              # __unicode__ on Python 2
         return self.role
+
+    def as_dict(self):              # integration with fullcalendar
+        return {
+            'id': self.member.id,
+            'title': self.member.surname + ' ' + self.member.user.name,
+        }

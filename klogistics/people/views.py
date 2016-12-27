@@ -12,14 +12,14 @@ from braces.views import LoginRequiredMixin
 
 from seasons.decorators import open_period_only
 from allocations.models import Location, Allocation
-from .models import Person
+from .models import Person, Membership, Team
 
 
-def people_json(request):
-    """ Restituisce l'elenco delle persone in formato json. """
-    people = Person.objects.all()
-    people = [ obj.as_dict() for obj in people ]
-    return JsonResponse(people, safe=False)
+def teams_json(request):
+    """ Restituisce l'elenco delle squadre in formato json. """
+    teams = Team.objects.all()
+    teams = [ obj.as_dict() for obj in teams ]
+    return JsonResponse(teams, safe=False)
 
 
 def search_day_allocation(request):

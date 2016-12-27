@@ -34,10 +34,15 @@
                     duration: { days: {{ season_duration }} }
                 }
             },
-            resourceLabelText: 'Persone',
             resourceAreaWidth: '20%',
+            resourceColumns: [
+                {
+                    labelText: 'Persone',
+                    field: 'title'
+                },
+            ],
             resources: {
-                url: '{% url 'people:ppljson' %}',
+                url: '{% url 'people:teamsjson' %}',
                 error: function() {
                     $('#script-warning').show();
                 }

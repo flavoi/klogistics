@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^login/$', view=djlogin, name='login'),
     url(r'^logout/$', view=djlogout, name='logout'),
     url(r'^cambio-password/$', view=djpwchange, name='pwchange'),
-    url(r'^persone-json/$', view=views.people_json, name='ppljson'),
+    url(r'^squadre-json/$', view=views.teams_json, name='teamsjson'),
     url(r'^$',
         view=views.TodayPersonView.as_view(),
         name='today'),
