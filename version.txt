@@ -1,3 +1,7 @@
+beta 5 - 
+   - Added team grouping in calendar page
+
+
 beta 4 - 09/12/2016
    - Added version notes in version.txt
    - Changed calendar page title to display date in dd/mm/aaaa format
