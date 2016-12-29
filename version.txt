@@ -1,4 +1,4 @@
-beta 5 - 
+beta 5 - 29/12/2016
    - Added team grouping in calendar page
    - Changed notification bar to occupy smaller area
    - Removed verbose text in account management area
