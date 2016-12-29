@@ -24,42 +24,46 @@ Giorno {{ today }}
       </a>
     {% endif %}
   </div> <!-- end filters -->
-
-  <br />
-
-  <div class="team-presentation">
-    <div class="row">
-      {% for person in people %}
-        <div class="col-md-3 col-xs-6">
-          <div class="card card-user">
-            <div class="image">
-            </div>
-            <div class="content">
-              <div class="author">
-                <a href="#">
-                  <img class="avatar border-gray" src="{{ person.avatar }}" alt="{{ person.name }}"/>
-                  <h4 class="title">{{ person.user.name }} {{ person.surname }}<br />
-                     <small>
-                       {% for allocation in person.allocation_set.all|people_allocation_day:today %}
-                        <span class="label" style="border-color: {{ allocation.location.color }}; color: {{ allocation.location.color }};">
-                          {{ allocation.location }}
-                        </span>
-                        {% empty %}
-                        <span class="label label-default">N/D</span>
-                      {% endfor %}
-                    </small>
-                  </h4>
-                </a>
-              </div> <!-- end card author -->
-              <p class="description text-center">
-                <i class="fa fa-map-marker fa-fw text-muted"></i> {{ person.office }} <br/>
-                <i class="fa fa-phone fa-fw text-muted"></i> {{ person.mobile_phone }} <br/>
-                <i class="fa fa-envelope-o fa-fw text-muted"></i> {{ person.user.email }}                    
-              </p>
-            </div> <!-- end card content -->
-         </div> <!-- end card -->
-        </div> <!-- end grid column -->
-      {% endfor %}
-    </div> <!-- end grid row -->
-  </div> <!-- end team presentation -->
 {% endblock content %}
+
+{% block extracontent %}
+  <div class="section section-gray">
+    <div class="container">
+      <div class="row">
+        {% for person in people %}
+          <div class="col-md-3 col-xs-6">
+            <div class="card card-user">
+              <div class="image">
+              </div>
+              <div class="content">
+                <div class="author">
+                  <a href="#">
+                    <img class="avatar border-gray" src="{{ person.avatar }}" alt="{{ person.name }}"/>
+                    <h4 class="title">{{ person.user.name }} {{ person.surname }}<br />
+                       <small>
+                         {% for allocation in person.allocation_set.all|people_allocation_day:today %}
+                          <span class="label" style="border-color: {{ allocation.location.color }}; color: {{ allocation.location.color }};">
+                            {{ allocation.location }}
+                          </span>
+                          {% empty %}
+                          <span class="label label-default">N/D</span>
+                        {% endfor %}
+                      </small>
+                    </h4>
+                  </a>
+                </div> <!-- end card author -->
+                <hr>
+                <div class="text-center">
+                  <i class="fa fa-map-marker fa-fw text-muted"></i> {{ person.office }} <br/>
+                  <i class="fa fa-phone fa-fw text-muted"></i> {{ person.mobile_phone }} <br/>
+                  <i class="fa fa-envelope-o fa-fw text-muted"></i> {{ person.user.email }}                    
+                </div>
+              </div> <!-- end card content -->
+           </div> <!-- end card -->
+          </div> <!-- end grid column -->
+        {% endfor %}
+      </div> <!-- end grid row -->
+    </div> <!-- end container -->
+  </div> <!-- end section -->
+  <br />
+{% endblock extracontent %}
