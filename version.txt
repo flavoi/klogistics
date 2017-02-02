@@ -1,23 +1,26 @@
-beta 5 - 29/12/2016
-   - Added team grouping in calendar page
-   - Changed notification bar to occupy smaller area
-   - Removed verbose text in account management area
-   - Added gray background in homepage
-   - Added Kwiki link in navbar
+beta 0.5.1 - 02/02/2017
+    - Updated versioning under the Semantic Versioning guidelines - see http://semver.org/ for details
 
-beta 4 - 09/12/2016
-   - Added version notes in version.txt
-   - Changed calendar page title to display date in dd/mm/aaaa format
-   - Fixed intervals calculation in automatic allocations script
-   - Unified all functionalities in a single navbar menu
-   - Updated user cards style
-   - Updated navbar icons style
-   - Updated datepicker style
-   - Upgraded color picker in the admin
-   - Updated jquery to the latest version
+beta 0.5.0 - 29/12/2016
+    - Added team grouping in calendar page
+    - Changed notification bar to occupy smaller area
+    - Removed verbose text in account management area
+    - Added gray background in homepage
+    - Added Kwiki link in navbar
 
-beta 3 - 20/11/2016
+beta 0.4.0 - 09/12/2016
+    - Added version notes in version.txt
+    - Changed calendar page title to display date in dd/mm/aaaa format
+    - Fixed intervals calculation in automatic allocations script
+    - Unified all functionalities in a single navbar menu
+    - Updated user cards style
+    - Updated navbar icons style
+    - Updated datepicker style
+    - Upgraded color picker in the admin
+    - Updated jquery to the latest version
 
-beta 2 - 13/11/2016
+beta 0.3.0 - 20/11/2016
 
-beta 1 - 06/11/2016
+beta 0.2.0 - 13/11/2016
+
+beta 0.1.0 - 06/11/2016
