@@ -39,7 +39,13 @@ class Person(models.Model):
     class Meta:
         ordering = ['surname']
         verbose_name_plural = 'people'
-        
+    
+    def as_dict(self):              # integration with fullcalendar
+        return {
+            'id': self.id,
+            'title': self.user.name[0] + '. ' + self.surname
+        }
+
 
 class Team(models.Model):
     """ Il gruppo di lavoro. """

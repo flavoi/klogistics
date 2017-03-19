@@ -81,6 +81,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'signature.context.get_signature',
                 'seasons.context.get_seasons',
+                'seasons.context.get_open_season',
             ],
         },
     },

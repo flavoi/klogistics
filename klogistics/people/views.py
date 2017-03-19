@@ -17,7 +17,7 @@ from .models import Person, Membership, Team
 
 def teams_json(request):
     """ Restituisce l'elenco delle squadre in formato json. """
-    teams = Team.objects.all()
+    teams = Person.objects.all()
     teams = [ obj.as_dict() for obj in teams ]
     return JsonResponse(teams, safe=False)
 

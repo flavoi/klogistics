@@ -1,3 +1,6 @@
+beta 0.6.1 - xx/xx/xxxx
+    - Integrated material dashboard
+
 beta 0.5.1 - 02/02/2017
     - Updated versioning under the Semantic Versioning guidelines - see http://semver.org/ for details
 

@@ -1,105 +1,189 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  
-  <title>klogistics &raquo; {% block title %}{% endblock %}</title>
-  
-  <!-- Favicon -->
-  <link rel="shortcut icon" href="{{ STATIC_URL }}img/kl-logo.ico" />
-
+  <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/kl-logo.ico" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>klogistics &raquo; {% block title %}{% endblock %}</title>  
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+  <meta name="viewport" content="width=device-width" />
   <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL}}css/bootstrap/bootstrap.css" />
-
-  <!-- Get Shit Done Kit CSS -->
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/gsdk.css" />
-  
-  <!-- Fonts and icons CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-  <link rel="stylesheet" href='https://fonts.googleapis.com/css?family=Grand+Hotel|Open+Sans:400,300'>
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/get-shit-done-pro/pe-icon-7-stroke.css" />
-
-  <!-- JQuery Core Javascript -->
-  <script src="{{ STATIC_URL }}js/jquery/jquery.min.js"></script>
+  <link rel="stylesheet" href="{{ STATIC_URL}}material-dashboard/css/bootstrap.min.css" />
+  <!-- Material dashboard CSS -->
+  <link rel="stylesheet" href="{{ STATIC_URL}}material-dashboard/css/material-dashboard.css" />
+  <!-- Fonts and icons -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
 
   {% block extrahead %}{% endblock %}
 
 </head>
 
 <body>
-
-{% block navbar %}
-  {% include "navbar.html" %}
-{% endblock navbar %}
-
-<div class="wrapper" style="padding-top: 40px;">
-  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" id="myModalContent">
-      </div>
+    <div class="wrapper">
+        {% if user.is_authenticated %}
+        <div class="sidebar" data-active-color="blue" data-background-color="white">
+            <!--
+        Tip 1: You can change the color of active element of the sidebar using: data-active-color="purple | blue | green | orange | red | rose"
+        Tip 2: you can also add an image using data-image tag
+        Tip 3: you can change the color of the sidebar with data-background-color="white | black"
+    -->
+            <div class="logo">
+                <a href="{% url 'people:today' %}" class="simple-text">
+                    Klogistics
+                </a>
+            </div>
+            <div class="logo logo-mini">
+                <a href="{% url 'people:today' %}" class="simple-text">
+                    Kl
+                </a>
+            </div>
+            <div class="sidebar-wrapper">
+                <div class="user">
+                    <div class="photo">
+                        <img src="{{ user.person.avatar }}" />
+                    </div>
+                    <div class="info">
+                        <a data-toggle="collapse" href="#collapseExample" class="collapsed">
+                            {{ user.name }} {{ user.person.surname }}
+                            <b class="caret"></b>
+                        </a>
+                        <div class="collapse" id="collapseExample">
+                            <ul class="nav">
+                                <li>
+                                    <a href="#">My Profile</a>
+                                </li>
+                                <li>
+                                    <a href="#">Edit Profile</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <ul class="nav">
+                    <li class="{% block calendar_active %}{% endblock calendar_active %}">
+                        <a href="{% url 'allocations:season' open_season.slug %}">
+                            <i class="material-icons">date_range</i>
+                            <p>Calendario</p>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main-panel">
+            <nav class="navbar navbar-transparent navbar-absolute">
+                <div class="container-fluid">
+                    <div class="navbar-minimize">
+                        <button id="minimizeSidebar" class="btn btn-round btn-white btn-fill btn-just-icon">
+                            <i class="material-icons visible-on-sidebar-regular">more_vert</i>
+                            <i class="material-icons visible-on-sidebar-mini">view_list</i>
+                        </button>
+                    </div>
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#"> {% block pagename %}{% endblock pagename %}</a>
+                    </div>
+                    <div class="collapse navbar-collapse">
+                        <form class="navbar-form navbar-right" role="search">
+                            <div class="form-group form-search is-empty">
+                                <input type="text" class="form-control" placeholder="Search">
+                                <span class="material-input"></span>
+                            </div>
+                            <button type="submit" class="btn btn-white btn-round btn-just-icon">
+                                <i class="material-icons">search</i>
+                                <div class="ripple-container"></div>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            {% endif %}
+            <div class="content">
+                <div class="container-fluid">
+                {% block content %}{% endblock content %}
+                </div>
+            </div>
+            <footer class="footer">
+                <div class="container-fluid">
+                    <nav class="pull-left">
+                        <ul>
+                            <li>
+                                <a href="#">
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Company
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Portfolio
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    Blog
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <p class="copyright pull-right">
+                    <i class="fa fa-creative-commons" aria-hidden="true"></i>
+                        {{ signature }} | made with <i class="fa fa-heart heart" alt="love"></i> for our team
+                    </p>
+                </div>
+            </footer>
+        </div>
     </div>
-  </div>
-  <div class="modal fade" id="myModal2" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content" id="myModalContent2">
-      </div>
-    </div>
-  </div>
-  
-  <div class="section">
-    <div class="container">
-      <h2 class="section-title text-center">
-        {% block content_title %}{% endblock content_title %}
-      </h2>
-        {% block content %}{% endblock content %}
-    </div>
-  </div>
-
-  {% block extracontent %}{% endblock extracontent %}
-  
-  {% block footer %}
-    {% include "footer.html" %}
-  {% endblock footer %}
-
-  <!-- jQuery core JavaScript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/jquery.form.js"></script>
-
-  <!-- Bootstrap core JavaScript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap/bootstrap.min.js"></script>
-  
-  <!-- Plugins JavaScript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-checkbox.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-morphing.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-radio.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/gsdk-bootstrapswitch.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/bootstrap-select.js"></script>
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/bootstrap-datepicker-it.js"></script>
-  
-  <!-- Get shit done core Javascript -->
-  <script type="text/javascript" src="{{ STATIC_URL }}js/get-shit-done-pro/get-shit-done.js"></script>  
-
-  <script type="text/javascript">
-    $("#myModal").draggable({
-      handle: ".modal-header"
-    });
-
-    $("#myModal2").draggable({
-      handle: ".modal-header"
-    });
-  </script>
-
-  {% block extrascript %}{% endblock extrascript %}
-
-</div> <!-- end body wrapper -->
-
 </body>
+<!-- Core JavaScript -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/material.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/perfect-scrollbar.jquery.min.js"></script>
+<!-- Forms Validations Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery.validate.min.js"></script>
+<!--  Plugin for Date Time Picker and Full Calendar Plugin-->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/moment.min.js"></script>
+<!--  Charts Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/chartist.min.js"></script>
+<!--  Plugin for the Wizard -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery.bootstrap-wizard.js"></script>
+<!--  Notifications Plugin    -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/bootstrap-notify.js"></script>
+<!-- DateTimePicker Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/bootstrap-datetimepicker.js"></script>
+<!-- Vector Map Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery-jvectormap.js"></script>
+<!-- Sliders Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/nouislider.min.js"></script>
+<!--  Google Maps Plugin    -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<!-- Select Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery.select-bootstrap.js"></script>
+<!-- DataTables.net Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery.datatables.js"></script>
+<!-- Sweet Alert 2 Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/sweetalert2.js"></script>
+<!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jasny-bootstrap.min.js"></script>
+<!-- TagsInput Plugin -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/jquery.tagsinput.js"></script>
+<!-- Material Dashboard JavaScript Methods -->
+<script type="text/javascript" src="{{ STATIC_URL }}material-dashboard/js/material-dashboard.js"></script>
+
+{% block extrascript %}{% endblock extrascript %}
 
 </html>
