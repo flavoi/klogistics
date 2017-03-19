@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^periodo-json/(?P<season>\d+)/$',
         view=views.allocation_season_json,
         name='season-json'),
-    url(r'^luoghi/$',
+    url(r'^$',
         view=views.LocationView.as_view(),
         name='locations'),
     url(r'^registrazione/$',

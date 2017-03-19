@@ -1,33 +1,48 @@
 {% extends "base.html" %}
 
 {% block title %}
-luoghi
+cruscotto
 {% endblock title %}
 
-{% block content_title %}
-  Legenda per il calendario
-{% endblock content_title %}
+{% block dashboard_active %}active{% endblock dashboard_active %}
+
+{% block pagename %}Cruscotto{% endblock pagename %}
 
 {% block content %}
-  <div class="table-responsive">
-    <table class="table">
-      <thead>
-          <tr>
-              <th class="text-center">#</th>
-              <th>Nome</th>
-              <th>Descrizione</th>
-              <th>Colore</th>            
-          </tr>
-      </thead>
-      <tbody>
-        {% for location in locations %}
-          <tr>
-              <td class="text-center">{{ location.id }}</td>
-              <td>{{ location.name }}</td>
-              <td>{{ location.description }}</td>
-              <td><i class="fa fa-circle" style="border-color: {{ location.color }}; color: {{ location.color }};"></i></td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>    
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header card-header-icon" data-background-color="blue">
+          <i class="material-icons">card_travel</i>
+      </div>
+      <h4 class="card-title">Luoghi</h4>
+        <div class="card-content table-responsive table-full-width">
+          <table class="table table-hover">
+              <thead class="text-info">
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Descrizione</th>
+                  <th>Legenda</th>
+              </thead>
+              <tbody>
+                {% for location in locations %}
+                  <tr>
+                      <td>
+                        {{ location.id }}
+                      </td>
+                      <td>{{ location.name }}</td>
+                      <td>
+                          {{ location.description }}
+                      </td>
+                      <td>
+                        <i class="material-icons" style="border-color: {{ location.color }}; color: {{ location.color }};">label</i>
+                      </td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+      </div><!-- End table -->
+    </div><!-- End locations card -->
+  </div> <!-- End grid -->
+</div> <!-- End row -->
 {% endblock content %}
