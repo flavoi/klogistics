@@ -34,6 +34,7 @@ class AllocationForm(forms.ModelForm):
     def clean(self):
         form_start_date = self.cleaned_data.get('start_date')
         form_end_date = self.cleaned_data.get('end_date')
+        today = datetime.date.today()
         errors_dict = {}
         if form_end_date is not None and form_start_date is not None:
             if form_end_date < form_start_date:
@@ -45,4 +46,10 @@ class AllocationForm(forms.ModelForm):
             if form_end_date < current_season.start_date or \
                form_end_date > current_season.end_date:
                self.add_error('end_date', forms.ValidationError('La data fine deve essere inclusa nella stagione aperta.'))
+            if form_start_date.month < today.month and \
+               form_start_date.year == today.year:
+               self.add_error('start_date', forms.ValidationError('La data inizio deve essere inclusa nel mese corrente.'))
+            if form_end_date.month < today.month and \
+               form_end_date.year == today.year:
+               self.add_error('end_date', forms.ValidationError('La data fine deve essere inclusa nel mese corrente.'))
         super(AllocationForm, self).clean()
