@@ -71,5 +71,5 @@ class Membership(models.Model):
     def as_dict(self):              # integration with fullcalendar
         return {
             'id': self.member.id,
-            'title': self.member.surname + ' ' + self.member.user.name,
+            'title': self.member.user.name + ' ' + self.member.surname[0] + '.',
         }

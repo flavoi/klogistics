@@ -3,6 +3,9 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns = [
+    url(r'^$', 
+        view=views.OpenSeasonAllocationView.as_view(), 
+        name='open_season'),
     url(r'^periodo/(?P<slug>[\w-]+)/$', 
         view=views.SeasonAllocationView.as_view(), 
         name='season'),

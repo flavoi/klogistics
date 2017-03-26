@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^logout/$', view=djlogout, name='logout'),
     url(r'^cambio-password/$', view=djpwchange, name='pwchange'),
     url(r'^squadre-json/$', view=views.teams_json, name='teamsjson'),
-    url(r'^$',
+    url(r'^oggi/$',
         view=views.TodayPersonView.as_view(),
         name='today'),
     url(r'^([0-9]{4})/([0-9]{2})/([0-9]+)/$',

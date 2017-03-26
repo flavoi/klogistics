@@ -53,11 +53,10 @@ class AllocationView(LoginRequiredMixin, ListView):
 
 
 class SeasonAllocationView(AllocationView):
-    """ Visualizza il calendario relativo alla Stagione imputata."""
+    """ Visualizza il calendario relativo alla stagione imputata."""
 
     def get_queryset(self):
         self.season = Season.objects.get(slug=self.kwargs['slug'])
-        # self.season = Season.objects.all()[0]
         self.people = Person.objects.all()
         start_date, end_date = self.season.start_date, self.season.end_date
         return Allocation.objects.get_season_allocations(start_date, end_date)
@@ -66,9 +65,20 @@ class SeasonAllocationView(AllocationView):
         context = super(SeasonAllocationView, self).get_context_data(**kwargs)
         context['now'] = date.today().strftime("%Y-%m-%d")
         context['season'] = self.season
+        context['locations'] = Location.objects.all()
         delta = self.season.end_date - self.season.start_date
         context['season_duration'] = delta.days + 1
         return context
+
+
+class OpenSeasonAllocationView(SeasonAllocationView):
+    """ Visualizza il calendario relativo alla stagione imputata."""
+    
+    def get_queryset(self):
+        self.season = Season.objects.get_open_season()
+        self.people = Person.objects.all()
+        start_date, end_date = self.season.start_date, self.season.end_date
+        return Allocation.objects.get_season_allocations(start_date, end_date)
 
 
 class AllocationActionMixin(object):
