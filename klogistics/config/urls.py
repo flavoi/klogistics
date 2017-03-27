@@ -21,6 +21,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('authtools.urls')),
     url(r'^', include('allocations.urls', namespace='allocations')),
-    url(r'^persone/', include('people.urls', namespace='people')),
+    url(r'^', include('people.urls', namespace='people')),
     url(r'^stagioni/', include('seasons.urls')),
 ]
