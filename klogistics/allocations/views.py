@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 
 from braces.views import LoginRequiredMixin
+from extra_views import InlineFormSet, CreateWithInlinesView, ModelFormSetView
 
 from people.models import Person
 from seasons.decorators import open_period_only
@@ -50,7 +51,7 @@ def allocation_season_json(request, season):
 class AllocationView(LoginRequiredMixin, ListView):
     """ Espone la lista di allocazioni. """
     model = Allocation
-
+    template_name = 'allocations/calendar.html'
 
 class SeasonAllocationView(AllocationView):
     """ Visualizza il calendario relativo alla stagione imputata."""
@@ -106,6 +107,21 @@ class AllocationCreateView(LoginRequiredMixin, AllocationActionMixin, CreateView
     success_msg = "Registrazione completata!"
     form_class = AllocationForm
 
+
+class PersonInline(InlineFormSet):
+    model = Person
+
+
+@method_decorator(open_period_only, name='dispatch')
+class AllocationCreateSetView(ModelFormSetView):
+    """ Gestisce la creazione di piu` allocazioni contemporaneamente. """
+    model = Allocation
+    template_name_suffix = '_create_formset'
+    fields = ('location', 'start_date', 'end_date')
+
+    def get_queryset(self):
+        return super(AllocationCreateSetView, self).get_queryset().none()
+        
 
 @method_decorator(open_period_only, name='dispatch')
 class AllocationUpdateView(LoginRequiredMixin, AllocationActionMixin, UpdateView):

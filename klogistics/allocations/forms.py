@@ -7,6 +7,7 @@ from .models import Allocation
 from people.models import Person
 from seasons.models import Season
 
+
 class AllocationForm(forms.ModelForm):
     start_date = forms.DateField(
         widget=forms.DateInput(attrs={'class': 'datepicker'}),
@@ -53,3 +54,4 @@ class AllocationForm(forms.ModelForm):
                form_end_date.year == today.year:
                self.add_error('end_date', forms.ValidationError('La data fine deve essere inclusa nel mese corrente.'))
         super(AllocationForm, self).clean()
+

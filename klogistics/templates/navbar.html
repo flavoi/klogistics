@@ -35,8 +35,13 @@
       <ul class="nav navbar-nav navbar-right">
         {% if user.is_authenticated %}
           <li>
-            <a data-toggle="modal" data-target="#myModal" href="{% url 'allocations:create' %}" class="btn btn-default btn-round">
-              Registrati
+            <a href="{% url 'allocations:create-set' %}" class="btn btn-default btn-round">
+              <i class="fa fa-pencil-square-o fa-fw" aria-hidden="true"></i> Registrati
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'allocations:locations' %}">
+              <i class="fa fa-map fa-fw"></i> Luoghi
             </a>
           </li>
           <li class="dropdown">
