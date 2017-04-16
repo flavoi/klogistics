@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load i18n widget_tweaks %}
+
+{% block extrahead %}
+<style type="text/css">
+  .form-row {
+    padding-bottom: 15px;
+  }
+</style>
+{% endblock extrahead %}
+
+{% block title %}
+registrazione
+{% endblock title %}
+
+{% block content_title %}
+  Registrazione
+{% endblock content_title %}
+
+{% block content %}
+
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+
+<p class="lead text-center">
+Qui sotto è possibile inserire più occorrenze di logistica in una sola volta.<br />
+Il pulsante "aggiungi" inserisce una nuova riga, "sfila" la rimuove definitivamente. 
+</p>
+
+<form class="form-inline" id="AllocationFormSet" method="post" action="{% url 'allocations:create-set' %}">
+    {% csrf_token %}
+    {% for form in formset %}
+      {% if form.errors %}
+      <div class="alert alert-warning" role="alert">
+          <ul>
+          {% for field in form %}
+            {% if field.errors %}
+              <li><strong>{{ field.label|escape|capfirst }}:</strong>{{ field.errors|escape }}</li>
+            {% endif %}
+          {% endfor %}
+          </ul>
+      </div>
+      {% endif %}
+      <div class="form-row">
+        {% for field in form.visible_fields %}
+          <div class="form-group {% if field.errors %}has-warning{% endif %}">
+            <label for="field.id">{{ field.label|capfirst }}</label>
+            {{ field|add_class:"form-control" }}              
+          </div>
+        {% endfor %}
+      </div>
+  {% endfor %}
+  {{ formset.management_form }}
+  <input type="submit" class="btn btn-primary btn-fill" value="Salva" />
+</form>
+</div>
+</div>
+{% endblock content %}
+
+{% block extrascript %}
+<!-- Dynamic formset Javascript -->
+<script type="text/javascript" src="{{ STATIC_URL }}js/django-dynamic-formset/jquery.formset.fm.js"></script>  
+<script type="text/javascript">
+
+    /* Datepicker configuration */
+     $('.datepicker').datepicker({
+        weekStart: 1,
+        color: 'azure',
+        format: 'dd/mm/yyyy',
+        language: 'it',
+    });
+
+    $('.form-row').formset({
+      deleteText: 'Sfila',
+      deleteCssClass: 'form-control btn btn-simple',
+      addText: 'Aggiungi',
+      addCssClass: 'btn btn-primary btn-simple',
+    });
+
+</script>
+{% endblock extrascript %}
+
+{% block footer %}{% endblock footer %}

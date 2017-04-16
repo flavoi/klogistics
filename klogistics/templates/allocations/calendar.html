@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<link rel='stylesheet' href="{{ STATIC_URL }}css/fullcalendar/fullcalendar.min.css">
+<link rel='stylesheet' href="{{ STATIC_URL }}css/fullcalendar/scheduler.min.css">
+{% endblock extrahead %}
+
+{% block title %}
+calendario
+{% endblock title %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="card card-plain">
+            <div id='calendar'></div>
+        </div>
+    </div>
+    </div> <!-- End grid col -->
+</div> <!-- End grid row -->
+
+{% endblock content %}
+
+{% block extrascript %}
+<script src="{{ STATIC_URL }}js/fullcalendar/moment.min.js"></script>
+<script src="{{ STATIC_URL }}js/fullcalendar/fullcalendar.min.js"></script>
+<script src="{{ STATIC_URL }}js/fullcalendar/fullcalendar-lang-it.js""></script>
+<script src="{{ STATIC_URL }}js/fullcalendar/scheduler.min.js"></script>
+<script type="text/javascript">
+    calendar = {
+        initFullCalendar: function(){ 
+            $calendar = $('#calendar');
+            today = new Date();
+            y = today.getFullYear();
+            m = today.getMonth();
+            d = today.getDate();
+            $('#calendar').fullCalendar({
+                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
+                header: {
+                    left: 'title',
+                    center: 'timelineMonth,timelineWeek,agendaDay,',
+                    right: 'prev,next,today'
+                },
+                defaultDate: today,
+                contentHeight: 'auto',
+                businessHours: {
+                    dow: [ 1, 2, 3, 4, 5 ], // Lunedì - Giovedì
+                },
+                defaultView: 'timelineWeek',
+                slotDuration: { days: 1 },
+                resourceAreaWidth: '20%',
+                resourceColumns: [
+                    {
+                        labelText: 'Persone',
+                        field: 'title'
+                    },
+                ],
+                resources: {
+                    url: '{% url 'people:teamsjson' %}',
+                    error: function() {
+                        $('#script-warning').show();
+                    }
+                },
+                events: {
+                    url: '{% url 'allocations:season-json' season.pk %}',
+                    error: function() {
+                        $('#script-warning').show();
+                    }
+                },
+                eventClick: function(date, jsEvent, view) { 
+                    // Destinazione modal per eventi dell'utente                    
+                    var h = $(this).attr('href');                
+                    if (h != null) {
+                        $(this).attr('data-target','#myModal');
+                        $(this).attr('data-toggle','modal');
+                    }
+                },
+            }); // Fine configurazione calendario
+        } // Fine inizializzazione calendario
+    } // Fine oggetto calendario
+    $(document).ready(function() {
+        calendar.initFullCalendar();
+    });
+</script>
+{% endblock %}
