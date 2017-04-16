@@ -1,4 +1,4 @@
-beta 0.6.0 - 16/02/2017
+beta 0.6.1 - 16/02/2017
    - Integrated formset for in bulk creation of new allocations
    - Included weekagenda and dayagenda in the calendar
    - Removed today page since it's already included in the calendar
