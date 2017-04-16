@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from django import forms
 
-from .models import Allocation
+from .models import Allocation, Location
 from people.models import Person
 from seasons.models import Season
 
@@ -12,17 +12,27 @@ class AllocationForm(forms.ModelForm):
     start_date = forms.DateField(
         widget=forms.DateInput(attrs={
             'placeholder': 'gg/mm/aaaa',
-            'class': 'datepicker',
+            'class': 'form-control datepicker',
         }),
         label='data inizio',
     )
     end_date = forms.DateField(
         widget=forms.DateInput(attrs={
             'placeholder': 'gg/mm/aaaa',
-            'class': 'datepicker',
+            'class': 'form-control datepicker',
         }),
         label='data fine',
         help_text="Gli estremi sono inclusi.",
+    )
+    location = forms.ModelChoiceField(
+        label='Luogo',
+        empty_label='Nessuna selezione',
+        queryset=Location.objects.all(),            
+        widget=forms.Select(
+            attrs={
+            'class': 'form-control'
+            }
+        ),
     )
 
     class Meta:
@@ -64,11 +74,21 @@ class AllocationForm(forms.ModelForm):
 
 class AllocationPlainForm(AllocationForm):
     start_date = forms.DateField(
-        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
+        widget=forms.DateInput(
+            attrs={
+                'placeholder': 'gg/mm/aaaa',
+                'class': 'form-control',
+            }
+        ),
         label='data inizio',
     )
     end_date = forms.DateField(
-        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
+        widget=forms.DateInput(
+            attrs={
+                'placeholder': 'gg/mm/aaaa',
+                'class': 'form-control',
+            }
+        ),
         label='data fine',
         help_text="Gli estremi sono inclusi.",
     )

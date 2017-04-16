@@ -11,7 +11,7 @@
 
 {% block modal_body %}
     {% for field in form %}
-    <fieldset class="form-group {% if field.errors %}has-warning{% endif %}">
+    <div class="form-group {% if field.errors %}has-warning{% endif %}">
         {% if field.errors %}
             {% for error in field.errors %}
                 <div class="alert alert-warning" role="alert">
@@ -22,13 +22,13 @@
         <label class="col-sm-4 control-label">
             {{ field.label|capfirst }}:
         </label>
-        <div class="col-sm-8">
-            {{ field|add_class:"form-control" }}
+        <div class="col-sm-6">
+            {{ field }}
             {% if field.help_text %}
                 <span id="helpBlock" class="help-block">{{ field.help_text|safe }}</span>
             {% endif %}
         </div>
-    </fieldset>
+    </div>
     {% endfor %}
 {% endblock modal_body %}
 

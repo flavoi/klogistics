@@ -20,13 +20,14 @@ registrazione
 {% block content %}
 
 <div class="row">
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-10 col-md-offset-1">
 
 <p class="lead text-center">
 Qui sotto è possibile inserire più occorrenze di logistica in una sola volta.<br />
 Il pulsante "aggiungi" inserisce una nuova riga, "sfila" la rimuove definitivamente. 
 </p>
 
+<div class='text-center'>
 <form class="form-inline" id="AllocationFormSet" method="post" action="{% url 'allocations:create-set' %}">
     {% csrf_token %}
     {% for form in formset %}
@@ -45,7 +46,7 @@ Il pulsante "aggiungi" inserisce una nuova riga, "sfila" la rimuove definitivame
         {% for field in form.visible_fields %}
           <div class="form-group {% if field.errors %}has-warning{% endif %}">
             <label for="field.id">{{ field.label|capfirst }}</label>
-            {{ field|add_class:"form-control" }}              
+            {{ field }}              
           </div>
         {% endfor %}
       </div>
@@ -53,6 +54,7 @@ Il pulsante "aggiungi" inserisce una nuova riga, "sfila" la rimuove definitivame
   {{ formset.management_form }}
   <input type="submit" class="btn btn-primary btn-fill" value="Salva" />
 </form>
+</div>
 </div>
 </div>
 {% endblock content %}

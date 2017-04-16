@@ -23,7 +23,7 @@
             {{ field.label|capfirst }}:
         </label>
         <div class="col-sm-8">
-            {{ field|add_class:"form-control" }}
+            {{ field }}
             {% if field.help_text %}
                 <span id="helpBlock" class="help-block">{{ field.help_text|safe }}</span>
             {% endif %}
