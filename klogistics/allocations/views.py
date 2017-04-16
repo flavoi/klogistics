@@ -1,12 +1,13 @@
 import json
 from datetime import date, timedelta, datetime
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.http import JsonResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
+from django.forms import modelformset_factory
 
 from braces.views import LoginRequiredMixin
 from extra_views import InlineFormSet, CreateWithInlinesView, ModelFormSetView
@@ -16,6 +17,30 @@ from seasons.decorators import open_period_only
 from seasons.models import Season
 from .models import Location, Allocation
 from .forms import AllocationForm
+
+@open_period_only
+def manage_allocations(request):
+    """ Renderizza il formset di compilazioni della logistica """
+    AllocationFormSet = modelformset_factory(
+        Allocation, 
+        form=AllocationForm,
+    )
+    if request.method == 'POST':
+        formset = AllocationFormSet(request.POST, request.FILES, form_kwargs={'user': request.user})
+        if formset.is_valid() and formset:
+            formset.save()
+            messages.success(request, "Registrazione completata!")
+            return redirect('allocations:open_season')
+    else:
+        formset = AllocationFormSet(
+            form_kwargs={'user': request.user},
+            queryset=Allocation.objects.none(),
+        )
+    context = {
+        'formset': formset,
+    }
+    template_name = 'allocations/allocation_create_formset.html'
+    return render(request, template_name, context)
 
 
 def allocation_season_json(request, season):
@@ -52,6 +77,7 @@ class AllocationView(LoginRequiredMixin, ListView):
     """ Espone la lista di allocazioni. """
     model = Allocation
     template_name = 'allocations/calendar.html'
+
 
 class SeasonAllocationView(AllocationView):
     """ Visualizza il calendario relativo alla stagione imputata."""
@@ -107,21 +133,6 @@ class AllocationCreateView(LoginRequiredMixin, AllocationActionMixin, CreateView
     success_msg = "Registrazione completata!"
     form_class = AllocationForm
 
-
-class PersonInline(InlineFormSet):
-    model = Person
-
-
-@method_decorator(open_period_only, name='dispatch')
-class AllocationCreateSetView(ModelFormSetView):
-    """ Gestisce la creazione di piu` allocazioni contemporaneamente. """
-    model = Allocation
-    template_name_suffix = '_create_formset'
-    fields = ('location', 'start_date', 'end_date')
-
-    def get_queryset(self):
-        return super(AllocationCreateSetView, self).get_queryset().none()
-        
 
 @method_decorator(open_period_only, name='dispatch')
 class AllocationUpdateView(LoginRequiredMixin, AllocationActionMixin, UpdateView):

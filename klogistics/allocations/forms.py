@@ -10,11 +10,11 @@ from seasons.models import Season
 
 class AllocationForm(forms.ModelForm):
     start_date = forms.DateField(
-        widget=forms.DateInput(attrs={'class': 'datepicker'}),
+        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
         label='data inizio',
     )
     end_date = forms.DateField(
-        widget=forms.DateInput(attrs={'class': 'datepicker'}),
+        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
         label='data fine',
         help_text="Gli estremi sono inclusi.",
     )

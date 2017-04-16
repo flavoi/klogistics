@@ -19,7 +19,7 @@ urlpatterns = [
         view=views.AllocationCreateView.as_view(),
         name='create'),
     url(r'^registrazione/multipla/$', 
-        view=views.AllocationCreateSetView.as_view(),
+        view=views.manage_allocations,
         name='create-set'),
     url(r'^modifica/(?P<pk>\d+)/$',
         view=views.AllocationUpdateView.as_view(),
