@@ -16,14 +16,14 @@ from people.models import Person
 from seasons.decorators import open_period_only
 from seasons.models import Season
 from .models import Location, Allocation
-from .forms import AllocationForm
+from .forms import AllocationForm, AllocationPlainForm
 
 @open_period_only
 def manage_allocations(request):
     """ Renderizza il formset di compilazioni della logistica """
     AllocationFormSet = modelformset_factory(
         Allocation, 
-        form=AllocationForm,
+        form=AllocationPlainForm,
     )
     if request.method == 'POST':
         formset = AllocationFormSet(request.POST, request.FILES, form_kwargs={'user': request.user})

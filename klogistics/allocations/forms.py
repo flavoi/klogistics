@@ -10,11 +10,17 @@ from seasons.models import Season
 
 class AllocationForm(forms.ModelForm):
     start_date = forms.DateField(
-        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
+        widget=forms.DateInput(attrs={
+            'placeholder': 'gg/mm/aaaa',
+            'class': 'datepicker',
+        }),
         label='data inizio',
     )
     end_date = forms.DateField(
-        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
+        widget=forms.DateInput(attrs={
+            'placeholder': 'gg/mm/aaaa',
+            'class': 'datepicker',
+        }),
         label='data fine',
         help_text="Gli estremi sono inclusi.",
     )
@@ -55,3 +61,14 @@ class AllocationForm(forms.ModelForm):
                self.add_error('end_date', forms.ValidationError('La data fine deve essere inclusa nel mese corrente.'))
         super(AllocationForm, self).clean()
 
+
+class AllocationPlainForm(AllocationForm):
+    start_date = forms.DateField(
+        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
+        label='data inizio',
+    )
+    end_date = forms.DateField(
+        widget=forms.DateInput(attrs={'placeholder': 'gg/mm/aaaa'}),
+        label='data fine',
+        help_text="Gli estremi sono inclusi.",
+    )
