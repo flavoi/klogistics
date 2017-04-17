@@ -1,13 +1,18 @@
-import json
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import json, StringIO, xlsxwriter
 from datetime import date, timedelta, datetime
 
 from django.shortcuts import get_object_or_404, render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.utils.decorators import method_decorator
+from django.utils.translation import ugettext
 from django.contrib import messages
 from django.core.urlresolvers import reverse_lazy
 from django.forms import modelformset_factory
+
 
 from braces.views import LoginRequiredMixin
 from extra_views import InlineFormSet, CreateWithInlinesView, ModelFormSetView
@@ -17,6 +22,7 @@ from seasons.decorators import open_period_only
 from seasons.models import Season
 from .models import Location, Allocation
 from .forms import AllocationForm, AllocationPlainForm
+
 
 @open_period_only
 def manage_allocations(request):
@@ -43,13 +49,66 @@ def manage_allocations(request):
     return render(request, template_name, context)
 
 
+@open_period_only
+def allocation_season_excel(request, season):
+    """ Restituisce le allocazioni della stagione in formato excel """
+    
+    season = get_object_or_404(Season, pk=season)
+    start_date, end_date = season.start_date, season.end_date
+    allocations = Allocation.objects.get_season_allocations(start_date, end_date)
+    people = Person.objects.all()
+
+    # Inizializza il foglio excel
+    response = HttpResponse(content_type='application/vnd.ms-excel')
+    response['Content-Disposition'] = 'attachment; filename=Report.xlsx'
+    output = StringIO.StringIO()
+    workbook = xlsxwriter.Workbook(output)
+    worksheet_s = workbook.add_worksheet(season.name)
+    title_format = workbook.add_format({
+        'bold': True,
+        'font_size': 14,
+        'align': 'center',
+        'valign': 'vcenter',
+    })
+    header_format = workbook.add_format({
+        'bg_color': '#F7F7F7',
+        'color': 'black',
+        'align': 'center',
+        'valign': 'top',
+        'border': 1,
+    })
+
+    # Compila titolo del foglio e dati
+    title_text = u"{0} {1}".format(ugettext("Logistica"), season.name)
+    worksheet_s.merge_range('B2:H2', title_text, title_format)
+    for idx, p in enumerate(people):
+        worksheet_s.write(4, idx+1, p.surname, header_format)
+    delta = end_date - start_date
+    for i in range(delta.days + 1):
+        row = 5 + i
+        current_date = start_date + timedelta(days=i)
+        worksheet_s.write(row, 0, current_date.strftime("%d/%m/%Y"))
+        for idx, p in enumerate(people):
+            today_p_allocation = allocations.filter(person=p)
+            today_p_allocation = today_p_allocation.filter(start_date__lte=current_date)
+            today_p_allocation = today_p_allocation.filter(end_date__gte=current_date)
+            if today_p_allocation:
+                # Scrive la prima allocazione del giorno "current_date" per la persona "p"
+                worksheet_s.write(row, idx+1, str(today_p_allocation[0].location))
+    workbook.close()
+    xlsx_data = output.getvalue()
+    response.write(xlsx_data)
+    return response
+
+
+@open_period_only
 def allocation_season_json(request, season):
     """ Restituisce le allocazioni della stagione in formato json """
     season = get_object_or_404(Season, pk=season)
     start_date, end_date = season.start_date, season.end_date
     allocations = Allocation.objects.get_season_allocations(start_date, end_date)
 
-    # Partiziono i risultati tra quelli dell'utente autenticato e il resto
+    # Partiziona i risultati tra quelli dell'utente autenticato e il resto
     all_user = allocations.filter(person__user=request.user)
     all_others = allocations.exclude(person__user=request.user)
     
@@ -61,7 +120,7 @@ def allocation_season_json(request, season):
 
     all_others = [obj.as_dict() for obj in all_others] 
 
-    # Concateno i risultati
+    # Concatena i risultati
     allocations_list = all_user + all_others
 
     # Aggiusta la data fine per includere l'estremo destro nel calendario

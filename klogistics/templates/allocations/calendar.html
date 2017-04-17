@@ -15,10 +15,13 @@ Periodo: {{ season.name }}
 
 {% block content %}
 <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-        <div class="card card-plain">
-            <div id='calendar'></div>
-        </div>
+    <div class="col-md-10">
+        <div id='calendar'></div>
+    </div>
+    <div class="col-md-2">
+        <a href="{% url 'allocations:season-excel' season.pk %}" class="btn btn-default">
+        Excel report    
+        </a>
     </div>
     </div> <!-- End grid col -->
 </div> <!-- End grid row -->
