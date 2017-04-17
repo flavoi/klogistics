@@ -217,11 +217,13 @@ class AllocationDeleteView(LoginRequiredMixin, AllocationActionMixin, DeleteView
         return super(AllocationDeleteView, self).delete(request, *args, **kwargs)
 
 
+@method_decorator(open_period_only, name='dispatch')
 class AllocationDetailView(LoginRequiredMixin, DetailView):
     """ Verifica la corretta creazione o modifica delle allocazioni. """
     model = Allocation
 
 
+@method_decorator(open_period_only, name='dispatch')
 class LocationView(LoginRequiredMixin, ListView):
     """ Restituisce la lista dei luoghi censiti a sistema. """
     model = Location
