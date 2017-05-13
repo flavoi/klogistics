@@ -1,3 +1,6 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import datetime
 from datetime import datetime, date, timedelta as td
 from random import randint

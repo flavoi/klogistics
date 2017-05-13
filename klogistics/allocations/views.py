@@ -113,12 +113,15 @@ def allocation_season_json(request, season):
     all_others = allocations.exclude(person__user=request.user)
     
     if season.is_open():
-        # Con stagione aperta solo i risultati utente sono modificabili 
+        # Con stagione aperta solo i risultati utente sono modificabili
         all_user = [obj.as_dict_with_url() for obj in all_user]
     else:
         all_user = [obj.as_dict() for obj in all_user]
 
-    all_others = [obj.as_dict() for obj in all_others] 
+    if request.user.is_superuser:
+        all_others = [obj.as_dict_with_url() for obj in all_others] 
+    else:
+        all_others = [obj.as_dict() for obj in all_others] 
 
     # Concatena i risultati
     allocations_list = all_user + all_others
